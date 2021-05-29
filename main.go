@@ -4,57 +4,103 @@ import (
 	"flag"
 	"fmt"
 	"strings"
+	"sync"
 	"time"
 
-	"sync"
-
+	"github.com/cheggaaa/pb/v3"
 	hdwallet "github.com/miguelmota/go-ethereum-hdwallet"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
+
+var wg sync.WaitGroup
 
 type Wallet struct {
 	Address    string
 	PrivateKey string
 	Mnemonic   string
 	CreatedAt  time.Time
+	gorm.Model
 }
 
 func main() {
 	fmt.Println("Starting...")
+	fmt.Println("")
 
-	isLog := flag.Bool("l", false, "show logging data in stdout")
 	number := flag.Int("n", 10, "set number of wallets to generate")
-	contain := flag.String("contain", "", "used to check the given letters present in the given string or not")
 	concurrency := flag.Int("c", 1, "set number of concurrency")
 	bits := flag.Int("bit", 256, "set number of entropy bits [128, 256]")
+	contain := flag.String("contain", "", "used to check the given letters present in the given string or not")
+	dbPath := flag.String("db", "", "set sqlite output path eg. wallets.db")
+	isLog := flag.Bool("l", false, "show logging data in stdout")
 	flag.Parse()
 
-	fmt.Printf("\n%-42s %s\n", "Address", "Seed (24 words)")
-	fmt.Printf("%-42s %s\n", strings.Repeat("-", 42), strings.Repeat("-", 160))
-
 	now := time.Now()
-
-	var wg sync.WaitGroup
 	count := 0
-	for i := 0; i < *number; i += *concurrency {
-		for j := 0; j < *concurrency && i+j < *number; j++ {
-			wg.Add(1)
-			go func(j int) {
-				defer wg.Done()
-				wallet := generateNewWallet(*bits)
-				if *contain != "" && !strings.Contains(wallet.Address, *contain) {
-					return
-				}
-				if *isLog {
-					fmt.Printf("[%v] %v, %v:\n", i+j+1, time.Now().Local().String(), time.Since(now))
-				}
-				fmt.Printf("%-18s %s\n", wallet.Address, wallet.Mnemonic)
-				count++
-			}(j)
+
+	if *dbPath != "" {
+		db, err := gorm.Open(sqlite.Open(*dbPath), &gorm.Config{
+			Logger: logger.Default.LogMode(logger.Silent),
+		})
+		if err != nil {
+			panic(err)
 		}
-		wg.Wait()
+		db.AutoMigrate(&Wallet{})
+		bar := pb.StartNew(*number)
+		bar.SetTemplate(pb.Default)
+		bar.SetTemplateString(`{{string . "prefix"}}{{counters . }} {{bar . "" "█" "█" "" "" | rndcolor}} {{percent . }} {{speed . }}{{string . "suffix"}}`)
+
+		for i := 0; i < *number; i += *concurrency {
+			tx := db.Begin()
+			for j := 0; j < *concurrency && i+j < *number; j++ {
+				wg.Add(1)
+				go func(j int) {
+					defer wg.Done()
+					wallet := generateNewWallet(*bits)
+					bar.Increment()
+					if *contain != "" && !strings.Contains(wallet.Address, *contain) {
+						return
+					}
+					if *isLog {
+						fmt.Printf("[%v] %v, %v:\n", i+j+1, time.Now().Local().String(), time.Since(now))
+					}
+					tx.Create(wallet)
+					count++
+				}(j)
+			}
+			wg.Wait()
+			tx.Commit()
+		}
+		bar.Finish()
+
+	} else {
+		fmt.Printf("\n%-42s %s\n", "Address", "Seed (24 words)")
+		fmt.Printf("%-42s %s\n", strings.Repeat("-", 42), strings.Repeat("-", 160))
+
+		for i := 0; i < *number; i += *concurrency {
+			for j := 0; j < *concurrency && i+j < *number; j++ {
+				wg.Add(1)
+				go func(j int) {
+					defer wg.Done()
+					wallet := generateNewWallet(*bits)
+					if *contain != "" && !strings.Contains(wallet.Address, *contain) {
+						return
+					}
+					if *isLog {
+						fmt.Printf("[%v] %v, %v:\n", i+j+1, time.Now().Local().String(), time.Since(now))
+					}
+					fmt.Printf("%-18s %s\n", wallet.Address, wallet.Mnemonic)
+					count++
+				}(j)
+			}
+			wg.Wait()
+		}
 	}
-	fmt.Printf("\nDuration: %v\n", time.Since(now))
-	fmt.Printf("Total Wallet: %d\n", count)
+
+	fmt.Printf("\nSpeed: %.2f w/s\n", float64(count)/time.Since(now).Seconds())
+	fmt.Printf("Total Duration: %v\n", time.Since(now))
+	fmt.Printf("Total Wallet Generated: %d w\n", count)
 }
 
 func generateNewWallet(bits int) *Wallet {
