@@ -3,8 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
+	"os/signal"
 	"strings"
 	"sync"
+	"syscall"
 	"time"
 
 	"github.com/cheggaaa/pb/v3"
@@ -77,8 +80,19 @@ func createWallet(mnemonic string) *Wallet {
 }
 
 func main() {
-	fmt.Println("Starting...")
-	fmt.Println("")
+
+	interrupt := make(chan os.Signal, 1)
+
+	signal.Notify(
+		interrupt,
+		syscall.SIGHUP,  // kill -SIGHUP XXXX
+		syscall.SIGINT,  // kill -SIGINT XXXX or Ctrl+c
+		syscall.SIGQUIT, // kill -SIGQUIT XXXX
+		syscall.SIGTERM, // kill -SIGTERM XXXX
+	)
+
+	fmt.Println("===============ETH Wallet Generator===============")
+	fmt.Println(" ")
 
 	number := flag.Int("n", 10, "set number of wallets to generate")
 	dbPath := flag.String("db", "", "set sqlite output path eg. wallets.db")
@@ -91,48 +105,62 @@ func main() {
 	now := time.Now()
 	count := 0
 
-	if *dbPath != "" {
-		db, err := gorm.Open(sqlite.Open(*dbPath), &gorm.Config{
-			Logger: logger.Default.LogMode(logger.Silent),
-		})
-		if err != nil {
-			panic(err)
-		}
+	defer func() {
+		fmt.Printf("\nResolved Speed: %.2f w/s\n", float64(count)/time.Since(now).Seconds())
+		fmt.Printf("Total Duration: %v\n", time.Since(now))
+		fmt.Printf("Total Wallet Resolved: %d w\n", count)
 
-		db.AutoMigrate(&Wallet{})
-		bar := pb.StartNew(*number)
-		bar.SetTemplate(pb.Default)
-		bar.SetTemplateString(`{{string . "prefix"}}{{counters . }} {{bar . "" "█" "█" "" "" | rndcolor}} {{percent . }} {{speed . }}{{string . "suffix"}}`)
+		fmt.Printf("\nCopyright (C) 2021 Planxnx <planxthanee@gmail.com>\n")
+	}()
 
-		for i := 0; i < *number; i += *concurrency {
-			tx := db.Begin()
-			for j := 0; j < *concurrency && i+j < *number; j++ {
-				wg.Add(1)
+	go func() {
+		defer func() {
+			interrupt <- syscall.SIGQUIT
+		}()
 
-				go func(j int) {
-					defer wg.Done()
-
-					wallet := generateNewWallet(*bits)
-					bar.Increment()
-
-					if *contain != "" && !strings.Contains(wallet.Address, *contain) {
-						return
-					}
-
-					if *isLog {
-						fmt.Printf("[%v] %v, %v:\n", i+j+1, time.Now().Local().String(), time.Since(now))
-					}
-
-					tx.Create(wallet)
-					count++
-				}(j)
+		if *dbPath != "" {
+			db, err := gorm.Open(sqlite.Open(*dbPath), &gorm.Config{
+				Logger: logger.Default.LogMode(logger.Silent),
+			})
+			if err != nil {
+				panic(err)
 			}
-			wg.Wait()
-			tx.Commit()
-		}
-		bar.Finish()
 
-	} else {
+			db.AutoMigrate(&Wallet{})
+			bar := pb.StartNew(*number)
+			bar.SetTemplate(pb.Default)
+			bar.SetTemplateString(`{{string . "prefix"}}{{counters . }} {{bar . "" "█" "█" "" "" | rndcolor}} {{percent . }} {{speed . }}{{string . "suffix"}}`)
+
+			for i := 0; i < *number; i += *concurrency {
+				tx := db.Begin()
+				for j := 0; j < *concurrency && i+j < *number; j++ {
+					wg.Add(1)
+
+					go func(j int) {
+						defer wg.Done()
+
+						wallet := generateNewWallet(*bits)
+						bar.Increment()
+
+						if *contain != "" && !strings.Contains(wallet.Address, *contain) {
+							return
+						}
+
+						if *isLog {
+							fmt.Printf("[%v] %v, %v:\n", i+j+1, time.Now().Local().String(), time.Since(now))
+						}
+
+						tx.Create(wallet)
+						count++
+					}(j)
+				}
+				wg.Wait()
+				tx.Commit()
+			}
+			bar.Finish()
+			return
+		}
+
 		fmt.Printf("\n%-42s %s\n", "Address", "Seed (24 words)")
 		fmt.Printf("%-42s %s\n", strings.Repeat("-", 42), strings.Repeat("-", 160))
 
@@ -158,10 +186,8 @@ func main() {
 				}(j)
 			}
 			wg.Wait()
-		}
-	}
 
-	fmt.Printf("\nResolved Speed: %.2f w/s\n", float64(count)/time.Since(now).Seconds())
-	fmt.Printf("Total Duration: %v\n", time.Since(now))
-	fmt.Printf("Total Wallet Resolved: %d w\n", count)
+		}
+	}()
+	<-interrupt
 }
