@@ -56,7 +56,9 @@ func (w *Wallet) createWallet(mnemonic string) *Wallet {
 
 func generateNewWallet(bits int) *Wallet {
 	mnemonic, _ := hdwallet.NewMnemonic(bits)
-	return createWallet(mnemonic)
+	wallet := createWallet(mnemonic)
+	wallet.Bits = bits
+	return wallet
 }
 
 func createWallet(mnemonic string) *Wallet {
@@ -69,6 +71,7 @@ func createWallet(mnemonic string) *Wallet {
 		Address:    account.Address.Hex(),
 		PrivateKey: pk,
 		Mnemonic:   mnemonic,
+		HDPath:     account.URL.Path,
 		CreatedAt:  time.Now(),
 	}
 }
@@ -158,7 +161,7 @@ func main() {
 		}
 	}
 
-	fmt.Printf("\nSpeed: %.2f w/s\n", float64(count)/time.Since(now).Seconds())
+	fmt.Printf("\nResolved Speed: %.2f w/s\n", float64(count)/time.Since(now).Seconds())
 	fmt.Printf("Total Duration: %v\n", time.Since(now))
-	fmt.Printf("Total Wallet Generated: %d w\n", count)
+	fmt.Printf("Total Wallet Resolved: %d w\n", count)
 }
