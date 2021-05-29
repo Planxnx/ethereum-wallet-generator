@@ -99,21 +99,24 @@ func main() {
 	concurrency := flag.Int("c", 1, "set number of concurrency")
 	bits := flag.Int("bit", 256, "set number of entropy bits [128, 256]")
 	contain := flag.String("contain", "", "used to check the given letters present in the given string or not")
-	isLog := flag.Bool("l", false, "show logging data in stdout")
+	isDryrun := flag.Bool("dryrun", false, "generate wallet without result (used for benchamark speed)")
 	flag.Parse()
 
 	now := time.Now()
-	count := 0
+	resolvedCount := 0
 
 	defer func() {
-		fmt.Printf("\nResolved Speed: %.2f w/s\n", float64(count)/time.Since(now).Seconds())
+		fmt.Printf("\nResolved Speed: %.2f w/s\n", float64(resolvedCount)/time.Since(now).Seconds())
 		fmt.Printf("Total Duration: %v\n", time.Since(now))
-		fmt.Printf("Total Wallet Resolved: %d w\n", count)
+		fmt.Printf("Total Wallet Resolved: %d w\n", resolvedCount)
 
 		fmt.Printf("\nCopyright (C) 2021 Planxnx <planxthanee@gmail.com>\n")
 	}()
 
 	go func() {
+		bar := pb.StartNew(*number)
+		bar.SetTemplate(pb.Default)
+		bar.SetTemplateString(`{{counters . }} | {{bar . "" "█" "█" "" "" | rndcolor}} | {{percent . }} | {{speed . }} | {{string . "resolved"}}`)
 		defer func() {
 			interrupt <- syscall.SIGQUIT
 		}()
@@ -121,18 +124,19 @@ func main() {
 		if *dbPath != "" {
 			db, err := gorm.Open(sqlite.Open(*dbPath), &gorm.Config{
 				Logger: logger.Default.LogMode(logger.Silent),
+				DryRun: *isDryrun,
 			})
 			if err != nil {
 				panic(err)
 			}
 
-			db.AutoMigrate(&Wallet{})
-			bar := pb.StartNew(*number)
-			bar.SetTemplate(pb.Default)
-			bar.SetTemplateString(`{{string . "prefix"}}{{counters . }} {{bar . "" "█" "█" "" "" | rndcolor}} {{percent . }} {{speed . }}{{string . "suffix"}}`)
+			if !*isDryrun {
+				db.AutoMigrate(&Wallet{})
+			}
 
 			for i := 0; i < *number; i += *concurrency {
 				tx := db.Begin()
+				txResolved := 0
 				for j := 0; j < *concurrency && i+j < *number; j++ {
 					wg.Add(1)
 
@@ -146,23 +150,20 @@ func main() {
 							return
 						}
 
-						if *isLog {
-							fmt.Printf("[%v] %v, %v:\n", i+j+1, time.Now().Local().String(), time.Since(now))
-						}
-
+						txResolved++
 						tx.Create(wallet)
-						count++
 					}(j)
 				}
 				wg.Wait()
 				tx.Commit()
+				resolvedCount += txResolved
+				bar.Set("resolved", fmt.Sprintf("resovled: %v", resolvedCount))
 			}
 			bar.Finish()
 			return
 		}
 
-		fmt.Printf("\n%-42s %s\n", "Address", "Seed (24 words)")
-		fmt.Printf("%-42s %s\n", strings.Repeat("-", 42), strings.Repeat("-", 160))
+		var result strings.Builder
 
 		for i := 0; i < *number; i += *concurrency {
 			for j := 0; j < *concurrency && i+j < *number; j++ {
@@ -172,22 +173,28 @@ func main() {
 					defer wg.Done()
 
 					wallet := generateNewWallet(*bits)
+					bar.Increment()
 
 					if *contain != "" && !strings.Contains(wallet.Address, *contain) {
 						return
 					}
 
-					if *isLog {
-						fmt.Printf("[%v] %v, %v:\n", i+j+1, time.Now().Local().String(), time.Since(now))
-					}
-
-					fmt.Printf("%-18s %s\n", wallet.Address, wallet.Mnemonic)
-					count++
+					fmt.Fprintf(&result, "%-18s %s\n", wallet.Address, wallet.Mnemonic)
+					resolvedCount++
+					bar.Set("resolved", fmt.Sprintf("resovled: %v", resolvedCount))
 				}(j)
 			}
 			wg.Wait()
-
 		}
+		bar.Finish()
+
+		if *isDryrun {
+			return
+		}
+
+		fmt.Printf("\n%-42s %s\n", "Address", "Seed")
+		fmt.Printf("%-42s %s\n", strings.Repeat("-", 42), strings.Repeat("-", 160))
+		fmt.Println(result.String())
 	}()
 	<-interrupt
 }
