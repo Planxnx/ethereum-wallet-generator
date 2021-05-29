@@ -1,13 +1,23 @@
-# eth-wallet-gen
+<h3 align="center">
+  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" heigth="100" />
+  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" heigth="100" />
+  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" heigth="100" />
+  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" heigth="100" />
+  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" heigth="100" />
+  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" heigth="100" />
+  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" heigth="100" />
+</h3>
 
+# eth-wallet-gen
+> Ethereum Wallet Generator in Go (golang). Implements the [go-ethereum-hdwallet](https://github.com/miguelmota/go-ethereum-hdwallet).
 [![license](https://img.shields.io/badge/license-WTFPL%20--%20Do%20What%20the%20Fuck%20You%20Want%20to%20Public%20License-green.svg)](https://github.com/modood/btckeygen/blob/master/LICENSE)
 
-Easy Way to generate multiple ETH wallets at once! (Implements the [go-ethereum-hdwallet](https://github.com/miguelmota/go-ethereum-hdwallet))
+#### Easy & Fast Way to generate multiple ETH wallets at once! 
 
 - Tiny and Fastest wallet generator with Golang.
 - Embeded Database Supported! (with SQLite3).
 - Adjust speed with customable concurrency numbers.
-- Reduce result size supported by filtering wallet addresses.
+- Filtering by Letters Supported! (resovled only addresses that you want).
 - Auto generated BIP-39 mnemonic using 128-256 bits of entropy (12, 24 Word Seed Phrase) (Default is 256 bits).
 - Default Hierarchical Deterministic Path - m/44'/60'/0'/0 .
 - You can benchmark generate speed by DryRun.
@@ -28,7 +38,7 @@ Usage of eth-wallet-gen:
   -db        string set sqlite output path eg. wallets.d
   -c         int    set number of concurrency (default 1)
   -bit       int    set number of entropy bits [128, 256] (default 256)
-  -contain   string used to check the given letters present in the given string or not
+  -contain   string used to check the given letters present in the given string or not (used for filtered address)
   -dryrun    bool   generate wallet without result (used for benchamark speed)
 ```
 
