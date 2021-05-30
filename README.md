@@ -17,10 +17,10 @@
 
 #### Easy & Fast Way to generate multiple ETH wallets at once!
 
-- Tiny and Fastest wallet generator with Golang.
+- Tiny sizes and Fastest Speed with Golang.
 - Embeded Database Supported! (with SQLite3).
-- Adjust speed with customable concurrency numbers.
 - Filtering by Letters Supported! (resovled only addresses that you want).
+- Speed up! with customable concurrency numbers.
 - Auto generated BIP-39 mnemonic using 128-256 bits of entropy (12, 24 Word Seed Phrase) (Default is 256 bits).
 - Default Hierarchical Deterministic Path - m/44'/60'/0'/0 .
 - You can benchmark generate speed by DryRun.
@@ -41,7 +41,7 @@ Usage of eth-wallet-gen:
   -db        string set sqlite output path eg. wallets.d
   -c         int    set number of concurrency (default 1)
   -bit       int    set number of entropy bits [128, 256] (default 256)
-  -contain   string used to check the given letters present in the given string or not (used for filtered address)
+  -contains  string used to check the given letters present in the given string or not (used for filtered address)
   -strict    bool   strict contains mode (required contains to use)
   -dryrun    bool   generate wallet without result (used for benchamark speed)
 ```
@@ -55,24 +55,24 @@ $ eth-wallet-gen
 
 ===============ETH Wallet Generator===============
 
-10 / 10 | [████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 10 p/s | resovled: 10
+10 / 10 | [█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | ? p/s | resovled: 10
 
 Address                                    Seed
 ------------------------------------------ ----------------------------------------------------------------------------------------------------------------------------------------------------------------
-0xbf0835798a3246f689e75725C5BA5fB66C8C0a1d trend shoe loan civil melt please forget spread lava sad kiwi sunset donate expire match joy crew bring fruit chief lion peanut ketchup initial
-0x18d9f2DC63F7Ec0C93242bd67153DD09e32073d0 cinnamon total reject merit budget fee boring file charge hawk rice pulp isolate mask small cycle bounce hidden remove desk budget avoid auto wonder
-0x725b35b4ebe480f055770773Afb9f1D1254D4473 unfair fruit thought accuse steel confirm iron sort weather orchard rice remove jazz work rebel you tobacco stable follow pig oil slogan potato nominee
-0x17637A027cfF8412Fa12964F3FfC16CdB0Fa86E8 rhythm orient coyote level become over whale behave merge company private steel sort galaxy cargo admit rain possible luxury denial good devote raise sausage
-0xd06697f0299fA909475FA3Ab202ec08167003f73 craft purse liberty fix monitor glow carry speed price slight bunker crystal find exotic tag drink vessel remember hill digital omit away idea already
-0x3620D1fCfc4a88E3ef53b7e4708b225FC0A05e04 help quarter merry romance banner mammal display together velvet denial empower family word silly there custom palm retire call seminar uncle basket range armed
-0x7ac8A0F23ab05AD665d7c5787E6a827A8458Aa67 program bleak vivid vote comic they world bind antenna city laundry duck group half cause rookie unlock diesel steak march noise correct sudden sphere
-0xa2a1F5667aBD6ae8d0BAD89FfEe367f5d7d1AE57 chat return pledge old win wedding notice teach pattern name bean argue thrive true barely wine traffic bubble crunch always what puppy install off
-0xfa5846738CD0db45bF2c1154F4b5BD2245038E5B warrior section between champion curious about tube toy sail symbol grab exhaust ordinary poet universe grit dwarf soap clarify typical chalk solid mask hand
-0x5aba5511D8F814B4d9a3877beF1cC0c2C151Ec8d good elevator scheme course wine believe spare august turkey solar label ability arrive dune picture large point fall tail reflect photo develop limb olympic
+0xc982Dd2E1E9E980A40725367916000793c258aB4 beauty spring lend endless unique thing neutral dignity soup beyond park pact accident mosquito barely tuition memory rather salt spend disease execute list input
+0x39F85fb3EFd4Ee8191cE2531AE61d8F2D7C8716f judge match embark suspect wonder sea skull immense ahead galaxy tree recycle lyrics ridge slide physical derive equip clever improve recipe quality tattoo link
+0xb3125E8e8Ac9cd54D42DddA9f04D149717AeaaEC pupil ugly festival cruise bar shuffle ball mansion unhappy knee chunk spell fetch rude usage wait picture glue effort wrong angry awake common sample
+0x12De8E6eE2A3c82188f12e0ebA984977E49f6E42 hamster treat alcohol thunder reopen demise sick burger beauty reflect bird simple few win female moral paddle version awful develop tell cake that sphere
+0x65b25D613C1fAf0a2D48d23757Ed8242f3Ef19f4 flight safe pitch digital main civil pumpkin trick harbor announce drastic nerve super net credit brother swift soldier tonight bonus beyond jelly way video
+0x831A0855726f322c61F943b5fb2D212d5451EBb4 olympic people exchange defense lizard maple doctor wool scene ask broken bitter moment sweet help slide off buyer guilt boost trial fame ride method
+0x8031c4f8d2A64b1458D749e772A0B365E783A61E increase detect together doll include security insect flash arena deputy orchard poem pact dove atom review wash fashion lonely globe over visa remind toddler
+0xD8e65744C6F0DA597b34BDEFAE67e8B1eD1ed9F1 word hour assist warrior hold number right when city off frequent tube enrich steel dentist provide million reject dune ship pudding candy annual almost
+0x2CC9df2B0210415Bf15dde9883e89Ad73a548d2f involve people rural grief business case fun injury noodle ritual slender flash predict prosper weird expire remind tank knock anger pool network change style
+0x6c6575237168e923F1a2d2Ef6fb7E1cc62404A8D bargain include street tent unique vague animal axis turn hockey scatter attitude naive couple adjust cement deny actor average odor estate happy barrel birth
 
 
-Resolved Speed: 155.22 w/s
-Total Duration: 64.448369ms
+Resolved Speed: 502.78 w/s
+Total Duration: 24.832485ms
 Total Wallet Resolved: 10 w
 
 ```
@@ -80,37 +80,34 @@ Total Wallet Resolved: 10 w
 **With contains and strict options:**
 
 ```txt
-$ eth-wallet-gen -n 10000 -contains 0x00,77 -strict
-
+$ eth-wallet-gen -n 50000 -contains 0x00,777 -strict
 ===============ETH Wallet Generator===============
 
-10000 / 10000 | [██████████████████████████████████████████████████████████████████] | 100.00% | 283 p/s | resovled: 4
+50000 / 50000 | [██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 447 p/s | resovled: 1
 
 Address                                    Seed
 ------------------------------------------ ----------------------------------------------------------------------------------------------------------------------------------------------------------------
-0x002B1cb0Bfdcf6Dba415f277DbdF3fbC368FcaEB flee hurry balance require deposit spray flip derive frog between decide pluck piano game arrow armed pioneer warrior luxury tongue digital legend river lobster
-0x00a40cE744E3e173afDE1455e16DAbc7D75BDf77 fluid bounce round exact rich much initial phrase satisfy cheese swim jaguar spirit icon enforce stereo select shift cream primary nice raven iron defense
-0x00930946d47Ad9Ffd217720041451aaEaF3dE051 spatial brief mansion broom project drum alter clog auction device all curve brave frost skate bless broccoli sure letter afford exchange rely test march
-0x00ea313400bd87971E677c234D27d2Dd11cF1113 amateur mix depart version license grass leg wrong recycle tent naive return sort soon burst section allow gun face stuff people give pulse frequent
+0x00d6118f53777ecFbF430E40121345D91Fb6018b pen cliff toward mushroom stairs finish filter basic slogan exotic bomb senior drip brush coffee include lady tent finish stable evoke wolf lobster frame
 
 
-Resolved Speed: 0.11 w/s
-Total Duration: 35.540619169s
-Total Wallet Resolved: 4 w
+Resolved Speed: 0.01 w/s
+Total Duration: 1m52.063956141s
+Total Wallet Resolved: 1 w
 ```
 
-**With SQLite3 and options:**
+**Speed up with Concuurecny and stored to SQLite3:**
 
 ```txt
-$ eth-wallet-gen -n 10000 -c 50 -db wallets.db -contain 0x77
-
+$ eth-wallet-gen -n 50000 -c 100 -db wallets.db -contain 0x777
 ===============ETH Wallet Generator===============
 
-10000 / 10000 | [████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 500 p/s | resovled: 42
+50000 / 50000 | [█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 1674 p/s | resovled: 16
 
-Resolved Speed: 2.08 w/s
-Total Duration: 20.212770838s
-Total Wallet Resolved: 42 w
+Resolved Speed: 0.44 w/s
+Total Duration: 31.177676099s
+Total Wallet Resolved: 16 w
+
+Copyright (C) 2021 Planxnx <planxthanee@gmail.com>
 
 ```
 
