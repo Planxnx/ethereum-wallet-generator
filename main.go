@@ -12,13 +12,16 @@ import (
 
 	"github.com/cheggaaa/pb/v3"
 	hdwallet "github.com/miguelmota/go-ethereum-hdwallet"
+	"github.com/schollz/progressbar/v3"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 )
 
-var wg sync.WaitGroup
-var result strings.Builder
+var (
+	wg     sync.WaitGroup
+	result strings.Builder
+)
 
 type Wallet struct {
 	Address    string
@@ -28,6 +31,11 @@ type Wallet struct {
 	HDPath     string
 	CreatedAt  time.Time
 	gorm.Model
+}
+
+type ProgressBar struct {
+	StandardMode   *pb.ProgressBar
+	CompatibleMode *progressbar.ProgressBar
 }
 
 func NewWallet(bits int, hdPath string) *Wallet {
@@ -80,6 +88,48 @@ func createWallet(mnemonic string) *Wallet {
 	}
 }
 
+func NewProgressBar(number int, isCompatible bool) (bar *ProgressBar) {
+	if isCompatible {
+		bar = &ProgressBar{
+			CompatibleMode: progressbar.NewOptions(number,
+				progressbar.OptionSetItsString("w"),
+				progressbar.OptionSetPredictTime(true),
+				progressbar.OptionShowIts(),
+				progressbar.OptionShowCount(),
+				progressbar.OptionFullWidth(),
+			),
+		}
+		return
+	}
+	bar = &ProgressBar{
+		StandardMode: pb.StartNew(number),
+	}
+	bar.StandardMode.SetTemplate(pb.Default)
+	bar.StandardMode.SetTemplateString(`{{counters . }} | {{bar . "" "█" "█" "" "" | rndcolor}} | {{percent . }} | {{speed . }} | {{string . "resolved"}}`)
+	return
+}
+
+func (bar *ProgressBar) Increment() error {
+	if bar.CompatibleMode != nil {
+		return bar.CompatibleMode.Add(1)
+	}
+	return bar.StandardMode.Increment().Err()
+}
+
+func (bar *ProgressBar) SetResolved(resolved int) error {
+	if bar.StandardMode != nil {
+		return bar.StandardMode.Set("resolved", fmt.Sprintf("resovled: %v", resolved)).Err()
+	}
+	return nil
+}
+
+func (bar *ProgressBar) Finish() error {
+	if bar.CompatibleMode != nil {
+		return bar.CompatibleMode.Close()
+	}
+	return bar.StandardMode.Finish().Err()
+}
+
 func main() {
 
 	interrupt := make(chan os.Signal, 1)
@@ -95,13 +145,14 @@ func main() {
 	fmt.Println("===============ETH Wallet Generator===============")
 	fmt.Println(" ")
 
-	number := flag.Int("n", 10, "set number of wallets to generate (set number to 0 for Infinite loop ∞)")
+	number := flag.Int("n", 10, "set number of wallets to generate (set number to -1 for Infinite loop ∞)")
 	dbPath := flag.String("db", "", "set sqlite output name eg. wallets.db (db file will create in /db)")
 	concurrency := flag.Int("c", 1, "set number of concurrency")
 	bits := flag.Int("bit", 256, "set number of entropy bits [128, 256]")
 	contain := flag.String("contains", "", "used to check the given letters present in the given string or not")
 	strict := flag.Bool("strict", false, "strict contains mode (required contains to use)")
 	isDryrun := flag.Bool("dryrun", false, "generate wallet without result (used for benchamark speed)")
+	isCompatible := flag.Bool("compatible", false, "logging compatible mode (turn on this to fix logging glitch)")
 	flag.Parse()
 
 	contains := strings.Split(*contain, ",")
@@ -121,6 +172,9 @@ func main() {
 		}
 		return true
 	}
+	if *number < 0 {
+		*number = -1
+	}
 
 	now := time.Now()
 	resolvedCount := 0
@@ -133,7 +187,9 @@ func main() {
 		fmt.Printf("\nCopyright (C) 2021 Planxnx <planxthanee@gmail.com>\n")
 	}()
 
+	bar := NewProgressBar(*number, *isCompatible)
 	defer func() {
+		bar.Finish()
 		if *isDryrun {
 			return
 		}
@@ -145,9 +201,6 @@ func main() {
 	}()
 
 	go func() {
-		bar := pb.StartNew(*number)
-		bar.SetTemplate(pb.Default)
-		bar.SetTemplateString(`{{counters . }} | {{bar . "" "█" "█" "" "" | rndcolor}} | {{percent . }} | {{speed . }} | {{string . "resolved"}}`)
 		defer func() {
 			interrupt <- syscall.SIGQUIT
 		}()
@@ -165,10 +218,10 @@ func main() {
 				db.AutoMigrate(&Wallet{})
 			}
 
-			for i := 0; i < *number || *number == 0; i += *concurrency {
+			for i := 0; i < *number || *number < 0; i += *concurrency {
 				tx := db.Begin()
 				txResolved := 0
-				for j := 0; j < *concurrency && (i+j < *number || *number == 0); j++ {
+				for j := 0; j < *concurrency && (i+j < *number || *number < 0); j++ {
 					wg.Add(1)
 
 					go func(j int) {
@@ -192,14 +245,13 @@ func main() {
 				wg.Wait()
 				tx.Commit()
 				resolvedCount += txResolved
-				bar.Set("resolved", fmt.Sprintf("resovled: %v", resolvedCount))
+				bar.SetResolved(resolvedCount)
 			}
-			bar.Finish()
 			return
 		}
 
-		for i := 0; i < *number || *number == 0; i += *concurrency {
-			for j := 0; j < *concurrency && (i+j < *number || *number == 0); j++ {
+		for i := 0; i < *number || *number < 0; i += *concurrency {
+			for j := 0; j < *concurrency && (i+j < *number || *number < 0); j++ {
 				wg.Add(1)
 
 				go func(j int) {
@@ -218,7 +270,7 @@ func main() {
 
 					fmt.Fprintf(&result, "%-18s %s\n", wallet.Address, wallet.Mnemonic)
 					resolvedCount++
-					bar.Set("resolved", fmt.Sprintf("resovled: %v", resolvedCount))
+					bar.SetResolved(resolvedCount)
 				}(j)
 			}
 			wg.Wait()
