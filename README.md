@@ -21,6 +21,7 @@
 - Embeded Database Supported! (with SQLite3).
 - Filtering by Letters Supported! (resovled only addresses that you want).
 - Speed up! with customable concurrency numbers.
+- ∞ Infinity wallets generated! (set target number to 0 (zero) to enable infinite loop mode)
 - Auto generated BIP-39 mnemonic using 128-256 bits of entropy (12, 24 Word Seed Phrase) (Default is 256 bits).
 - Default Hierarchical Deterministic Path - m/44'/60'/0'/0 .
 - You can benchmark generate speed by DryRun.
@@ -47,7 +48,7 @@ $ go get -u github.com/Planxnx/eth-wallet-gen
 
 ```
 Usage of eth-wallet-gen:
-  -n         int    set number of wallets to generate (default 10)
+  -n         int    set number of wallets to generate (default 10) (set number to 0 for Infinite loop ∞)
   -db        string set sqlite output path eg. wallets.d
   -c         int    set number of concurrency (default 1)
   -bit       int    set number of entropy bits [128, 256] (default 256)
@@ -128,14 +129,14 @@ Total Wallet Resolved: 1 w
 **Speed up with Concuurecny and Stored to SQLite3:**
 
 ```txt
-$ eth-wallet-gen -n 50000 -c 100 -db wallets.db -contain 0x777
+$ eth-wallet-gen -n 50000 -c 100 -db wallets.db
 ===============ETH Wallet Generator===============
 
 50000 / 50000 | [█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 1674 p/s | resovled: 16
 
-Resolved Speed: 0.44 w/s
+Resolved Speed: 1568 w/s
 Total Duration: 31.177676099s
-Total Wallet Resolved: 16 w
+Total Wallet Resolved: 50000 w
 ```
 
 ## Contributing

@@ -95,7 +95,7 @@ func main() {
 	fmt.Println("===============ETH Wallet Generator===============")
 	fmt.Println(" ")
 
-	number := flag.Int("n", 10, "set number of wallets to generate")
+	number := flag.Int("n", 10, "set number of wallets to generate (set number to 0 for Infinite loop ∞)")
 	dbPath := flag.String("db", "", "set sqlite output path eg. wallets.db")
 	concurrency := flag.Int("c", 1, "set number of concurrency")
 	bits := flag.Int("bit", 256, "set number of entropy bits [128, 256]")
@@ -165,10 +165,10 @@ func main() {
 				db.AutoMigrate(&Wallet{})
 			}
 
-			for i := 0; i < *number; i += *concurrency {
+			for i := 0; i < *number || *number == 0; i += *concurrency {
 				tx := db.Begin()
 				txResolved := 0
-				for j := 0; j < *concurrency && i+j < *number; j++ {
+				for j := 0; j < *concurrency && (i+j < *number || *number == 0); j++ {
 					wg.Add(1)
 
 					go func(j int) {
@@ -198,8 +198,8 @@ func main() {
 			return
 		}
 
-		for i := 0; i < *number; i += *concurrency {
-			for j := 0; j < *concurrency && i+j < *number; j++ {
+		for i := 0; i < *number || *number == 0; i += *concurrency {
+			for j := 0; j < *concurrency && (i+j < *number || *number == 0); j++ {
 				wg.Add(1)
 
 				go func(j int) {
