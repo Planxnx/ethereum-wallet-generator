@@ -18,6 +18,7 @@ import (
 )
 
 var wg sync.WaitGroup
+var result strings.Builder
 
 type Wallet struct {
 	Address    string
@@ -113,6 +114,14 @@ func main() {
 		fmt.Printf("\nCopyright (C) 2021 Planxnx <planxthanee@gmail.com>\n")
 	}()
 
+	defer func() {
+		if result.Len() > 0 {
+			fmt.Printf("\n%-42s %s\n", "Address", "Seed")
+			fmt.Printf("%-42s %s\n", strings.Repeat("-", 42), strings.Repeat("-", 160))
+			fmt.Println(result.String())
+		}
+	}()
+
 	go func() {
 		bar := pb.StartNew(*number)
 		bar.SetTemplate(pb.Default)
@@ -163,8 +172,6 @@ func main() {
 			return
 		}
 
-		var result strings.Builder
-
 		for i := 0; i < *number; i += *concurrency {
 			for j := 0; j < *concurrency && i+j < *number; j++ {
 				wg.Add(1)
@@ -192,9 +199,6 @@ func main() {
 			return
 		}
 
-		fmt.Printf("\n%-42s %s\n", "Address", "Seed")
-		fmt.Printf("%-42s %s\n", strings.Repeat("-", 42), strings.Repeat("-", 160))
-		fmt.Println(result.String())
 	}()
 	<-interrupt
 }
