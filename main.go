@@ -23,6 +23,7 @@ var (
 	result strings.Builder
 )
 
+//Wallet ethereum wallet data
 type Wallet struct {
 	Address    string
 	PrivateKey string
@@ -33,11 +34,13 @@ type Wallet struct {
 	gorm.Model
 }
 
+//ProgressBar progressbar logging with 2 mode
 type ProgressBar struct {
 	StandardMode   *pb.ProgressBar
 	CompatibleMode *progressbar.ProgressBar
 }
 
+//NewWallet .
 func NewWallet(bits int, hdPath string) *Wallet {
 	mnemonic, _ := hdwallet.NewMnemonic(bits)
 
@@ -88,6 +91,7 @@ func createWallet(mnemonic string) *Wallet {
 	}
 }
 
+//NewProgressBar .
 func NewProgressBar(number int, isCompatible bool) (bar *ProgressBar) {
 	if isCompatible {
 		bar = &ProgressBar{
@@ -109,6 +113,7 @@ func NewProgressBar(number int, isCompatible bool) (bar *ProgressBar) {
 	return
 }
 
+//Increment increment progress
 func (bar *ProgressBar) Increment() error {
 	if bar.CompatibleMode != nil {
 		return bar.CompatibleMode.Add(1)
@@ -116,13 +121,15 @@ func (bar *ProgressBar) Increment() error {
 	return bar.StandardMode.Increment().Err()
 }
 
+//SetResolved set resolved wallet number
 func (bar *ProgressBar) SetResolved(resolved int) error {
 	if bar.StandardMode != nil {
-		return bar.StandardMode.Set("resolved", fmt.Sprintf("resovled: %v", resolved)).Err()
+		return bar.StandardMode.Set("resolved", fmt.Sprintf("resolved: %v", resolved)).Err()
 	}
 	return nil
 }
 
+//Finish close progress bar
 func (bar *ProgressBar) Finish() error {
 	if bar.CompatibleMode != nil {
 		return bar.CompatibleMode.Close()
