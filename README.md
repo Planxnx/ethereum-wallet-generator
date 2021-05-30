@@ -27,6 +27,16 @@
 - We recommend every user of this application audit and verify any underlying code for its validity and suitability.
 - DYOR!
 
+#### TODO
+
+- Support more databases (eg. MySQL, MongoDB, Postgres).
+- Support CSV file.
+- Add more filter options
+- Notification!
+- GUI.
+- Wallet Customizations.
+- etc ...
+
 ## Installation
 
 ```
@@ -77,7 +87,7 @@ Total Wallet Resolved: 10 w
 
 ```
 
-**With contains letters:**
+**Filtered with contains letters:**
 
 ```txt
 $ eth-wallet-gen -n 200 -c 5000 -contains 0x77,0x00,0x99
@@ -97,7 +107,7 @@ Total Duration: 133.079403ms
 Total Wallet Resolved: 3 w
 ```
 
-**With contains and strict options:**
+**Filtered with contains and strict options:**
 
 ```txt
 $ eth-wallet-gen -n 50000 -contains 0x00,777 -strict
