@@ -134,6 +134,9 @@ func main() {
 	}()
 
 	defer func() {
+		if *isDryrun {
+			return
+		}
 		if result.Len() > 0 {
 			fmt.Printf("\n%-42s %s\n", "Address", "Seed")
 			fmt.Printf("%-42s %s\n", strings.Repeat("-", 42), strings.Repeat("-", 160))
@@ -221,11 +224,6 @@ func main() {
 			wg.Wait()
 		}
 		bar.Finish()
-
-		if *isDryrun {
-			return
-		}
-
 	}()
 	<-interrupt
 }
