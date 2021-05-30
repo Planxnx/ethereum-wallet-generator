@@ -8,13 +8,14 @@
   <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" heigth="100" />
 </h3>
 
-# eth-wallet-gen  
+# eth-wallet-gen
+
 > Ethereum Wallet Generator in Go (golang). Implements the [go-ethereum-hdwallet](https://github.com/miguelmota/go-ethereum-hdwallet).
 
 [![Golang](https://badges.aleen42.com/src/golang.svg)](https://golang.org/)
 [![license](https://img.shields.io/badge/license-WTFPL%20--%20Do%20What%20the%20Fuck%20You%20Want%20to%20Public%20License-green.svg)](https://github.com/Planxnx/eth-wallet-gen/blob/main/LICENSE)
 
-#### Easy & Fast Way to generate multiple ETH wallets at once! 
+#### Easy & Fast Way to generate multiple ETH wallets at once!
 
 - Tiny and Fastest wallet generator with Golang.
 - Embeded Database Supported! (with SQLite3).
@@ -41,6 +42,7 @@ Usage of eth-wallet-gen:
   -c         int    set number of concurrency (default 1)
   -bit       int    set number of entropy bits [128, 256] (default 256)
   -contain   string used to check the given letters present in the given string or not (used for filtered address)
+  -strict    bool   strict contains mode (required contains to use)
   -dryrun    bool   generate wallet without result (used for benchamark speed)
 ```
 
@@ -73,6 +75,28 @@ Resolved Speed: 155.22 w/s
 Total Duration: 64.448369ms
 Total Wallet Resolved: 10 w
 
+```
+
+**With contains and strict options:**
+
+```txt
+$ eth-wallet-gen -n 10000 -contains 0x00,77 -strict
+
+===============ETH Wallet Generator===============
+
+10000 / 10000 | [██████████████████████████████████████████████████████████████████] | 100.00% | 283 p/s | resovled: 4
+
+Address                                    Seed
+------------------------------------------ ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+0x002B1cb0Bfdcf6Dba415f277DbdF3fbC368FcaEB flee hurry balance require deposit spray flip derive frog between decide pluck piano game arrow armed pioneer warrior luxury tongue digital legend river lobster
+0x00a40cE744E3e173afDE1455e16DAbc7D75BDf77 fluid bounce round exact rich much initial phrase satisfy cheese swim jaguar spirit icon enforce stereo select shift cream primary nice raven iron defense
+0x00930946d47Ad9Ffd217720041451aaEaF3dE051 spatial brief mansion broom project drum alter clog auction device all curve brave frost skate bless broccoli sure letter afford exchange rely test march
+0x00ea313400bd87971E677c234D27d2Dd11cF1113 amateur mix depart version license grass leg wrong recycle tent naive return sort soon burst section allow gun face stuff people give pulse frequent
+
+
+Resolved Speed: 0.11 w/s
+Total Duration: 35.540619169s
+Total Wallet Resolved: 4 w
 ```
 
 **With SQLite3 and options:**

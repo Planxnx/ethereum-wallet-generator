@@ -99,9 +99,28 @@ func main() {
 	dbPath := flag.String("db", "", "set sqlite output path eg. wallets.db")
 	concurrency := flag.Int("c", 1, "set number of concurrency")
 	bits := flag.Int("bit", 256, "set number of entropy bits [128, 256]")
-	contain := flag.String("contain", "", "used to check the given letters present in the given string or not")
+	contain := flag.String("contains", "", "used to check the given letters present in the given string or not")
+	strict := flag.Bool("strict", false, "strict contains mode (required contains to use)")
 	isDryrun := flag.Bool("dryrun", false, "generate wallet without result (used for benchamark speed)")
 	flag.Parse()
+
+	contains := strings.Split(*contain, ",")
+	findContains := func(address string) bool {
+		cb := func(contain string) bool {
+			return strings.Contains(address, contain)
+		}
+
+		if *strict {
+			if !have(contains, cb) {
+				return false
+			}
+		} else {
+			if !some(contains, cb) {
+				return false
+			}
+		}
+		return true
+	}
 
 	now := time.Now()
 	resolvedCount := 0
@@ -155,7 +174,11 @@ func main() {
 						wallet := generateNewWallet(*bits)
 						bar.Increment()
 
-						if *contain != "" && !strings.Contains(wallet.Address, *contain) {
+						// if *contain != "" && !strings.Contains(wallet.Address, *contain) {
+						// 	return
+						// }
+
+						if len(contains) != 0 && !findContains(wallet.Address) {
 							return
 						}
 
@@ -182,7 +205,11 @@ func main() {
 					wallet := generateNewWallet(*bits)
 					bar.Increment()
 
-					if *contain != "" && !strings.Contains(wallet.Address, *contain) {
+					// if *contain != "" && !strings.Contains(wallet.Address, *contain) {
+					// 	return
+					// }
+
+					if len(contains) != 0 && !findContains(wallet.Address) {
 						return
 					}
 
@@ -201,4 +228,23 @@ func main() {
 
 	}()
 	<-interrupt
+}
+
+// forked this methods from core-js
+func some(arr []string, fn func(string) bool) bool {
+	for _, v := range arr {
+		if fn(v) {
+			return true
+		}
+	}
+	return false
+}
+
+func have(arr []string, fn func(string) bool) bool {
+	for _, v := range arr {
+		if !fn(v) {
+			return false
+		}
+	}
+	return true
 }
