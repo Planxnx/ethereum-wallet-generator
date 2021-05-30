@@ -49,7 +49,7 @@ $ go get -u github.com/Planxnx/eth-wallet-gen
 ```
 Usage of eth-wallet-gen:
   -n         int    set number of wallets to generate (default 10) (set number to 0 for Infinite loop ∞)
-  -db        string set sqlite output path eg. wallets.d
+  -db        string set sqlite output file name eg. wallets.db (db file will create in /db)
   -c         int    set number of concurrency (default 1)
   -bit       int    set number of entropy bits [128, 256] (default 256)
   -contains  string used to check the given letters present in the given string or not (used for filtered address)

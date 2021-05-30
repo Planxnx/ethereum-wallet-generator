@@ -96,7 +96,7 @@ func main() {
 	fmt.Println(" ")
 
 	number := flag.Int("n", 10, "set number of wallets to generate (set number to 0 for Infinite loop ∞)")
-	dbPath := flag.String("db", "", "set sqlite output path eg. wallets.db")
+	dbPath := flag.String("db", "", "set sqlite output name eg. wallets.db (db file will create in /db)")
 	concurrency := flag.Int("c", 1, "set number of concurrency")
 	bits := flag.Int("bit", 256, "set number of entropy bits [128, 256]")
 	contain := flag.String("contains", "", "used to check the given letters present in the given string or not")
@@ -153,7 +153,7 @@ func main() {
 		}()
 
 		if *dbPath != "" {
-			db, err := gorm.Open(sqlite.Open(*dbPath), &gorm.Config{
+			db, err := gorm.Open(sqlite.Open("./db/"+*dbPath), &gorm.Config{
 				Logger: logger.Default.LogMode(logger.Silent),
 				DryRun: *isDryrun,
 			})

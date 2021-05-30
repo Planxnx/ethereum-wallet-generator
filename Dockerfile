@@ -13,6 +13,6 @@ RUN GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o main .
 # STEP 2 build a small image
 ############################
 FROM alpine:3.12.0
-COPY --from=builder /src/build/main /src/app/
-WORKDIR /src/app
+COPY --from=builder /src/build/main /
+WORKDIR /
 ENTRYPOINT ["./main"]
