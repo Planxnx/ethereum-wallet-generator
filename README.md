@@ -77,6 +77,26 @@ Total Wallet Resolved: 10 w
 
 ```
 
+**With contains letters:**
+
+```txt
+$ eth-wallet-gen -n 200 -c 5000 -contains 0x77,0x00,0x99
+===============ETH Wallet Generator===============
+
+200 / 200 | [████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | ? p/s | resovled: 3
+
+Address                                    Seed
+------------------------------------------ ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+0x995708bcf90Fa9938C590F8da76aeB07025A9404 mother spider zoo waste outdoor deposit hire atom judge online seven lemon combine love street problem hope sure chuckle sting brand erosion craft glove
+0x000D5b15Fd715eabd9540FA1e7c23360c93233DF already tragic cherry plastic pelican one exclude curve lava luxury text sponsor salad extend cattle memory ticket gate interest island discover body bless tonight
+0x77e7063389F6F17fF8216394edE23D259367dbCb fuel wolf embark tip this accident vague face cave echo shift pear between very child draw version face noodle head bubble oblige supreme slot
+
+
+Resolved Speed: 22.54 w/s
+Total Duration: 133.079403ms
+Total Wallet Resolved: 3 w
+```
+
 **With contains and strict options:**
 
 ```txt
@@ -95,7 +115,7 @@ Total Duration: 1m52.063956141s
 Total Wallet Resolved: 1 w
 ```
 
-**Speed up with Concuurecny and stored to SQLite3:**
+**Speed up with Concuurecny and Stored to SQLite3:**
 
 ```txt
 $ eth-wallet-gen -n 50000 -c 100 -db wallets.db -contain 0x777
@@ -106,9 +126,6 @@ $ eth-wallet-gen -n 50000 -c 100 -db wallets.db -contain 0x777
 Resolved Speed: 0.44 w/s
 Total Duration: 31.177676099s
 Total Wallet Resolved: 16 w
-
-Copyright (C) 2021 Planxnx <planxthanee@gmail.com>
-
 ```
 
 ## Contributing
