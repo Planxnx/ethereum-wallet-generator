@@ -17,3 +17,6 @@
 # Wallets
 *.db
 *.csv
+
+/volume*
+/wallet*
