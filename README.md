@@ -1,8 +1,11 @@
 <br>
 <h3 align="center">
+  
+  <img src="https://user-images.githubusercontent.com/37617738/120125455-13de3a00-c1e3-11eb-9a51-707e2dcefdaa.png" alt="eth" height="70" />
+   &nbsp&nbsp
   <img src="https://user-images.githubusercontent.com/37617738/120122724-aaefc580-c1d4-11eb-9343-234eb8fb3ab9.png" alt="eth-wallet-gen" height="50" />
 </h3>
-
+<br/>
 <h3 align="center">
   <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" height="50" />
   <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" height="60" />
@@ -16,6 +19,9 @@
   <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" height="140" />
 </h3>
 <br>
+
+  
+
 
 > **Multiple Ethereum Wallet Generator in Go (golang).** Implements the [go-ethereum-hdwallet](https://github.com/miguelmota/go-ethereum-hdwallet).
 
@@ -48,7 +54,7 @@
 
 ## Installation
 
-<img  align="right" src="https://user-images.githubusercontent.com/37617738/120122855-b1cb0800-c1d5-11eb-9502-8d64bb275337.png" height="140"/>
+<img  align="right" src="https://user-images.githubusercontent.com/37617738/120122855-b1cb0800-c1d5-11eb-9502-8d64bb275337.png" height="140" alt="gopher" />
 
 ```console
 $ go get -u github.com/Planxnx/eth-wallet-gen
@@ -146,7 +152,8 @@ Total Wallet Resolved: 50000 w
 
 ```
 
-## Contributing
+## Contributing ![eth](https://user-images.githubusercontent.com/37617738/120125730-1d1bd680-c1e4-11eb-83ad-45664245cae9.png)
+
 
 Pull requests are welcome!
 
