@@ -137,6 +137,14 @@ func (bar *ProgressBar) Finish() error {
 	return bar.StandardMode.Finish().Err()
 }
 
+func init() {
+	if _, err := os.Stat("db"); os.IsNotExist(err) {
+		if err := os.Mkdir("db", 0755); err != nil {
+			panic(err)
+		}
+	}
+}
+
 func main() {
 
 	interrupt := make(chan os.Signal, 1)
