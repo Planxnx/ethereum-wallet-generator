@@ -2,7 +2,7 @@
 <h3 align="center">
   
   <img src="https://user-images.githubusercontent.com/37617738/120125455-13de3a00-c1e3-11eb-9a51-707e2dcefdaa.png" alt="eth" height="70" />
-   &nbsp&nbsp&nbsp&nbsp
+   &nbsp&nbsp
   <img src="https://user-images.githubusercontent.com/37617738/120122724-aaefc580-c1d4-11eb-9343-234eb8fb3ab9.png" alt="eth-wallet-gen" height="50" />
 </h3>
 <br/>
