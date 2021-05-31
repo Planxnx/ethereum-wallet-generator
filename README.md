@@ -1,52 +1,64 @@
+<br>
 <h3 align="center">
-  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" heigth="100" />
-  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" heigth="100" />
-  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" heigth="100" />
-  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" heigth="100" />
-  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" heigth="100" />
-  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" heigth="100" />
-  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" heigth="100" />
+  <img src="https://user-images.githubusercontent.com/37617738/120122724-aaefc580-c1d4-11eb-9343-234eb8fb3ab9.png" alt="eth-wallet-gen" height="50" />
 </h3>
 
-# eth-wallet-gen
+<h3 align="center">
+  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" height="50" />
+  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" height="60" />
+  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" height="70" />
+  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" height="80" />
+  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" height="90" />
+  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" height="100" />
+  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" height="110" />
+  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" height="120" />
+  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" height="130" />
+  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" height="140" />
+</h3>
+<br>
 
-> Ethereum Wallet Generator in Go (golang). Implements the [go-ethereum-hdwallet](https://github.com/miguelmota/go-ethereum-hdwallet).
+> **Multiple Ethereum Wallet Generator in Go (golang).** Implements the [go-ethereum-hdwallet](https://github.com/miguelmota/go-ethereum-hdwallet).
 
 [![Golang](https://badges.aleen42.com/src/golang.svg)](https://golang.org/)
+[![Go Report Card](https://goreportcard.com/badge/github.com/Planxnx/eth-wallet-gen)](https://goreportcard.com/report/github.com/Planxnx/eth-wallet-gen)
+![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/planxthanee/eth-wallet-gen)
+![Docker Image Size (tag)](https://img.shields.io/docker/image-size/planxthanee/eth-wallet-gen/latest)
+![GitHub issues](https://img.shields.io/github/issues/Planxnx/eth-wallet-gen)
 [![license](https://img.shields.io/badge/license-WTFPL%20--%20Do%20What%20the%20Fuck%20You%20Want%20to%20Public%20License-green.svg)](https://github.com/Planxnx/eth-wallet-gen/blob/main/LICENSE)
 
-#### Easy & Fast Way to generate multiple ETH wallets at once!
+#### Easy & Fast Way to generate multiple Ethereum Wallets at once!
 
-- Tiny sizes and Fastest Speed with Golang.
+- Tiny sizes and Fastest Speed with Golang 🚀
 - Embeded Database Supported! (with SQLite3).
-- Filtering by Letters Supported! (resovled only addresses that you want).
-- Speed up! with customable concurrency numbers.
-- ∞ Infinity wallets generated! (set target number to 0 (zero) to enable infinite loop mode)
+- Filtering by Letters Supported! (resovled only addresses that you want) 🔥
+- Speed up!! with customable concurrency numbers ⚡️ 
+- ∞ Infinity wallets generated! (set number to -1 to active infinite loop) ∞
 - Auto generated BIP-39 mnemonic using 128-256 bits of entropy (12, 24 Word Seed Phrase) (Default is 256 bits).
 - Default Hierarchical Deterministic Path - m/44'/60'/0'/0 .
-- You can benchmark generate speed by DryRun.
-- We recommend every user of this application audit and verify any underlying code for its validity and suitability.
-- DYOR!
+- You can benchmark generate speed by DryRun 📈
+- Docker images are provided 🐳
+- We recommend every user of this application audit and verify any underlying code for its validity and suitability. 👮🏻‍♂️
 
 #### TODO
 
-- Support more databases (eg. MySQL, MongoDB, Postgres).
-- Support CSV file.
+- Support more databases (eg. MySQL, Postgres, ) and CSV file.
 - Add more filter options
-- Notification!
-- GUI.
-- Wallet Customizations.
-- etc ...
+- Web GUI.
+- New Features! 
 
 ## Installation
 
-```
+<img  align="right" src="https://user-images.githubusercontent.com/37617738/120122855-b1cb0800-c1d5-11eb-9502-8d64bb275337.png" height="140"/>
+
+```console
 $ go get -u github.com/Planxnx/eth-wallet-gen
+or
+$ docker pull planxthanee/eth-wallet-gen:latest
 ```
 
 ## Usage
 
-```
+```console
 Usage of eth-wallet-gen:
   -n         int    set number of wallets to generate (default 10) (set number to 0 for Infinite loop ∞)
   -db        string set sqlite output file name eg. wallets.db (db file will create in /db)
@@ -61,7 +73,7 @@ Usage of eth-wallet-gen:
 
 **Simple with stdout:**
 
-```txt
+```console
 $ eth-wallet-gen
 
 ===============ETH Wallet Generator===============
@@ -88,29 +100,9 @@ Total Wallet Resolved: 10 w
 
 ```
 
-**Filtered with contains letters:**
+**Using filtered by contains and strict options:**
 
-```txt
-$ eth-wallet-gen -n 200 -c 5000 -contains 0x77,0x00,0x99
-===============ETH Wallet Generator===============
-
-200 / 200 | [████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | ? p/s | resovled: 3
-
-Address                                    Seed
------------------------------------------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------
-0x995708bcf90Fa9938C590F8da76aeB07025A9404 mother spider zoo waste outdoor deposit hire atom judge online seven lemon combine love street problem hope sure chuckle sting brand erosion craft glove
-0x000D5b15Fd715eabd9540FA1e7c23360c93233DF already tragic cherry plastic pelican one exclude curve lava luxury text sponsor salad extend cattle memory ticket gate interest island discover body bless tonight
-0x77e7063389F6F17fF8216394edE23D259367dbCb fuel wolf embark tip this accident vague face cave echo shift pear between very child draw version face noodle head bubble oblige supreme slot
-
-
-Resolved Speed: 22.54 w/s
-Total Duration: 133.079403ms
-Total Wallet Resolved: 3 w
-```
-
-**Filtered with contains and strict options:**
-
-```txt
+```console
 $ eth-wallet-gen -n 50000 -contains 0x00,777 -strict
 ===============ETH Wallet Generator===============
 
@@ -119,6 +111,7 @@ $ eth-wallet-gen -n 50000 -contains 0x00,777 -strict
 Address                                    Seed
 ------------------------------------------ ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 0x00d6118f53777ecFbF430E40121345D91Fb6018b pen cliff toward mushroom stairs finish filter basic slogan exotic bomb senior drip brush coffee include lady tent finish stable evoke wolf lobster frame
+0x0077e7063389F6F7fF8216394ed23D259367dbCb fuel wolf embark tip this accident vague face cave echo shift pear between very child draw version face noodle head bubble oblige supreme slot
 
 
 Resolved Speed: 0.01 w/s
@@ -126,17 +119,31 @@ Total Duration: 1m52.063956141s
 Total Wallet Resolved: 1 w
 ```
 
-**Speed up with Concuurecny and Stored to SQLite3:**
+**Speed up with by using the Concuurecny and Stored to SQLite3:**
 
-```txt
-$ eth-wallet-gen -n 50000 -c 100 -db wallets.db
+```console
+$ eth-wallet-gen -n 50000 -c 500 -db wallet.db
 ===============ETH Wallet Generator===============
 
-50000 / 50000 | [█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 1674 p/s | resovled: 16
+50000 / 50000 | [█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 2311 p/s | resovled: 16
 
-Resolved Speed: 1568 w/s
-Total Duration: 31.177676099s
+Resolved Speed: 2289 w/s
+Total Duration: 23.177676099s
 Total Wallet Resolved: 50000 w
+```
+
+**Using Docker (recommend using concurrency for speed up):**
+
+```console 
+$ docker run --rm -v $PWD:/db planxthanee/eth-wallet-gen -n 1000 -db wallet.db 
+===============ETH Wallet Generator===============
+
+  100% |██████████████████████████████████████| (50000/50000, 1240 w/s) [1m26s:1s]
+
+Resolved Speed: 1231.89 w/s
+Total Duration: 42.78s
+Total Wallet Resolved: 50000 w
+
 ```
 
 ## Contributing
