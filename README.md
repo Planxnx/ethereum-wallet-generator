@@ -27,9 +27,11 @@
 
 [![Golang](https://badges.aleen42.com/src/golang.svg)](https://golang.org/)
 [![Go Report Card](https://goreportcard.com/badge/github.com/Planxnx/eth-wallet-gen)](https://goreportcard.com/report/github.com/Planxnx/eth-wallet-gen)
+[![Build Status](https://travis-ci.com/Planxnx/eth-wallet-gen.svg?branch=main)](https://travis-ci.com/Planxnx/eth-wallet-gen)
 ![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/planxthanee/eth-wallet-gen)
 ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/planxthanee/eth-wallet-gen/latest)
 ![GitHub issues](https://img.shields.io/github/issues/Planxnx/eth-wallet-gen)
+[![DeepSource](https://deepsource.io/gh/Planxnx/eth-wallet-gen.svg/?label=active+issues)](https://deepsource.io/gh/Planxnx/eth-wallet-gen/?ref=repository-badge)
 [![license](https://img.shields.io/badge/license-WTFPL%20--%20Do%20What%20the%20Fuck%20You%20Want%20to%20Public%20License-green.svg)](https://github.com/Planxnx/eth-wallet-gen/blob/main/LICENSE)
 
 #### Easy & Fast Way to generate multiple Ethereum Wallets at once!
