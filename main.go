@@ -139,7 +139,7 @@ func (bar *ProgressBar) Finish() error {
 
 func init() {
 	if _, err := os.Stat("db"); os.IsNotExist(err) {
-		if err := os.Mkdir("db", 0755); err != nil {
+		if err := os.Mkdir("db", 0750); err != nil {
 			panic(err)
 		}
 	}
