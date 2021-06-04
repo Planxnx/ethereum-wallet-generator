@@ -20,9 +20,6 @@
 </h3>
 <br>
 
-  
-
-
 > **Multiple Ethereum Wallet Generator in Go (golang).** Implements the [go-ethereum-hdwallet](https://github.com/miguelmota/go-ethereum-hdwallet).
 
 [![Golang](https://badges.aleen42.com/src/golang.svg)](https://golang.org/)
@@ -36,15 +33,15 @@
 
 #### Easy & Fast Way to generate multiple Ethereum Wallets at once!
 
-- Tiny sizes and Fastest Speed with Golang 🚀
+- Tiny sizes and Fastest Speed with Golang 🚀 (required go 1.14 or higher)
+- No Go? No Problem! Docker images are provided for you 🐳
 - Embeded Database Supported! (with SQLite3).
 - Filtering by Letters Supported! (resovled only addresses that you want) 🔥
-- Speed up!! with customable concurrency numbers ⚡️ 
+- Speed up!! with customable concurrency numbers ⚡️
 - ∞ Infinity wallets generated! (set number to -1 to active infinite loop) ∞
 - Auto generated BIP-39 mnemonic using 128-256 bits of entropy (12, 24 Word Seed Phrase) (Default is 256 bits).
 - Default Hierarchical Deterministic Path - m/44'/60'/0'/0 .
 - You can benchmark generate speed by DryRun 📈
-- Docker images are provided 🐳
 - We recommend every user of this application audit and verify any underlying code for its validity and suitability. 👮🏻‍♂️
 
 #### TODO
@@ -52,7 +49,7 @@
 - Support more databases (eg. MySQL, Postgres, ) and CSV file.
 - Add more filter options
 - Web GUI.
-- New Features! 
+- New Features!
 
 ## Installation
 
@@ -79,7 +76,7 @@ Usage of eth-wallet-gen:
 
 ## Example
 
-**Simple with stdout:**
+### **Simple with stdout:**
 
 ```console
 $ eth-wallet-gen
@@ -108,7 +105,7 @@ Total Wallet Resolved: 10 w
 
 ```
 
-**Using filtered by contains and strict options:**
+### **Using filtered by contains and strict options:**
 
 ```console
 $ eth-wallet-gen -n 50000 -contains 0x00,777 -strict
@@ -127,7 +124,7 @@ Total Duration: 1m52.063956141s
 Total Wallet Resolved: 1 w
 ```
 
-**Speed up with by using the Concuurecny and Stored to SQLite3:**
+### **Speed up with by using the Concuurecny and Stored to SQLite3:**
 
 ```console
 $ eth-wallet-gen -n 50000 -c 500 -db wallet.db
@@ -140,10 +137,10 @@ Total Duration: 23.177676099s
 Total Wallet Resolved: 50000 w
 ```
 
-**Using Docker (recommend using concurrency for speed up):**
+#### **Using Docker (recommend using concurrency for speed up):**
 
-```console 
-$ docker run --rm -v $PWD:/db planxthanee/eth-wallet-gen -n 1000 -db wallet.db 
+```console
+$ docker run --rm -v $PWD:/db planxthanee/eth-wallet-gen -n 1000 -db wallet.db
 ===============ETH Wallet Generator===============
 
   100% |██████████████████████████████████████| (50000/50000, 1240 w/s) [1m26s:1s]
@@ -155,7 +152,6 @@ Total Wallet Resolved: 50000 w
 ```
 
 ## Contributing ![eth](https://user-images.githubusercontent.com/37617738/120125730-1d1bd680-c1e4-11eb-83ad-45664245cae9.png)
-
 
 Pull requests are welcome!
 
