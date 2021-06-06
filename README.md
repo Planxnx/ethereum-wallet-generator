@@ -36,7 +36,7 @@
 - Tiny sizes and Fastest Speed with Golang 🚀 (required go 1.14 or higher)
 - No Go? No Problem! Docker images are provided for you 🐳
 - Embeded Database Supported! (with SQLite3).
-- Filtering by Letters Supported! (resovled only addresses that you want) 🔥
+- Filtering by Letters Supported! [prefix, suffix, contains] (resovled only addresses that you want) 🔥
 - Speed up!! with customable concurrency numbers ⚡️
 - ∞ Infinity wallets generated! (set number to -1 to active infinite loop) ∞
 - Auto generated BIP-39 mnemonic using 128-256 bits of entropy (12, 24 Word Seed Phrase) (Default is 256 bits).
@@ -69,8 +69,10 @@ Usage of eth-wallet-gen:
   -db        string set sqlite output file name eg. wallets.db (db file will create in /db)
   -c         int    set number of concurrency (default 1)
   -bit       int    set number of entropy bits [128, 256] (default 256)
-  -contains  string used to check the given letters present in the given string or not (used for filtered address)
   -strict    bool   strict contains mode (required contains to use)
+  -contains  string used to check the given letters present in the given string or not (support for multiple characters)
+  -prefix    string used to check the given letters present in the prefix string or not (support for single character)
+  -suffix    string used to check the given letters present in the suffux string or not (support for single character)
   -dryrun    bool   generate wallet without result (used for benchamark speed)
 ```
 
