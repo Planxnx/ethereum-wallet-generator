@@ -6,6 +6,7 @@ import (
 	"time"
 
 	hdwallet "github.com/miguelmota/go-ethereum-hdwallet"
+	"github.com/pkg/errors"
 	"gorm.io/gorm"
 )
 
@@ -21,11 +22,22 @@ type Wallet struct {
 }
 
 //NewWallet .
-func NewWalletGenerator(bits int, hdPath string) *Wallet {
+func NewWalletGenerator(bits int, hdPath string) (*Wallet, error) {
+	if bits != 256 && bits != 128 {
+		return nil, errors.New("bits must be 128 or 256")
+	}
+	if hdPath == "" {
+		hdPath = hdwallet.DefaultBaseDerivationPath.String()
+	} else {
+		_, err := hdwallet.ParseDerivationPath(hdPath)
+		if err != nil {
+			return nil, errors.Wrap(err, "wrong hdpath format")
+		}
+	}
 	return &Wallet{
 		Bits:   bits,
 		HDPath: hdPath,
-	}
+	}, nil
 }
 
 func (w *Wallet) GenerateGeneratorWallet() *Wallet {
