@@ -49,3 +49,53 @@ func TestNewGeneratorWithWrongConfig(t *testing.T) {
 	}
 
 }
+
+func TestGenerate100Wallets(t *testing.T) {
+	number := 100
+
+	generator, err := NewWalletGenerator(256, "")
+	if err != nil {
+		t.Errorf("Error with %v", err)
+	}
+	if generator == nil {
+		t.Error("generator should not be nil")
+	}
+
+	index, wallets := generator.GenerateMultipleWallets(Config{
+		Number:   number,
+		Contains: []string{"0x"},
+	})
+
+	go func() {
+		indexCounter := 0
+		for i := range index {
+			if i >= number {
+				t.Errorf("index should less than %v, got %v", number, i)
+			}
+			indexCounter++
+		}
+
+		if indexCounter != number {
+			t.Errorf("indexCounter got %v want %v", indexCounter, number)
+		}
+	}()
+
+	walletCounter := 0
+	for wallet := range wallets {
+		if wallet.Address == "" {
+			t.Error("wallet.Address should not be empty")
+		}
+		if wallet.PrivateKey == "" {
+			t.Error("wallet.PrivateKey should not be empty")
+		}
+		if wallet.Mnemonic == "" {
+			t.Error("wallet.Mnemonic should not be empty")
+		}
+		walletCounter++
+	}
+
+	if walletCounter != number {
+		t.Errorf("walletCounter got %v want %v", walletCounter, number)
+	}
+
+}
