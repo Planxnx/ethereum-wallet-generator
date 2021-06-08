@@ -34,7 +34,7 @@
 #### Easy & Fast Way to generate multiple Ethereum Wallets at once!
 
 - Tiny sizes and Fastest Speed with Golang 🚀 (required go 1.14 or higher)
-- No Go? No Problem! [Docker images](https://hub.docker.com/repository/docker/planxthanee/eth-wallet-gen) are provided for you 🐳 
+- No Go? No Problem! [Docker images](https://hub.docker.com/repository/docker/planxthanee/eth-wallet-gen) are provided for you 🐳
 - Embeded Database Supported! (with SQLite3).
 - Filtering by Letters Supported! [prefix, suffix, contains] (resovled only addresses that you want) 🔥
 - Speed up!! with customable concurrency numbers ⚡️
@@ -42,14 +42,14 @@
 - Auto generated BIP-39 mnemonic using 128-256 bits of entropy (12, 24 Word Seed Phrase) (Default is 256 bits).
 - Default Hierarchical Deterministic Path - m/44'/60'/0'/0 .
 - You can benchmark generate speed by DryRun 📈
+- [Golang Package](https://github.com/Planxnx/eth-wallet-gen/blob/main/generator) for import to your projects.
 - We recommend every user of this application audit and verify any underlying code for its validity and suitability. 👮🏻‍♂️
 
 #### TODO
 
 - Support more databases (eg. MySQL, Postgres, ) and CSV file.
 - Add more filter options (eg. RegEx) .
-- Web GUI.
-- New Features!
+- Improve Performance and Code Quality ⚡️
 
 ## Installation
 
