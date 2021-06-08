@@ -148,8 +148,10 @@ func main() {
 		db.AutoMigrate(&generator.Wallet{})
 	}
 
-	walletgen := generator.NewWalletGenerator(*bits, "")
-
+	walletgen, err := generator.NewWalletGenerator(*bits, "")
+	if err != nil {
+		panic(err)
+	}
 	//Start Generating
 	index, wallets := walletgen.GenerateMultipleWallets(generator.Config{
 		Number:      *number,
