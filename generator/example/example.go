@@ -137,22 +137,25 @@ func main() {
 		}
 	}()
 
-	db, err := gorm.Open(sqlite.Open("./db/"+*dbPath), &gorm.Config{
-		Logger: logger.Default.LogMode(logger.Silent),
-		DryRun: *isDryrun,
-	})
-	if err != nil {
-		panic(err)
-	}
-	if !*isDryrun {
-		db.AutoMigrate(&generator.Wallet{})
+	var db *gorm.DB
+	if *dbPath != "" {
+		db, err := gorm.Open(sqlite.Open("./db/"+*dbPath), &gorm.Config{
+			Logger: logger.Default.LogMode(logger.Silent),
+			DryRun: *isDryrun,
+		})
+		if err != nil {
+			panic(err)
+		}
+		if !*isDryrun {
+			db.AutoMigrate(&generator.Wallet{})
+		}
 	}
 
 	walletgen, err := generator.NewWalletGenerator(*bits, "")
 	if err != nil {
 		panic(err)
 	}
-	//Start Generating
+	// index,wallet required to use :(
 	index, wallets := walletgen.GenerateMultipleWallets(generator.Config{
 		Number:      *number,
 		Concurrency: *concurrency,
