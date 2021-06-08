@@ -66,20 +66,6 @@ func TestGenerate100Wallets(t *testing.T) {
 		Contains: []string{"0x"},
 	})
 
-	go func() {
-		indexCounter := 0
-		for i := range index {
-			if i >= number {
-				t.Errorf("index should less than %v, got %v", number, i)
-			}
-			indexCounter++
-		}
-
-		if indexCounter != number {
-			t.Errorf("indexCounter got %v want %v", indexCounter, number)
-		}
-	}()
-
 	walletCounter := 0
 	for wallet := range wallets {
 		if wallet.Address == "" {
@@ -96,6 +82,18 @@ func TestGenerate100Wallets(t *testing.T) {
 
 	if walletCounter != number {
 		t.Errorf("walletCounter got %v want %v", walletCounter, number)
+	}
+
+	indexCounter := 0
+	for i := range index {
+		if i >= number {
+			t.Errorf("index should less than %v, got %v", number, i)
+		}
+		indexCounter++
+	}
+
+	if indexCounter != number {
+		t.Errorf("indexCounter got %v want %v", indexCounter, number)
 	}
 
 }

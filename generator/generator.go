@@ -138,8 +138,8 @@ func (w *Wallet) GenerateMultipleWallets(cf Config) (index chan int, wallets cha
 	}
 
 	var wg sync.WaitGroup
-	index = make(chan int)
-	wallets = make(chan *Wallet)
+	index = make(chan int, cf.Number)
+	wallets = make(chan *Wallet, cf.Number)
 
 	go func() {
 		defer func() {
@@ -155,7 +155,6 @@ func (w *Wallet) GenerateMultipleWallets(cf Config) (index chan int, wallets cha
 
 					wallet := w.GenerateWallet()
 
-					//ISSUE: index requried to use, FIX THIS!
 					index <- i + j
 
 					if !addreessValidator(wallet.Address) {

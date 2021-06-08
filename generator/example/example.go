@@ -155,7 +155,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	// index,wallet required to use :(
+
 	index, wallets := walletgen.GenerateMultipleWallets(generator.Config{
 		Number:      *number,
 		Concurrency: *concurrency,
