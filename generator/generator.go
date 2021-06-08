@@ -98,6 +98,10 @@ type Config struct {
 }
 
 func (w *Wallet) GenerateMultipleWallets(cf Config) (index chan int, wallets chan *Wallet) {
+	if cf.Concurrency < 1 {
+		cf.Concurrency = 1
+	}
+
 	addreessValidator := func(address string) bool {
 		isValid := false
 		if len(cf.Contains) != 0 {
@@ -150,6 +154,8 @@ func (w *Wallet) GenerateMultipleWallets(cf Config) (index chan int, wallets cha
 					defer wg.Done()
 
 					wallet := w.GenerateWallet()
+
+					//ISSUE: index requried to use, FIX THIS!
 					index <- i + j
 
 					if !addreessValidator(wallet.Address) {
