@@ -13,7 +13,7 @@ require (
 	github.com/miguelmota/go-ethereum-hdwallet v0.0.1
 	github.com/schollz/progressbar/v3 v3.8.1
 	golang.org/x/crypto v0.0.0-20210513164829-c07d793c2f9a // indirect
-	golang.org/x/sys v0.0.0-20210525143221-35b2ab0089ea // indirect
+	golang.org/x/sys v0.0.0-20210603125802-9665404d3644 // indirect
 	gorm.io/driver/sqlite v1.1.4
 	gorm.io/gorm v1.21.10
 )
