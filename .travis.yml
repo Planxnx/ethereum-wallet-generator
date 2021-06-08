@@ -8,5 +8,5 @@ go:
   - master
 
 script:
-  - go build
   - go test ./...
+  - go build
