@@ -148,6 +148,10 @@ func (w *Wallet) GenerateMultipleWallets(cf Config) (index chan int, wallets cha
 	wallets = make(chan *Wallet)
 
 	go func() {
+		defer func() {
+			close(wallets)
+			close(index)
+		}()
 		for i := 0; i < cf.Number || cf.Number < 0; i += cf.Concurrency {
 			for j := 0; j < cf.Concurrency && (i+j < cf.Number || cf.Number < 0); j++ {
 				wg.Add(1)
