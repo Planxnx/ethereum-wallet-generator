@@ -20,28 +20,6 @@ type Wallet struct {
 	gorm.Model
 }
 
-func generateNewWallet(bits int) *Wallet {
-	mnemonic, _ := hdwallet.NewMnemonic(bits)
-	wallet := createWallet(mnemonic)
-	wallet.Bits = bits
-	return wallet
-}
-
-func createWallet(mnemonic string) *Wallet {
-	wallet, _ := hdwallet.NewFromMnemonic(mnemonic)
-
-	account, _ := wallet.Derive(hdwallet.DefaultBaseDerivationPath, false)
-	pk, _ := wallet.PrivateKeyHex(account)
-
-	return &Wallet{
-		Address:    account.Address.Hex(),
-		PrivateKey: pk,
-		Mnemonic:   mnemonic,
-		HDPath:     account.URL.Path,
-		CreatedAt:  time.Now(),
-	}
-}
-
 //NewWallet .
 func NewWalletGenerator(bits int, hdPath string) *Wallet {
 	return &Wallet{
