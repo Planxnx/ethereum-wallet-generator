@@ -180,11 +180,11 @@ func main() {
 				return strings.Contains(address, contain)
 			}
 			if *strict {
-				if !have(contains, cb) {
+				if have(contains, cb) {
 					isValid = true
 				}
 			} else {
-				if !some(contains, cb) {
+				if some(contains, cb) {
 					isValid = true
 				}
 			}
