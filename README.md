@@ -129,7 +129,7 @@ Total Wallet Resolved: 1 w
 ### **Speed up with by using the Concuurecny and Stored to SQLite3:**
 
 ```console
-$ eth-wallet-gen -n 50000 -c 500 -db wallet.db
+$ eth-wallet-gen -n 50000 -c 500 -db wallet.db -prefix 0x
 ===============ETH Wallet Generator===============
 
 50000 / 50000 | [█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 2311 p/s | resovled: 16
