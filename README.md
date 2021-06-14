@@ -36,7 +36,7 @@
 - Tiny sizes and Fastest Speed with Golang 🚀 (required go 1.14 or higher)
 - No Go? No Problem! [Docker images](https://hub.docker.com/repository/docker/planxthanee/eth-wallet-gen) are provided for you 🐳
 - Embeded Database Supported! (with SQLite3).
-- Filtering by Letters Supported! [prefix, suffix, contains] (resovled only addresses that you want) 🔥
+- Filtering by RegEx or Letters Supported! [regex, prefix, suffix, contains] (resovled only addresses that you want) 🔥
 - Speed up!! with customable concurrency numbers ⚡️
 - ∞ Infinity wallets generated! (set number to -1 to active infinite loop) ∞
 - Auto generated BIP-39 mnemonic using 128-256 bits of entropy (12, 24 Word Seed Phrase) (Default is 256 bits).
@@ -73,6 +73,7 @@ Usage of eth-wallet-gen:
   -contains  string used to check the given letters present in the given string or not (support for multiple characters)
   -prefix    string used to check the given letters present in the prefix string or not (support for single character)
   -suffix    string used to check the given letters present in the suffux string or not (support for single character)
+  -regex  string used to check the given letters present in the regex format or not (eg. ^0x99 or ^0x00)
   -dryrun    bool   generate wallet without result (used for benchamark speed)
 ```
 

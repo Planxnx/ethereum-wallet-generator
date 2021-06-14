@@ -106,6 +106,9 @@ func (w *Wallet) GenerateMultipleWallets(cf Config) (index chan int, wallets cha
 		isValid := false
 		if len(cf.Contains) != 0 {
 			cb := func(contain string) bool {
+				if contain == "" {
+					return false
+				}
 				return strings.Contains(address, contain)
 			}
 			if cf.Strict {

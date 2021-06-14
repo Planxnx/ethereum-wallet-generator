@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"os/signal"
+	"regexp"
 	"strings"
 	"sync"
 	"syscall"
@@ -168,15 +169,23 @@ func main() {
 	contain := flag.String("contains", "", "used to check the given letters present in the given string or not")
 	prefix := flag.String("prefix", "", "used to check the given letters present in the prefix string or not")
 	suffix := flag.String("suffix", "", "used to check the given letters present in the suffix string or not")
+	regEx := flag.String("regex", "", "used to check the given letters present in the regex format or not")
 	isDryrun := flag.Bool("dryrun", false, "generate wallet without result (used for benchamark speed)")
 	isCompatible := flag.Bool("compatible", false, "logging compatible mode (turn on this to fix logging glitch)")
 	flag.Parse()
 
+	r, err := regexp.Compile(*regEx)
+	if err != nil {
+		panic(err)
+	}
 	contains := strings.Split(*contain, ",")
 	validateAddress := func(address string) bool {
 		isValid := false
-		if len(contains) != 0 {
+		if len(contains) > 0 {
 			cb := func(contain string) bool {
+				if contain == "" {
+					return false
+				}
 				return strings.Contains(address, contain)
 			}
 			if *strict {
@@ -191,15 +200,19 @@ func main() {
 		}
 
 		if *prefix != "" {
-			if !strings.HasPrefix(address, *prefix) {
-				isValid = false
+			if strings.HasPrefix(address, *prefix) {
+				isValid = true
 			}
 		}
 
 		if *suffix != "" {
-			if !strings.HasSuffix(address, *suffix) {
-				isValid = false
+			if strings.HasSuffix(address, *suffix) {
+				isValid = true
 			}
+		}
+
+		if *regEx != "" && r.MatchString(address) {
+			isValid = true
 		}
 
 		return isValid
