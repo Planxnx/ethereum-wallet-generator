@@ -175,8 +175,11 @@ func main() {
 	contains := strings.Split(*contain, ",")
 	validateAddress := func(address string) bool {
 		isValid := false
-		if len(contains) != 0 {
+		if len(contains) > 0 {
 			cb := func(contain string) bool {
+				if contain == "" {
+					return false
+				}
 				return strings.Contains(address, contain)
 			}
 			if *strict {
