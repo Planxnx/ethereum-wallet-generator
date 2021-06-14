@@ -6,12 +6,11 @@ import (
 	"os"
 	"os/signal"
 	"strings"
-	"sync"
 	"syscall"
 	"time"
 
+	"github.com/Planxnx/eth-wallet-gen/generator"
 	"github.com/cheggaaa/pb/v3"
-	hdwallet "github.com/miguelmota/go-ethereum-hdwallet"
 	"github.com/schollz/progressbar/v3"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -19,76 +18,13 @@ import (
 )
 
 var (
-	wg     sync.WaitGroup
 	result strings.Builder
 )
-
-//Wallet ethereum wallet data
-type Wallet struct {
-	Address    string
-	PrivateKey string
-	Mnemonic   string
-	Bits       int
-	HDPath     string
-	CreatedAt  time.Time
-	gorm.Model
-}
 
 //ProgressBar progressbar logging with 2 mode
 type ProgressBar struct {
 	StandardMode   *pb.ProgressBar
 	CompatibleMode *progressbar.ProgressBar
-}
-
-//NewWallet .
-func NewWallet(bits int, hdPath string) *Wallet {
-	mnemonic, _ := hdwallet.NewMnemonic(bits)
-
-	return &Wallet{
-		Mnemonic:  mnemonic,
-		HDPath:    hdPath,
-		CreatedAt: time.Now(),
-	}
-}
-
-func (w *Wallet) createWallet(mnemonic string) *Wallet {
-	wallet, _ := hdwallet.NewFromMnemonic(w.Mnemonic)
-
-	path := hdwallet.DefaultBaseDerivationPath
-	if w.HDPath != "" {
-		path = hdwallet.MustParseDerivationPath(w.HDPath)
-	}
-
-	account, _ := wallet.Derive(path, false)
-	pk, _ := wallet.PrivateKeyHex(account)
-
-	w.Address = account.Address.Hex()
-	w.PrivateKey = pk
-	w.UpdatedAt = time.Now()
-
-	return w
-}
-
-func generateNewWallet(bits int) *Wallet {
-	mnemonic, _ := hdwallet.NewMnemonic(bits)
-	wallet := createWallet(mnemonic)
-	wallet.Bits = bits
-	return wallet
-}
-
-func createWallet(mnemonic string) *Wallet {
-	wallet, _ := hdwallet.NewFromMnemonic(mnemonic)
-
-	account, _ := wallet.Derive(hdwallet.DefaultBaseDerivationPath, false)
-	pk, _ := wallet.PrivateKeyHex(account)
-
-	return &Wallet{
-		Address:    account.Address.Hex(),
-		PrivateKey: pk,
-		Mnemonic:   mnemonic,
-		HDPath:     account.URL.Path,
-		CreatedAt:  time.Now(),
-	}
 }
 
 //NewProgressBar .
@@ -173,37 +109,6 @@ func main() {
 	flag.Parse()
 
 	contains := strings.Split(*contain, ",")
-	validateAddress := func(address string) bool {
-		isValid := false
-		if len(contains) != 0 {
-			cb := func(contain string) bool {
-				return strings.Contains(address, contain)
-			}
-			if *strict {
-				if have(contains, cb) {
-					isValid = true
-				}
-			} else {
-				if some(contains, cb) {
-					isValid = true
-				}
-			}
-		}
-
-		if *prefix != "" {
-			if !strings.HasPrefix(address, *prefix) {
-				isValid = false
-			}
-		}
-
-		if *suffix != "" {
-			if !strings.HasSuffix(address, *suffix) {
-				isValid = false
-			}
-		}
-
-		return isValid
-	}
 	if *number < 0 {
 		*number = -1
 	}
@@ -232,93 +137,64 @@ func main() {
 		}
 	}()
 
+	var db *gorm.DB
+	if *dbPath != "" {
+		db, err := gorm.Open(sqlite.Open("./db/"+*dbPath), &gorm.Config{
+			Logger: logger.Default.LogMode(logger.Silent),
+			DryRun: *isDryrun,
+		})
+		if err != nil {
+			panic(err)
+		}
+		if !*isDryrun {
+			db.AutoMigrate(&generator.Wallet{})
+		}
+	}
+
+	walletgen, err := generator.NewWalletGenerator(*bits, "")
+	if err != nil {
+		panic(err)
+	}
+
+	index, wallets := walletgen.GenerateMultipleWallets(generator.Config{
+		Number:      *number,
+		Concurrency: *concurrency,
+		Strict:      *strict,
+		Contains:    contains,
+		Prefix:      *prefix,
+		Suffix:      *suffix,
+	})
+
 	go func() {
 		defer func() {
+			bar.Finish()
 			interrupt <- syscall.SIGQUIT
 		}()
 
-		if *dbPath != "" {
-			db, err := gorm.Open(sqlite.Open("./db/"+*dbPath), &gorm.Config{
-				Logger: logger.Default.LogMode(logger.Silent),
-				DryRun: *isDryrun,
-			})
-			if err != nil {
-				panic(err)
+		for range index {
+			if *number < 0 {
+				bar.Increment()
 			}
-
-			if !*isDryrun {
-				db.AutoMigrate(&Wallet{})
-			}
-
-			for i := 0; i < *number || *number < 0; i += *concurrency {
-				tx := db.Begin() //Optimized Performance
-				txResolved := 0
-				for j := 0; j < *concurrency && (i+j < *number || *number < 0); j++ {
-					wg.Add(1)
-
-					go func(j int) {
-						defer wg.Done()
-
-						wallet := generateNewWallet(*bits)
-						bar.Increment()
-
-						if !validateAddress(wallet.Address) {
-							return
-						}
-
-						txResolved++
-						tx.Create(wallet)
-					}(j)
-				}
-				wg.Wait()
-				tx.Commit()
-				resolvedCount += txResolved
-				bar.SetResolved(resolvedCount)
-			}
-			return
 		}
-
-		for i := 0; i < *number || *number < 0; i += *concurrency {
-			for j := 0; j < *concurrency && (i+j < *number || *number < 0); j++ {
-				wg.Add(1)
-
-				go func(j int) {
-					defer wg.Done()
-
-					wallet := generateNewWallet(*bits)
-					bar.Increment()
-
-					if !validateAddress(wallet.Address) {
-						return
-					}
-
-					fmt.Fprintf(&result, "%-18s %s\n", wallet.Address, wallet.Mnemonic)
-					resolvedCount++
-					bar.SetResolved(resolvedCount)
-				}(j)
-			}
-			wg.Wait()
-		}
-		bar.Finish()
 	}()
+	go func() {
+
+		for wallet := range wallets {
+			resolvedCount++
+			bar.SetResolved(resolvedCount)
+
+			if *dbPath != "" {
+				//NOTE: Performance Issues (too much db connections!)
+				db.Create(wallet)
+			} else {
+				fmt.Fprintf(&result, "%-18s %s\n", wallet.Address, wallet.Mnemonic)
+			}
+
+			if *number > 0 {
+				bar.Increment()
+			}
+		}
+	}()
+
 	<-interrupt
-}
-
-// forked this methods from core-js
-func some(arr []string, fn func(string) bool) bool {
-	for _, v := range arr {
-		if fn(v) {
-			return true
-		}
-	}
-	return false
-}
-
-func have(arr []string, fn func(string) bool) bool {
-	for _, v := range arr {
-		if !fn(v) {
-			return false
-		}
-	}
-	return true
 }
