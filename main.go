@@ -180,39 +180,36 @@ func main() {
 	}
 	contains := strings.Split(*contain, ",")
 	validateAddress := func(address string) bool {
-		isValid := false
+		isValid := true
 		if len(contains) > 0 {
 			cb := func(contain string) bool {
-				if contain == "" {
-					return false
-				}
 				return strings.Contains(address, contain)
 			}
 			if *strict {
-				if have(contains, cb) {
-					isValid = true
+				if !have(contains, cb) {
+					isValid = false
 				}
 			} else {
-				if some(contains, cb) {
-					isValid = true
+				if !some(contains, cb) {
+					isValid = false
 				}
 			}
 		}
 
 		if *prefix != "" {
-			if strings.HasPrefix(address, *prefix) {
-				isValid = true
+			if !strings.HasPrefix(address, *prefix) {
+				isValid = false
 			}
 		}
 
 		if *suffix != "" {
-			if strings.HasSuffix(address, *suffix) {
-				isValid = true
+			if !strings.HasSuffix(address, *suffix) {
+				isValid = false
 			}
 		}
 
-		if *regEx != "" && r.MatchString(address) {
-			isValid = true
+		if *regEx != "" && !r.MatchString(address) {
+			isValid = false
 		}
 
 		return isValid
