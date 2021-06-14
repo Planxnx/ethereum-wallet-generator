@@ -1,6 +1,7 @@
 package generator
 
 import (
+	"regexp"
 	"strings"
 	"sync"
 	"time"
@@ -95,9 +96,16 @@ type Config struct {
 	Contains    []string
 	Prefix      string
 	Suffix      string
+	RegEx       string
 }
 
 func (w *Wallet) GenerateMultipleWallets(cf Config) (index chan int, wallets chan *Wallet) {
+
+	r, err := regexp.Compile(cf.RegEx)
+	if err != nil {
+		panic(err)
+	}
+
 	if cf.Concurrency < 1 {
 		cf.Concurrency = 1
 	}
@@ -129,6 +137,10 @@ func (w *Wallet) GenerateMultipleWallets(cf Config) (index chan int, wallets cha
 			if !strings.HasSuffix(address, cf.Suffix) {
 				isValid = false
 			}
+		}
+
+		if cf.RegEx != "" && !r.MatchString(address) {
+			isValid = false
 		}
 
 		return isValid
