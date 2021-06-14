@@ -10,3 +10,4 @@ go:
 script:
   - go test ./...
   - go build
+  - go run main.go
