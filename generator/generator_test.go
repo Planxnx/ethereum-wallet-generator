@@ -61,39 +61,77 @@ func TestGenerate100Wallets(t *testing.T) {
 		t.Error("generator should not be nil")
 	}
 
-	index, wallets := generator.GenerateMultipleWallets(Config{
-		Number:   number,
-		Contains: []string{"0x"},
-	})
+	func() {
+		index, wallets := generator.GenerateMultipleWallets(Config{
+			Number:   number,
+			Contains: []string{"0x"},
+		})
 
-	walletCounter := 0
-	for wallet := range wallets {
-		if wallet.Address == "" {
-			t.Error("wallet.Address should not be empty")
+		walletCounter := 0
+		for wallet := range wallets {
+			if wallet.Address == "" {
+				t.Error("wallet.Address should not be empty")
+			}
+			if wallet.PrivateKey == "" {
+				t.Error("wallet.PrivateKey should not be empty")
+			}
+			if wallet.Mnemonic == "" {
+				t.Error("wallet.Mnemonic should not be empty")
+			}
+			walletCounter++
 		}
-		if wallet.PrivateKey == "" {
-			t.Error("wallet.PrivateKey should not be empty")
-		}
-		if wallet.Mnemonic == "" {
-			t.Error("wallet.Mnemonic should not be empty")
-		}
-		walletCounter++
-	}
 
-	if walletCounter != number {
-		t.Errorf("walletCounter got %v want %v", walletCounter, number)
-	}
-
-	indexCounter := 0
-	for i := range index {
-		if i >= number {
-			t.Errorf("index should less than %v, got %v", number, i)
+		if walletCounter != number {
+			t.Errorf("walletCounter got %v want %v", walletCounter, number)
 		}
-		indexCounter++
-	}
 
-	if indexCounter != number {
-		t.Errorf("indexCounter got %v want %v", indexCounter, number)
-	}
+		indexCounter := 0
+		for i := range index {
+			if i >= number {
+				t.Errorf("index should less than %v, got %v", number, i)
+			}
+			indexCounter++
+		}
+
+		if indexCounter != number {
+			t.Errorf("indexCounter got %v want %v", indexCounter, number)
+		}
+	}()
+
+	func() {
+		index, wallets := generator.GenerateMultipleWallets(Config{
+			Number:   number,
+			Strict:   true,
+			Contains: []string{"0x"},
+			Prefix:   "0x",
+			Suffix:   "0",
+		})
+
+		walletCounter := 0
+		for wallet := range wallets {
+			if wallet.Address == "" {
+				t.Error("wallet.Address should not be empty")
+			}
+			if wallet.PrivateKey == "" {
+				t.Error("wallet.PrivateKey should not be empty")
+			}
+			if wallet.Mnemonic == "" {
+				t.Error("wallet.Mnemonic should not be empty")
+			}
+			walletCounter++
+		}
+
+		indexCounter := 0
+		for i := range index {
+			if i >= number {
+				t.Errorf("index should less than %v, got %v", number, i)
+			}
+			indexCounter++
+		}
+
+		if indexCounter != number {
+			t.Errorf("indexCounter got %v want %v", indexCounter, number)
+		}
+	}()
 
 }
