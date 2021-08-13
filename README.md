@@ -45,12 +45,6 @@
 - [Golang Package](https://github.com/Planxnx/eth-wallet-gen/blob/main/generator) for import to your projects.
 - We recommend every user of this application audit and verify any underlying code for its validity and suitability. 👮🏻‍♂️
 
-#### TODO
-
-- Support more databases (eg. MySQL, Postgres, ) and CSV file.
-- Add more filter options (eg. RegEx) .
-- Improve Performance and Code Quality ⚡️
-
 ## Installation
 
 <img  align="right" src="https://user-images.githubusercontent.com/37617738/120122855-b1cb0800-c1d5-11eb-9502-8d64bb275337.png" height="140" alt="gopher" />
