@@ -10,68 +10,16 @@ import (
 	"time"
 
 	"github.com/Planxnx/eth-wallet-gen/generator"
-	"github.com/cheggaaa/pb/v3"
-	"github.com/schollz/progressbar/v3"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
+
+	"eth-wallet-gen/common"
 )
 
 var (
 	result strings.Builder
 )
-
-//ProgressBar progressbar logging with 2 mode
-type ProgressBar struct {
-	StandardMode   *pb.ProgressBar
-	CompatibleMode *progressbar.ProgressBar
-}
-
-//NewProgressBar .
-func NewProgressBar(number int, isCompatible bool) (bar *ProgressBar) {
-	if isCompatible {
-		bar = &ProgressBar{
-			CompatibleMode: progressbar.NewOptions(number,
-				progressbar.OptionSetItsString("w"),
-				progressbar.OptionSetPredictTime(true),
-				progressbar.OptionShowIts(),
-				progressbar.OptionShowCount(),
-				progressbar.OptionFullWidth(),
-			),
-		}
-		return
-	}
-	bar = &ProgressBar{
-		StandardMode: pb.StartNew(number),
-	}
-	bar.StandardMode.SetTemplate(pb.Default)
-	bar.StandardMode.SetTemplateString(`{{counters . }} | {{bar . "" "█" "█" "" "" | rndcolor}} | {{percent . }} | {{speed . }} | {{string . "resolved"}}`)
-	return
-}
-
-//Increment increment progress
-func (bar *ProgressBar) Increment() error {
-	if bar.CompatibleMode != nil {
-		return bar.CompatibleMode.Add(1)
-	}
-	return bar.StandardMode.Increment().Err()
-}
-
-//SetResolved set resolved wallet number
-func (bar *ProgressBar) SetResolved(resolved int) error {
-	if bar.StandardMode != nil {
-		return bar.StandardMode.Set("resolved", fmt.Sprintf("resolved: %v", resolved)).Err()
-	}
-	return nil
-}
-
-//Finish close progress bar
-func (bar *ProgressBar) Finish() error {
-	if bar.CompatibleMode != nil {
-		return bar.CompatibleMode.Close()
-	}
-	return bar.StandardMode.Finish().Err()
-}
 
 func init() {
 	if _, err := os.Stat("db"); os.IsNotExist(err) {
@@ -124,7 +72,13 @@ func main() {
 		fmt.Printf("\nCopyright (C) 2021 Planxnx <planxthanee@gmail.com>\n")
 	}()
 
-	bar := NewProgressBar(*number, *isCompatible)
+	var bar *common.ProgressBar
+	if *isCompatible {
+		bar = common.NewCompatibleProgressBar(*number)
+	} else {
+		bar = common.NewStandardProgressBar(*number)
+	}
+
 	defer func() {
 		bar.Finish()
 		if *isDryrun {
