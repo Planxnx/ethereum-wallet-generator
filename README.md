@@ -59,16 +59,17 @@ $ docker pull planxthanee/eth-wallet-gen:latest
 
 ```console
 Usage of eth-wallet-gen:
-  -n         int    set number of wallets to generate (default 10) (set number to -1 for Infinite loop ∞)
-  -db        string set sqlite output file name eg. wallets.db (db file will create in /db)
-  -c         int    set number of concurrency (default 1)
-  -bit       int    set number of entropy bits [128, 256] (default 256)
-  -strict    bool   strict contains mode (required contains to use)
-  -contains  string used to check the given letters present in the given string or not (support for multiple characters)
-  -prefix    string used to check the given letters present in the prefix string or not (support for single character)
-  -suffix    string used to check the given letters present in the suffux string or not (support for single character)
-  -regex  string used to check the given letters present in the regex format or not (eg. ^0x99 or ^0x00)
-  -dryrun    bool   generate wallet without result (used for benchamark speed)
+  -n          int    set number of wallets to generate (default 10) (set number to -1 for Infinite loop ∞)
+  -db         string set sqlite output file name eg. wallets.db (db file will create in /db)
+  -c          int    set concurrency value (default 1)
+  -bit        int    set number of entropy bits [128, 256] (default 256)
+  -strict     bool   strict contains mode (required contains to use)
+  -contains   string used to check if the given letters are present in the given string (support for multiple characters)
+  -prefix     string used to check if the given letters are present in the prefix string (support for single character)
+  -suffix     string used to check if the given letters are present in the suffix string (support for single character)
+  -regex      string used to check the given letters present in the regex format (eg. ^0x99 or ^0x00)
+  -dryrun     bool   generate wallet without a result (used for benchmark speed)
+  -compatible bool   logging compatible mode (turn this on to fix logging glitch)
 ```
 
 ## Example
