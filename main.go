@@ -41,35 +41,6 @@ type ProgressBar struct {
 	CompatibleMode *progressbar.ProgressBar
 }
 
-//NewWallet .
-func NewWallet(bits int, hdPath string) *Wallet {
-	mnemonic, _ := hdwallet.NewMnemonic(bits)
-
-	return &Wallet{
-		Mnemonic:  mnemonic,
-		HDPath:    hdPath,
-		CreatedAt: time.Now(),
-	}
-}
-
-func (w *Wallet) createWallet(mnemonic string) *Wallet {
-	wallet, _ := hdwallet.NewFromMnemonic(w.Mnemonic)
-
-	path := hdwallet.DefaultBaseDerivationPath
-	if w.HDPath != "" {
-		path = hdwallet.MustParseDerivationPath(w.HDPath)
-	}
-
-	account, _ := wallet.Derive(path, false)
-	pk, _ := wallet.PrivateKeyHex(account)
-
-	w.Address = account.Address.Hex()
-	w.PrivateKey = pk
-	w.UpdatedAt = time.Now()
-
-	return w
-}
-
 func generateNewWallet(bits int) *Wallet {
 	mnemonic, _ := hdwallet.NewMnemonic(bits)
 	wallet := createWallet(mnemonic)
@@ -92,10 +63,10 @@ func createWallet(mnemonic string) *Wallet {
 	}
 }
 
-//NewProgressBar .
+//NewProgressBar
 func NewProgressBar(number int, isCompatible bool) (bar *ProgressBar) {
 	if isCompatible {
-		bar = &ProgressBar{
+		return &ProgressBar{
 			CompatibleMode: progressbar.NewOptions(number,
 				progressbar.OptionSetItsString("w"),
 				progressbar.OptionSetPredictTime(true),
@@ -104,7 +75,6 @@ func NewProgressBar(number int, isCompatible bool) (bar *ProgressBar) {
 				progressbar.OptionFullWidth(),
 			),
 		}
-		return
 	}
 	bar = &ProgressBar{
 		StandardMode: pb.StartNew(number),
