@@ -63,7 +63,9 @@ func createWallet(mnemonic string) *Wallet {
 	}
 }
 
-//NewProgressBar
+//NewProgressBar returns a new progress bar based on whether or not it's compatible.
+// A progress bar that is not compatible will be set to StandardMode while all
+// compatible progress bars will have their mode set to CompatibleMode.
 func NewProgressBar(number int, isCompatible bool) (bar *ProgressBar) {
 	if isCompatible {
 		return &ProgressBar{
