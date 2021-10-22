@@ -233,7 +233,7 @@ func main() {
 				// 	return
 				// }
 
-				if len(contains) != 0 && !findContains(wallet.Address) {
+				if !validateAddress(wallet.Address) {
 					return
 				}
 
