@@ -25,7 +25,7 @@
 [![Golang](https://badges.aleen42.com/src/golang.svg)](https://golang.org/)
 [![Go Report Card](https://goreportcard.com/badge/github.com/Planxnx/eth-wallet-gen)](https://goreportcard.com/report/github.com/Planxnx/eth-wallet-gen)
 [![Build Status](https://travis-ci.com/Planxnx/eth-wallet-gen.svg?branch=main)](https://travis-ci.com/Planxnx/eth-wallet-gen)
-![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/planxthanee/eth-wallet-gen)
+[![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/planxthanee/eth-wallet-gen)](https://hub.docker.com/r/planxthanee/eth-wallet-gen)
 ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/planxthanee/eth-wallet-gen/latest)
 ![GitHub issues](https://img.shields.io/github/issues/Planxnx/eth-wallet-gen)
 [![DeepSource](https://deepsource.io/gh/Planxnx/eth-wallet-gen.svg/?label=active+issues)](https://deepsource.io/gh/Planxnx/eth-wallet-gen/?ref=repository-badge)
@@ -34,7 +34,7 @@
 #### Easy & Fast Way to generate multiple Ethereum Wallets at once!
 
 - Tiny sizes and Fastest Speed with Golang 🚀 (required go 1.14 or higher)
-- No Go? No Problem! [Docker images](https://hub.docker.com/repository/docker/planxthanee/eth-wallet-gen) are provided for you 🐳
+- No Go? No Problem! [Docker images](https://hub.docker.com/r/planxthanee/eth-wallet-gen) are provided for you 🐳
 - Embeded Database Supported! (with SQLite3).
 - Filtering by RegEx or Letters Supported! [regex, prefix, suffix, contains] (resovled only addresses that you want) 🔥
 - Speed up!! with customable concurrency numbers ⚡️
@@ -44,12 +44,6 @@
 - You can benchmark generate speed by DryRun 📈
 - [Golang Package](https://github.com/Planxnx/eth-wallet-gen/blob/main/generator) for import to your projects.
 - We recommend every user of this application audit and verify any underlying code for its validity and suitability. 👮🏻‍♂️
-
-#### TODO
-
-- Support more databases (eg. MySQL, Postgres, ) and CSV file.
-- Add more filter options (eg. RegEx) .
-- Improve Performance and Code Quality ⚡️
 
 ## Installation
 
