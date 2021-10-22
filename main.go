@@ -42,33 +42,33 @@ type ProgressBar struct {
 }
 
 //NewWallet .
-func NewWallet(bits int, hdPath string) *Wallet {
-	mnemonic, _ := hdwallet.NewMnemonic(bits)
+// func NewWallet(bits int, hdPath string) *Wallet {
+// 	mnemonic, _ := hdwallet.NewMnemonic(bits)
 
-	return &Wallet{
-		Mnemonic:  mnemonic,
-		HDPath:    hdPath,
-		CreatedAt: time.Now(),
-	}
-}
+// 	return &Wallet{
+// 		Mnemonic:  mnemonic,
+// 		HDPath:    hdPath,
+// 		CreatedAt: time.Now(),
+// 	}
+// }
 
-func (w *Wallet) createWallet(mnemonic string) *Wallet {
-	wallet, _ := hdwallet.NewFromMnemonic(w.Mnemonic)
+// func (w *Wallet) createWallet(mnemonic string) *Wallet {
+// 	wallet, _ := hdwallet.NewFromMnemonic(w.Mnemonic)
 
-	path := hdwallet.DefaultBaseDerivationPath
-	if w.HDPath != "" {
-		path = hdwallet.MustParseDerivationPath(w.HDPath)
-	}
+// 	path := hdwallet.DefaultBaseDerivationPath
+// 	if w.HDPath != "" {
+// 		path = hdwallet.MustParseDerivationPath(w.HDPath)
+// 	}
 
-	account, _ := wallet.Derive(path, false)
-	pk, _ := wallet.PrivateKeyHex(account)
+// 	account, _ := wallet.Derive(path, false)
+// 	pk, _ := wallet.PrivateKeyHex(account)
 
-	w.Address = account.Address.Hex()
-	w.PrivateKey = pk
-	w.UpdatedAt = time.Now()
+// 	w.Address = account.Address.Hex()
+// 	w.PrivateKey = pk
+// 	w.UpdatedAt = time.Now()
 
-	return w
-}
+// 	return w
+// }
 
 func generateNewWallet(bits int) *Wallet {
 	mnemonic, _ := hdwallet.NewMnemonic(bits)
