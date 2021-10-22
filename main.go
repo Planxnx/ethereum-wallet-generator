@@ -172,6 +172,7 @@ func main() {
 			interrupt <- syscall.SIGQUIT
 		}()
 
+		// generate wallets with db
 		if *dbPath != "" {
 			db, err := gorm.Open(sqlite.Open("./db/"+*dbPath), &gorm.Config{
 				Logger: logger.Default.LogMode(logger.Silent),
@@ -213,27 +214,35 @@ func main() {
 			return
 		}
 
-		for i := 0; i < *number || *number < 0; i += *concurrency {
-			for j := 0; j < *concurrency && (i+j < *number || *number < 0); j++ {
-				wg.Add(1)
+		// generate wallets without db
+		semph := make(chan int, *concurrency)
+		for i := 0; i < *number || *number < 0; i++ {
+			semph <- 1
+			wg.Add(1)
 
-				go func(j int) {
-					defer wg.Done()
+			go func(i int) {
+				defer func() {
+					<-semph
+					wg.Done()
+				}()
 
-					wallet := generateNewWallet(*bits)
-					bar.Increment()
+				wallet := generateNewWallet(*bits)
+				bar.Increment()
 
-					if !validateAddress(wallet.Address) {
-						return
-					}
+				// if *contain != "" && !strings.Contains(wallet.Address, *contain) {
+				// 	return
+				// }
 
-					fmt.Fprintf(&result, "%-18s %s\n", wallet.Address, wallet.Mnemonic)
-					resolvedCount++
-					bar.SetResolved(resolvedCount)
-				}(j)
-			}
-			wg.Wait()
+				if len(contains) != 0 && !findContains(wallet.Address) {
+					return
+				}
+
+				fmt.Fprintf(&result, "%-18s %s\n", wallet.Address, wallet.Mnemonic)
+				resolvedCount++
+				bar.SetResolved(resolvedCount)
+			}(i)
 		}
+		wg.Wait()
 		bar.Finish()
 	}()
 	<-interrupt
