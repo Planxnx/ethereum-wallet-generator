@@ -82,15 +82,15 @@ func main() {
 
 	number := flag.Int("n", 10, "set number of wallets to generate (set number to -1 for Infinite loop ∞)")
 	dbPath := flag.String("db", "", "set sqlite output name eg. wallets.db (db file will create in /db)")
-	concurrency := flag.Int("c", 1, "set number of concurrency")
+	concurrency := flag.Int("c", 1, "set concurrency value")
 	bits := flag.Int("bit", 256, "set number of entropy bits [128, 256]")
 	strict := flag.Bool("strict", false, "strict contains mode (required contains to use)")
-	contain := flag.String("contains", "", "used to check the given letters present in the given string or not")
-	prefix := flag.String("prefix", "", "used to check the given letters present in the prefix string or not")
-	suffix := flag.String("suffix", "", "used to check the given letters present in the suffix string or not")
-	regEx := flag.String("regex", "", "used to check the given letters present in the regex format or not")
-	isDryrun := flag.Bool("dryrun", false, "generate wallet without result (used for benchamark speed)")
-	isCompatible := flag.Bool("compatible", false, "logging compatible mode (turn on this to fix logging glitch)")
+	contain := flag.String("contains", "", "used to check if the given letters are present in the given string")
+	prefix := flag.String("prefix", "", "used to check if the given letters are present in the prefix string")
+	suffix := flag.String("suffix", "", "used to check if the given letters are present in the suffix string")
+	regEx := flag.String("regex", "", "used to check if the given letters are present in the regex format")
+	isDryrun := flag.Bool("dryrun", false, "generate wallet without a result (used for benchmark speed)")
+	isCompatible := flag.Bool("compatible", false, "logging compatible mode (turn this on to fix logging glitch)")
 	flag.Parse()
 
 	r, err := regexp.Compile(*regEx)
@@ -172,6 +172,7 @@ func main() {
 			interrupt <- syscall.SIGQUIT
 		}()
 
+		// generate wallets with db
 		if *dbPath != "" {
 			db, err := gorm.Open(sqlite.Open("./db/"+*dbPath), &gorm.Config{
 				Logger: logger.Default.LogMode(logger.Silent),
@@ -213,27 +214,35 @@ func main() {
 			return
 		}
 
-		for i := 0; i < *number || *number < 0; i += *concurrency {
-			for j := 0; j < *concurrency && (i+j < *number || *number < 0); j++ {
-				wg.Add(1)
+		// generate wallets without db
+		semph := make(chan int, *concurrency)
+		for i := 0; i < *number || *number < 0; i++ {
+			semph <- 1
+			wg.Add(1)
 
-				go func(j int) {
-					defer wg.Done()
+			go func(i int) {
+				defer func() {
+					<-semph
+					wg.Done()
+				}()
 
-					wallet := generateNewWallet(*bits)
-					bar.Increment()
+				wallet := generateNewWallet(*bits)
+				bar.Increment()
 
-					if !validateAddress(wallet.Address) {
-						return
-					}
+				// if *contain != "" && !strings.Contains(wallet.Address, *contain) {
+				// 	return
+				// }
 
-					fmt.Fprintf(&result, "%-18s %s\n", wallet.Address, wallet.Mnemonic)
-					resolvedCount++
-					bar.SetResolved(resolvedCount)
-				}(j)
-			}
-			wg.Wait()
+				if !validateAddress(wallet.Address) {
+					return
+				}
+
+				fmt.Fprintf(&result, "%-18s %s\n", wallet.Address, wallet.Mnemonic)
+				resolvedCount++
+				bar.SetResolved(resolvedCount)
+			}(i)
 		}
+		wg.Wait()
 		bar.Finish()
 	}()
 	<-interrupt
