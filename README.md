@@ -33,16 +33,16 @@
 
 #### Easy & Fast Way to generate multiple Ethereum Wallets at once!
 
-- Tiny sizes and Fastest Speed with Golang 🚀 (required go 1.14 or higher)
+- Tiny Sizes and Superior Speed with Golang 🚀 (required go 1.14 or higher)
 - No Go? No Problem! [Docker images](https://hub.docker.com/r/planxthanee/eth-wallet-gen) are provided for you 🐳
-- Embeded Database Supported! (with SQLite3).
-- Filtering by RegEx or Letters Supported! [regex, prefix, suffix, contains] (resovled only addresses that you want) 🔥
-- Speed up!! with customable concurrency numbers ⚡️
-- ∞ Infinity wallets generated! (set number to -1 to active infinite loop) ∞
-- Auto generated BIP-39 mnemonic using 128-256 bits of entropy (12, 24 Word Seed Phrase) (Default is 256 bits).
+- Embedded Database Supported! (with SQLite3).
+- Filtering by RegEx or Letters Supported! [regex, prefix, suffix, contains] (resolve only the addresses that you want) 🔥
+- Speed things up!! with customizable concurrency numbers ⚡️
+- ∞ Enable infinite wallet generation! (set number to -1 to active infinite loop) ∞
+- Auto-generate BIP-39 mnemonic using 128-256 bits of entropy (12, 24 Word Seed Phrase) (Default is 256 bits).
 - Default Hierarchical Deterministic Path - m/44'/60'/0'/0 .
-- You can benchmark generate speed by DryRun 📈
-- [Golang Package](https://github.com/Planxnx/eth-wallet-gen/blob/main/generator) for import to your projects.
+- You can benchmark generation speed by setting the `isDryrun` flag 📈
+- [Golang Package](https://github.com/Planxnx/eth-wallet-gen/blob/main/generator) to import within your projects.
 - We recommend every user of this application audit and verify any underlying code for its validity and suitability. 👮🏻‍♂️
 
 ## Installation
@@ -71,9 +71,9 @@ Usage of eth-wallet-gen:
   -dryrun    bool   generate wallet without result (used for benchamark speed)
 ```
 
-## Example
+## Examples
 
-### **Simple with stdout:**
+### **Simple stdout:**
 
 ```console
 $ eth-wallet-gen
@@ -102,7 +102,7 @@ Total Wallet Resolved: 10 w
 
 ```
 
-### **Using filtered by contains and strict options:**
+### **Filter with contains and strict options:**
 
 ```console
 $ eth-wallet-gen -n 50000 -contains 0x00,777 -strict
@@ -121,7 +121,7 @@ Total Duration: 1m52.063956141s
 Total Wallet Resolved: 1 w
 ```
 
-### **Speed up with by using the Concuurecny and Stored to SQLite3:**
+### **Speed up wallet generation by using Concurrency and storing to SQLite3:**
 
 ```console
 $ eth-wallet-gen -n 50000 -c 500 -db wallet.db -prefix 0x
@@ -134,7 +134,7 @@ Total Duration: 23.177676099s
 Total Wallet Resolved: 50000 w
 ```
 
-#### **Using Docker (recommend using concurrency for speed up):**
+### **Use Docker (recommend using concurrency for speed up):**
 
 ```console
 $ docker run --rm -v $PWD:/db planxthanee/eth-wallet-gen -n 1000 -db wallet.db
