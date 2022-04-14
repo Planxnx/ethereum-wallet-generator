@@ -108,7 +108,7 @@ Total Wallet Resolved: 10 w
 $ eth-wallet-gen -n 50000 -contains 0x00,777 -strict
 ===============ETH Wallet Generator===============
 
-50000 / 50000 | [██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 447 p/s | resovled: 1
+50000 / 50000 | [██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 803 p/s | resovled: 2
 
 Address                                    Seed
 ------------------------------------------ ----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -116,9 +116,9 @@ Address                                    Seed
 0x0077e7063389F6F7fF8216394ed23D259367dbCb fuel wolf embark tip this accident vague face cave echo shift pear between very child draw version face noodle head bubble oblige supreme slot
 
 
-Resolved Speed: 0.01 w/s
-Total Duration: 1m52.063956141s
-Total Wallet Resolved: 1 w
+Resolved Speed: 0.02 w/s
+Total Duration: 1m2.3567961s
+Total Wallet Resolved: 2 w
 ```
 
 ### **Speed up wallet generation by using Concurrency and storing to SQLite3:**
@@ -127,23 +127,23 @@ Total Wallet Resolved: 1 w
 $ eth-wallet-gen -n 50000 -c 500 -db wallet.db -prefix 0x
 ===============ETH Wallet Generator===============
 
-50000 / 50000 | [█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 2311 p/s | resovled: 16
+50000 / 50000 | [█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 5320 p/s | resovled: 16
 
-Resolved Speed: 2289 w/s
-Total Duration: 23.177676099s
+Resolved Speed: 5204.74 w/s
+Total Duration: 9.6018182s
 Total Wallet Resolved: 50000 w
 ```
 
 ### **Use Docker (recommend using concurrency for speed up):**
 
 ```console
-$ docker run --rm -v $PWD:/db planxthanee/eth-wallet-gen -n 1000 -db wallet.db
+$ docker run --rm -v $PWD:/db planxthanee/eth-wallet-gen -n 50000 -db wallet.db
 ===============ETH Wallet Generator===============
 
-  100% |██████████████████████████████████████| (50000/50000, 1240 w/s) [1m26s:1s]
+  100% |██████████████████████████████████████| (50000/50000, 2468 w/s) [1m26s:1s]
 
-Resolved Speed: 1231.89 w/s
-Total Duration: 42.78s
+Resolved Speed: 2461.89 w/s
+Total Duration: 20.31s
 Total Wallet Resolved: 50000 w
 
 ```
