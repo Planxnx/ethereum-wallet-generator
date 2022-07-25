@@ -16,7 +16,7 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 
-	"eth-wallet-gen/common"
+	"github.com/Planxnx/eth-wallet-gen/pkg/progressbar"
 )
 
 var (
@@ -134,11 +134,11 @@ func main() {
 		fmt.Printf("\nCopyright (C) 2023 Planxnx <planxthanee@gmail.com>\n")
 	}()
 
-	var bar *common.ProgressBar
+	var bar *progressbar.ProgressBar
 	if *isCompatible {
-		bar = common.NewCompatibleProgressBar(*number)
+		bar = progressbar.NewCompatibleProgressBar(*number)
 	} else {
-		bar = common.NewStandardProgressBar(*number)
+		bar = progressbar.NewStandardProgressBar(*number)
 	}
 
 	defer func() {
