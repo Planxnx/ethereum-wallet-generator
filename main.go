@@ -11,7 +11,7 @@ import (
 	"syscall"
 	"time"
 
-	hdwallet "github.com/miguelmota/go-ethereum-hdwallet"
+	"github.com/Planxnx/eth-wallet-gen/pkg/wallets"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -35,26 +35,12 @@ type Wallet struct {
 	gorm.Model
 }
 
-func generateNewWallet(bits int) *Wallet {
-	mnemonic, _ := hdwallet.NewMnemonic(bits)
-	wallet := createWallet(mnemonic)
-	wallet.Bits = bits
-	return wallet
-}
-
-func createWallet(mnemonic string) *Wallet {
-	wallet, _ := hdwallet.NewFromMnemonic(mnemonic)
-
-	account, _ := wallet.Derive(hdwallet.DefaultBaseDerivationPath, false)
-	pk, _ := wallet.PrivateKeyHex(account)
-
-	return &Wallet{
-		Address:    account.Address.Hex(),
-		PrivateKey: pk,
-		Mnemonic:   mnemonic,
-		HDPath:     account.URL.Path,
-		CreatedAt:  time.Now(),
+func generateNewWallet(bits int) *wallets.Wallet {
+	wallet, err := wallets.NewWallet(bits)
+	if err != nil {
+		panic(err)
 	}
+	return wallet
 }
 
 func init() {
@@ -145,7 +131,7 @@ func main() {
 		fmt.Printf("Total Duration: %v\n", time.Since(now))
 		fmt.Printf("Total Wallet Resolved: %d w\n", resolvedCount)
 
-		fmt.Printf("\nCopyright (C) 2021 Planxnx <planxthanee@gmail.com>\n")
+		fmt.Printf("\nCopyright (C) 2023 Planxnx <planxthanee@gmail.com>\n")
 	}()
 
 	var bar *common.ProgressBar

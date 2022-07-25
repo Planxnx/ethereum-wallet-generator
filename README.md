@@ -20,7 +20,7 @@
 </h3>
 <br>
 
-> **Multiple Ethereum Wallet Generator in Go (golang).** Implements the [go-ethereum-hdwallet](https://github.com/miguelmota/go-ethereum-hdwallet).
+> **Multiple Ethereum Wallet Generator in Go (golang).**
 
 [![Golang](https://badges.aleen42.com/src/golang.svg)](https://golang.org/)
 [![Build Status](https://travis-ci.com/Planxnx/eth-wallet-gen.svg?branch=main)](https://travis-ci.com/Planxnx/eth-wallet-gen)
