@@ -142,7 +142,7 @@ func main() {
 	}
 
 	defer func() {
-		bar.Finish()
+		_ = bar.Finish()
 		if *isDryrun {
 			return
 		}
@@ -170,7 +170,9 @@ func main() {
 			}
 
 			if !*isDryrun {
-				db.AutoMigrate(&Wallet{})
+				if err := db.AutoMigrate(&Wallet{}); err != nil {
+					panic(err)
+				}
 			}
 
 			for i := 0; i < *number || *number < 0; i += *concurrency {
@@ -183,7 +185,7 @@ func main() {
 						defer wg.Done()
 
 						wallet := generateNewWallet(*bits)
-						bar.Increment()
+						_ = bar.Increment()
 
 						if !validateAddress(wallet.Address) {
 							return
@@ -196,7 +198,7 @@ func main() {
 				wg.Wait()
 				tx.Commit()
 				resolvedCount += txResolved
-				bar.SetResolved(resolvedCount)
+				_ = bar.SetResolved(resolvedCount)
 			}
 			return
 		}
@@ -214,7 +216,7 @@ func main() {
 				}()
 
 				wallet := generateNewWallet(*bits)
-				bar.Increment()
+				_ = bar.Increment()
 
 				// if *contain != "" && !strings.Contains(wallet.Address, *contain) {
 				// 	return
@@ -226,11 +228,11 @@ func main() {
 
 				fmt.Fprintf(&result, "%-18s %s\n", wallet.Address, wallet.Mnemonic)
 				resolvedCount++
-				bar.SetResolved(resolvedCount)
+				_ = bar.SetResolved(resolvedCount)
 			}(i)
 		}
 		wg.Wait()
-		bar.Finish()
+		_ = bar.Finish()
 	}()
 	<-interrupt
 }
