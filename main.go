@@ -161,8 +161,9 @@ func main() {
 		// generate wallets with db
 		if *dbPath != "" {
 			db, err := gorm.Open(sqlite.Open("./db/"+*dbPath), &gorm.Config{
-				Logger: logger.Default.LogMode(logger.Silent),
-				DryRun: *isDryrun,
+				Logger:                 logger.Default.LogMode(logger.Silent),
+				DryRun:                 *isDryrun,
+				SkipDefaultTransaction: true,
 			})
 			if err != nil {
 				panic(err)
