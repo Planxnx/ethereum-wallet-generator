@@ -23,7 +23,7 @@
 > **Multiple Ethereum Wallet Generator in Go (golang).**
 
 [![Golang](https://badges.aleen42.com/src/golang.svg)](https://golang.org/)
-[![Build Status](https://travis-ci.com/Planxnx/eth-wallet-gen.svg?branch=main)](https://travis-ci.com/Planxnx/eth-wallet-gen)
+[![Build Status](https://app.travis-ci.com/Planxnx/eth-wallet-gen.svg?branch=main)](https://app.travis-ci.com/Planxnx/eth-wallet-gen)
 [![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/planxthanee/eth-wallet-gen)](https://hub.docker.com/r/planxthanee/eth-wallet-gen)
 ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/planxthanee/eth-wallet-gen/latest)
 ![GitHub issues](https://img.shields.io/github/issues/Planxnx/eth-wallet-gen)
