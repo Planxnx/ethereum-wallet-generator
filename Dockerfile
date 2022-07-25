@@ -1,18 +1,20 @@
 ############################
 # STEP 1 build executable binary
 ############################
-FROM golang:1.15.1-alpine AS builder
-RUN apk update && apk add build-base && apk add gcc
+FROM golang:1.18.4 AS builder
 WORKDIR /src/build
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
-RUN GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o main .
+ENV GOOS=linux
+ENV GOARCH=amd64
+ENV CGO_ENABLED=0
+RUN go build -o main .
 
 ############################
 # STEP 2 build a small image
 ############################
-FROM alpine:3.12.0
+FROM alpine:latest
 COPY --from=builder /src/build/main /
 WORKDIR /
 ENTRYPOINT ["./main","-compatible"]
