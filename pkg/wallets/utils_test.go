@@ -1,7 +1,7 @@
 package wallets
 
 import (
-	"math/rand"
+	"crypto/rand"
 	"testing"
 )
 
