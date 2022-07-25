@@ -76,7 +76,7 @@ func deriveWallet(seed []byte, path accounts.DerivationPath) (*ecdsa.PrivateKey,
 	}
 
 	for _, n := range path {
-		key, err = key.DeriveNonStandard(n)
+		key, err = key.Derive(n)
 		if err != nil {
 			return nil, nil, err
 
