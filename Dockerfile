@@ -2,13 +2,13 @@
 # STEP 1 build executable binary
 ############################
 FROM golang:1.19.0-alpine AS builder
+RUN apk update && apk add build-base && apk add gcc
 WORKDIR /src/build
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
 ENV GOOS=linux
 ENV GOARCH=amd64
-ENV CGO_ENABLED=1
 RUN go build -o main .
 
 ############################
