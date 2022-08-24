@@ -11,12 +11,12 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/Planxnx/eth-wallet-gen/pkg/wallets"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 
 	"github.com/Planxnx/eth-wallet-gen/pkg/progressbar"
+	"github.com/Planxnx/eth-wallet-gen/pkg/wallets"
 )
 
 var (
@@ -24,35 +24,15 @@ var (
 	result strings.Builder
 )
 
-//Wallet ethereum wallet data
-type Wallet struct {
-	Address    string
-	PrivateKey string
-	Mnemonic   string
-	Bits       int
-	HDPath     string
-	CreatedAt  time.Time
-	gorm.Model
-}
-
-func generateNewWallet(bits int) *wallets.Wallet {
-	wallet, err := wallets.NewWallet(bits)
-	if err != nil {
-		panic(err)
-	}
-	return wallet
-}
-
 func init() {
 	if _, err := os.Stat("db"); os.IsNotExist(err) {
-		if err := os.Mkdir("db", 0750); err != nil {
+		if err := os.Mkdir("db", 0o750); err != nil {
 			panic(err)
 		}
 	}
 }
 
 func main() {
-
 	interrupt := make(chan os.Signal, 1)
 
 	signal.Notify(
@@ -170,13 +150,13 @@ func main() {
 			}
 
 			if !*isDryrun {
-				if err := db.AutoMigrate(&Wallet{}); err != nil {
+				if err := db.AutoMigrate(&wallets.Wallet{}); err != nil {
 					panic(err)
 				}
 			}
 
 			for i := 0; i < *number || *number < 0; i += *concurrency {
-				tx := db.Begin() //Optimized Performance
+				tx := db.Begin() // Optimized Performance
 				txResolved := 0
 				for j := 0; j < *concurrency && (i+j < *number || *number < 0); j++ {
 					wg.Add(1)
@@ -184,7 +164,7 @@ func main() {
 					go func(j int) {
 						defer wg.Done()
 
-						wallet := generateNewWallet(*bits)
+						wallet, _ := wallets.NewWallet(*bits)
 						_ = bar.Increment()
 
 						if !validateAddress(wallet.Address) {
@@ -215,7 +195,7 @@ func main() {
 					wg.Done()
 				}()
 
-				wallet := generateNewWallet(*bits)
+				wallet, _ := wallets.NewWallet(*bits)
 				_ = bar.Increment()
 
 				// if *contain != "" && !strings.Contains(wallet.Address, *contain) {
