@@ -20,11 +20,6 @@ import (
 	"github.com/Planxnx/eth-wallet-gen/pkg/wallets"
 )
 
-var (
-	wg     sync.WaitGroup
-	result strings.Builder
-)
-
 func init() {
 	if _, err := os.Stat("db"); os.IsNotExist(err) {
 		if err := os.Mkdir("db", 0o750); err != nil {
@@ -164,6 +159,7 @@ func main() {
 		}
 	}()
 
+	var wg sync.WaitGroup
 	go func() {
 		defer func() {
 			interrupt <- syscall.SIGQUIT
