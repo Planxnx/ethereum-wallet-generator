@@ -32,7 +32,7 @@
 
 #### Easy & Fast Way to generate multiple Ethereum Wallets at once!
 
-- Tiny Sizes and Superior Speed with Golang 🚀 (required go 1.16 or higher)
+- Tiny Sizes and Superior Speed with Golang 🚀 (required go 1.19 or higher)
 - No Go? No Problem! [Docker images](https://hub.docker.com/r/planxthanee/eth-wallet-gen) are provided for you 🐳
 - Embedded Database Supported! (with SQLite3).
 - Filtering by RegEx or Letters Supported! [regex, prefix, suffix, contains] (resolve only the addresses that you want) 🔥
