@@ -66,28 +66,28 @@ func NewRepository(config ...RepositoryConfig) *Repository {
 	return r
 }
 
-func (r *Repository) Generate() error {
+func (r *Repository) Generate() (ok bool, err error) {
 	wallet, err := NewWallet(r.config.BitSize)
 	if err != nil {
-		return errors.Wrapf(ErrorCanNotGenerate, err.Error())
+		return false, errors.Wrapf(ErrorCanNotGenerate, err.Error())
 	}
 
 	if !r.config.AddresValidator(wallet.Address) {
-		return errors.WithStack(ErrorInvalidAddress)
+		return false, nil
 	}
 
 	if r.config.DB != nil {
 		if err := r.dbInsert(wallet); err != nil {
-			return errors.Wrapf(ErrorCanNotStore, err.Error())
+			return false, errors.Wrapf(ErrorCanNotStore, err.Error())
 		}
-		return nil
+		return true, nil
 	}
 
 	if _, err := fmt.Fprintf(&r.result, "%-18s %s\n", wallet.Address, wallet.Mnemonic); err != nil {
-		return errors.Wrapf(ErrorCanNotStore, err.Error())
+		return false, errors.Wrapf(ErrorCanNotStore, err.Error())
 	}
 
-	return nil
+	return true, nil
 }
 
 func (r *Repository) Results() string {
