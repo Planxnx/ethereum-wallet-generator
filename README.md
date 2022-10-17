@@ -26,6 +26,7 @@
 [![Build Status](https://app.travis-ci.com/Planxnx/eth-wallet-gen.svg?branch=main)](https://app.travis-ci.com/Planxnx/eth-wallet-gen)
 [![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/planxthanee/eth-wallet-gen)](https://hub.docker.com/r/planxthanee/eth-wallet-gen)
 ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/planxthanee/eth-wallet-gen/latest)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/1d765b63df4b4266bdcf653d5a024458)](https://www.codacy.com/gh/Planxnx/eth-wallet-gen/dashboard?utm_source=github.com&utm_medium=referral&utm_content=Planxnx/eth-wallet-gen&utm_campaign=Badge_Grade)
 ![GitHub issues](https://img.shields.io/github/issues/Planxnx/eth-wallet-gen)
 [![DeepSource](https://deepsource.io/gh/Planxnx/eth-wallet-gen.svg/?label=active+issues)](https://deepsource.io/gh/Planxnx/eth-wallet-gen/?ref=repository-badge)
 [![license](https://img.shields.io/badge/license-WTFPL%20--%20Do%20What%20the%20Fuck%20You%20Want%20to%20Public%20License-green.svg)](https://github.com/Planxnx/eth-wallet-gen/blob/main/LICENSE)
