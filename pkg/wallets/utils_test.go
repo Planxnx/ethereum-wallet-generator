@@ -35,5 +35,4 @@ func TestByteToString(t *testing.T) {
 			t.Errorf("expected: %s, actual: %s", expected, actual)
 		}
 	}
-
 }
