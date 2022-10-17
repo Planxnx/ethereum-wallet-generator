@@ -10,6 +10,7 @@ import (
 	"github.com/ethereum/go-ethereum/accounts"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/pkg/errors"
 	"github.com/tyler-smith/go-bip39"
 	"gorm.io/gorm"
 )
@@ -72,21 +73,20 @@ func NewWallet(bitSize int) (*Wallet, error) {
 func deriveWallet(seed []byte, path accounts.DerivationPath) (*ecdsa.PrivateKey, *ecdsa.PublicKey, error) {
 	key, err := hdkeychain.NewMaster(seed, &chaincfg.MainNetParams)
 	if err != nil {
-		return nil, nil, err
+		return nil, nil, errors.WithStack(err)
 	}
 
 	for _, n := range path {
 		key, err = key.Derive(n)
 		if err != nil {
-			return nil, nil, err
-
+			return nil, nil, errors.WithStack(err)
 		}
 	}
 
 	privateKey, err := key.ECPrivKey()
 	privateKeyECDSA := privateKey.ToECDSA()
 	if err != nil {
-		return nil, nil, err
+		return nil, nil, errors.WithStack(err)
 	}
 
 	return privateKeyECDSA, privateKeyECDSA.Public().(*ecdsa.PublicKey), nil
