@@ -4,18 +4,19 @@ import (
 	"fmt"
 
 	"github.com/cheggaaa/pb/v3"
+	"github.com/pkg/errors"
 	"github.com/schollz/progressbar/v3"
 )
 
-const DEFAULT_STANDARD_MODE_TEMPLATE = `{{counters . }} | {{bar . "" "█" "█" "" "" | rndcolor}} | {{percent . }} | {{speed . }} | {{string . "resolved"}}`
+const DefaultStandardModeTemplate = `{{counters . }} | {{bar . "" "█" "█" "" "" | rndcolor}} | {{percent . }} | {{speed . }} | {{string . "resolved"}}`
 
-//ProgressBar progressbar logging with 2 mode
+// ProgressBar progressbar logging with 2 mode
 type ProgressBar struct {
 	StandardMode   *pb.ProgressBar
 	CompatibleMode *progressbar.ProgressBar
 }
 
-//NewCompatibleProgressBar returns a new progress bar set to compatible mode.
+// NewCompatibleProgressBar returns a new progress bar set to compatible mode.
 func NewCompatibleProgressBar(number int) *ProgressBar {
 	return &ProgressBar{
 		CompatibleMode: progressbar.NewOptions(number,
@@ -28,36 +29,36 @@ func NewCompatibleProgressBar(number int) *ProgressBar {
 	}
 }
 
-//NewStandardProgressBar returns a new progress bar set to standard mode.
+// NewStandardProgressBar returns a new progress bar set to standard mode.
 func NewStandardProgressBar(number int) *ProgressBar {
 	bar := &ProgressBar{
 		StandardMode: pb.StartNew(number),
 	}
 	bar.StandardMode.SetTemplate(pb.Default)
-	bar.StandardMode.SetTemplateString(DEFAULT_STANDARD_MODE_TEMPLATE)
+	bar.StandardMode.SetTemplateString(DefaultStandardModeTemplate)
 	return bar
 }
 
-//Increment increment progress
+// Increment increment progress
 func (bar *ProgressBar) Increment() error {
 	if bar.CompatibleMode != nil {
-		return bar.CompatibleMode.Add(1)
+		return errors.WithStack(bar.CompatibleMode.Add(1))
 	}
-	return bar.StandardMode.Increment().Err()
+	return errors.WithStack(bar.StandardMode.Increment().Err())
 }
 
-//SetResolved set resolved wallet number
+// SetResolved set resolved wallet number
 func (bar *ProgressBar) SetResolved(resolved int) error {
 	if bar.StandardMode != nil {
-		return bar.StandardMode.Set("resolved", fmt.Sprintf("resolved: %v", resolved)).Err()
+		return errors.WithStack(bar.StandardMode.Set("resolved", fmt.Sprintf("resolved: %v", resolved)).Err())
 	}
 	return nil
 }
 
-//Finish close progress bar
+// Finish close progress bar
 func (bar *ProgressBar) Finish() error {
 	if bar.CompatibleMode != nil {
-		return bar.CompatibleMode.Close()
+		return errors.WithStack(bar.CompatibleMode.Close())
 	}
-	return bar.StandardMode.Finish().Err()
+	return errors.WithStack(bar.StandardMode.Finish().Err())
 }
