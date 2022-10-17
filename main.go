@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"flag"
 	"fmt"
 	"log"
@@ -178,10 +177,12 @@ func main() {
 					wg.Done()
 				}()
 
-				if err := walletsRepo.Generate(); err != nil {
-					if !errors.Is(err, wallets.ErrorInvalidAddress) {
-						log.Printf("Error: %v", err)
-					}
+				ok, err := walletsRepo.Generate()
+				if err != nil {
+					log.Printf("Error: %+v", err)
+					return
+				}
+				if !ok {
 					return
 				}
 
