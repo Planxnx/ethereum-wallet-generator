@@ -1,0 +1,70 @@
+# GolangCI-Lint
+# this workspace is using golangci-lint for linting, so you need to install it.
+## MacOS Installation (HomeBrew)
+# $ brew install golangci-lint
+# See more: https://golangci-lint.run/usage/install/
+## VSCode Integrations (for User Settings)
+# 1. Open VSCode Settings (JSON)
+# 2. in configs, add field `go.lintTool` and value `golangci-lint` ("go.lintTool":"golangci-lint")
+# See more: https://golangci-lint.run/usage/integrations/
+
+run:
+  timeout: 5m
+  tests: true
+  skip-dirs:
+    - temps
+  allow-parallel-runners: true
+
+linters: # https://golangci-lint.run/usage/linters/
+  disable-all: true
+  enable:
+    ### Metalinter
+    - staticcheck # bugs, metalinter - https://staticcheck.io
+    - govet # bugs, metalinter
+    - gocritic # style, metalinter - https://github.com/go-critic/go-critic
+    - revive # style, metalinter - https://github.com/mgechev/revive
+    # Enabled by Default
+    - gocritic # style, metalinter - https://github.com/go-critic/go-critic
+    - revive # style, metalinter - https://github.com/mgechev/revive
+    - errcheck # bugs, error
+    - gosimple # style
+    - govet # bugs, metalinter
+    - ineffassign # unused
+    - typecheck # bugs
+    - unused # unused
+    # Other Linters
+    - bodyclose # performance, bugs - checks whether HTTP response body is closed successfully
+    - decorder # format, style - check declaration order and count of types, constants, variables and functions
+    - dupl # style - code clone detection
+    - errorlint # bugs, error - find code that will cause problems with the error wrapping scheme introduced in Go 1.13.
+    - goconst # style - Finds repeated strings that could be replaced by a constant
+    - gosec # bugs - Inspects source code for security problems
+    - misspell # style, comment - Finds commonly misspelled English words in comments. https://github.com/client9/misspell
+    - noctx # performance, bugs - finds sending http request without context.Context
+    - nosprintfhostport # style - Checks for misuse of Sprintf to construct a host with port in a URL.
+    - prealloc # performance - Find slice declarations that could potentially be pre-allocated, https://github.com/alexkohler/prealloc
+    - unconvert # style - unnecessary type conversions
+    - usestdlibvars # style - detect the possibility to use variables/constants from the Go standard library
+    - whitespace # style - detection of leading and trailing whitespace
+    - wrapcheck # style, error - Checks that errors returned from external packages are wrapped, we should wrap the error from external library
+    - dupl # style - code clone detection
+    - nosnakecase # style - detects snake case of variable naming and function name.
+
+linters-settings:
+  misspell:
+    locale: US
+    ignore-words: []
+  gomnd:
+    ignored-functions: []
+    ignored-files: []
+  gocritic:
+    enabled-tags:
+      - diagnostic
+      - style
+      - performance
+      - opinionated
+    isabled-tags:
+      - experimental
+  gosec:
+    excludes:
+      - G404 # Insecure random number source (rand)
