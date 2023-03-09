@@ -20,7 +20,8 @@
 </h3>
 <br>
 
-> **Multiple Ethereum Wallet Generator in Go (golang).**
+> **Multiple Ethereum and Crypto Wallets Generator written in Go💰**
+> <br>Generate a thousand crypto wallets in a sec ⚡️
 
 [![Golang](https://badges.aleen42.com/src/golang.svg)](https://golang.org/)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/1d765b63df4b4266bdcf653d5a024458)](https://www.codacy.com/gh/Planxnx/eth-wallet-gen/dashboard?utm_source=github.com&utm_medium=referral&utm_content=Planxnx/eth-wallet-gen&utm_campaign=Badge_Grade)
@@ -30,19 +31,19 @@
 [![DeepSource](https://deepsource.io/gh/Planxnx/eth-wallet-gen.svg/?label=active+issues)](https://deepsource.io/gh/Planxnx/eth-wallet-gen/?ref=repository-badge)
 [![license](https://img.shields.io/badge/license-WTFPL%20--%20Do%20What%20the%20Fuck%20You%20Want%20to%20Public%20License-green.svg)](https://github.com/Planxnx/eth-wallet-gen/blob/main/LICENSE)
 
-#### Easy & Fast Way to generate multiple Ethereum Wallets at once!
+#### Easy & Fast Way to generate more than thousands of Ethereum Wallets at once!
 
+- ∞ Enable infinite wallet generation! (set number to -1 to active infinite loop) ∞
+- Auto-generate BIP-39 mnemonic using 128-256 bits of entropy (12, 24 Word Seed Phrase) (Default is 256 bits).
+- Default (HD Wallet)Hierarchical Deterministic Path - m/44'/60'/0'/0 .
 - Tiny Sizes and Superior Speed with Golang 🚀 (required go 1.18 or higher)
 - No Go? No Problem! [Docker images](https://hub.docker.com/r/planxthanee/eth-wallet-gen) are provided for you 🐳
 - Embedded Database Supported! (with SQLite3).
 - Filtering by RegEx or Letters Supported! [regex, prefix, suffix, contains] (resolve only the addresses that you want) 🔥
 - Speed things up!! with customizable concurrency numbers ⚡️
-- ∞ Enable infinite wallet generation! (set number to -1 to active infinite loop) ∞
-- Auto-generate BIP-39 mnemonic using 128-256 bits of entropy (12, 24 Word Seed Phrase) (Default is 256 bits).
-- Default Hierarchical Deterministic Path - m/44'/60'/0'/0 .
-- You can benchmark generation speed by setting the `isDryrun` flag 📈
+- You can benchmark generating speed by setting the `isDryrun` flag 📈
 - [Golang Package](https://github.com/Planxnx/eth-wallet-gen/blob/main/generator) to import within your projects.
-- We recommend every user of this application audit and verify any underlying code for its validity and suitability. 👮🏻‍♂️
+- We recommend every user of this application audit and verify every source code in this repository and every imported dependecies for its validity and clearness. 👮🏻‍♂️
 
 ## Installation
 
