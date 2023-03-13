@@ -1,9 +1,8 @@
 name: Building and Push to Docker Hub
 on:
   workflow_dispatch:
-  push:
-    tags:
-      - "*"
+  release:
+    types: [published]
 
 jobs:
   build:
