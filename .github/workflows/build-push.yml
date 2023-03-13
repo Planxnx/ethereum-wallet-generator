@@ -31,4 +31,4 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/eth-wallet-gen:${{ env.IMAGE_TAG }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/eth-wallet-gen:latest,${{ secrets.DOCKERHUB_USERNAME }}/eth-wallet-gen:${{ env.IMAGE_TAG }}
