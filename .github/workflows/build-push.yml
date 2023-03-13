@@ -1,11 +1,6 @@
 name: Building and Push to Docker Hub
 on:
   workflow_dispatch:
-    inputs:
-      IMAGE_TAG:
-        description: "Image tag to build and push"
-        required: false
-        default: "latest"
   push:
     tags:
       - "*"
@@ -19,10 +14,6 @@ jobs:
     steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
-
-      - name: Set IMAGE_TAG environment variable from input
-        if: ${{ github.event.inputs.IMAGE_TAG }} != null
-        run: echo "IMAGE_TAG=${{ github.event.inputs.IMAGE_TAG }}" >> $GITHUB_ENV
 
       - name: Set default IMAGE_TAG environment variable
         if: env.IMAGE_TAG == null
