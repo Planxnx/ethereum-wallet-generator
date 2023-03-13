@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"fmt"
 	"log"
@@ -8,7 +9,6 @@ import (
 	"os/signal"
 	"regexp"
 	"strings"
-	"sync"
 	"syscall"
 	"time"
 
@@ -16,7 +16,9 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 
+	"github.com/Planxnx/eth-wallet-gen/internal/generators"
 	"github.com/Planxnx/eth-wallet-gen/pkg/progressbar"
+	"github.com/Planxnx/eth-wallet-gen/pkg/utils"
 	"github.com/Planxnx/eth-wallet-gen/pkg/wallets"
 )
 
@@ -29,15 +31,14 @@ func init() {
 }
 
 func main() {
-	interrupt := make(chan os.Signal, 1)
-
-	signal.Notify(
-		interrupt,
+	// Context with gracefully shutdown signal
+	ctx, stop := signal.NotifyContext(context.Background(),
 		syscall.SIGHUP,  // kill -SIGHUP XXXX
 		syscall.SIGINT,  // kill -SIGINT XXXX or Ctrl+c
 		syscall.SIGQUIT, // kill -SIGQUIT XXXX
 		syscall.SIGTERM, // kill -SIGTERM XXXX
 	)
+	defer stop()
 
 	fmt.Println("===============ETH Wallet Generator===============")
 	fmt.Println(" ")
@@ -147,54 +148,29 @@ func main() {
 		DBTransactionsSize: uint64(*concurrency),
 	})
 
-	defer func() {
-		_ = bar.Finish()
-		if *isDryrun {
-			return
-		}
-		if result := walletsRepo.Results(); len(result) > 0 {
-			fmt.Printf("\n%-42s %s\n", "Address", "Seed")
-			fmt.Printf("%-42s %s\n", strings.Repeat("-", 42), strings.Repeat("-", 160))
-			fmt.Println(walletsRepo.Results())
-		}
-	}()
+	generator := generators.New(
+		walletsRepo,
+		generators.Config{
+			ProgressBar: bar,
+			DryRun:      *isDryrun,
+			Concurrency: *concurrency,
+			Number:      *number,
+		},
+	)
 
-	var wg sync.WaitGroup
 	go func() {
-		defer func() {
-			interrupt <- syscall.SIGQUIT
-		}()
-
-		// generate wallets without db
-		semph := make(chan int, *concurrency)
-		for i := 0; i < *number || *number < 0; i++ {
-			semph <- 1
-			wg.Add(1)
-
-			go func() {
-				defer func() {
-					<-semph
-					wg.Done()
-				}()
-
-				ok, err := walletsRepo.Generate()
-				if err != nil {
-					log.Printf("Error: %+v", err)
-					return
-				}
-				if !ok {
-					return
-				}
-
-				resolvedCount++
-				_ = bar.Increment()
-				_ = bar.SetResolved(resolvedCount)
-			}()
+		<-ctx.Done()
+		log.Printf("gracefully shutting down...\n")
+		if db != nil {
+			if err := utils.Must(db.DB()).Close(); err != nil {
+				log.Printf("DB Close Error: %+v", err)
+			}
 		}
-		wg.Wait()
-		_ = bar.Finish()
 	}()
-	<-interrupt
+
+	if err := generator.Start(ctx); err != nil {
+		log.Printf("Generator Error: %+v", err)
+	}
 }
 
 // forked this methods from core-js
