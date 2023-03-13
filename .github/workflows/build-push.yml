@@ -10,7 +10,7 @@ jobs:
     name: Build and Push
     runs-on: ubuntu-latest
     env:
-      IMAGE_TAG: ${{  github.ref_name || "latest" }}"
+      IMAGE_TAG: ${{  github.ref_name || "latest" }}
     steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
