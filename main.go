@@ -152,6 +152,9 @@ func main() {
 		if *isDryrun {
 			return
 		}
+		if err := walletsRepo.Commit(); err != nil {
+			fmt.Printf("Repo Commit Error: %+v", err)
+		}
 		if result := walletsRepo.Results(); len(result) > 0 {
 			fmt.Printf("\n%-42s %s\n", "Address", "Seed")
 			fmt.Printf("%-42s %s\n", strings.Repeat("-", 42), strings.Repeat("-", 160))

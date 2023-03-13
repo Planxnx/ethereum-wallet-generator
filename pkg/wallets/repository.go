@@ -90,6 +90,28 @@ func (r *Repository) Generate() (ok bool, err error) {
 	return true, nil
 }
 
+func (r *Repository) Close() error {
+	if err := r.Commit(); err != nil {
+		return errors.WithStack(err)
+	}
+	r.result.Reset()
+	return nil
+}
+
+func (r *Repository) Commit() error {
+	if r.config.DB == nil {
+		return nil
+	}
+
+	r.mu.Lock()
+	defer r.mu.Unlock()
+
+	if err := r.commit(); err != nil {
+		return errors.WithStack(err)
+	}
+	return nil
+}
+
 func (r *Repository) Results() string {
 	if r.result.Len() > 0 {
 		return r.result.String()
@@ -115,6 +137,21 @@ func (r *Repository) dbInsert(wallet *Wallet) error {
 	r.txWallets++
 
 	if r.txWallets >= r.config.DBTransactionsSize {
+		if err := r.commit(); err != nil {
+			return errors.WithStack(err)
+		}
+	}
+
+	return nil
+}
+
+// commit unsafe method, should be called inside package only
+func (r *Repository) commit() error {
+	if r.config.DB == nil {
+		return nil
+	}
+
+	if r.tx != nil {
 		if err := r.tx.Commit().Error; err != nil {
 			return errors.WithStack(err)
 		}
