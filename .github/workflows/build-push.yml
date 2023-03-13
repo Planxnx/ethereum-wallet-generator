@@ -2,13 +2,15 @@ name: Building and Push to Docker Hub
 on:
   workflow_dispatch:
   push:
-    branches:
-      - main
+    tags:
+      - "*"
 
 jobs:
   build:
     name: Build and Push
     runs-on: ubuntu-latest
+    env:
+      IMAGE_TAG: ${{  github.ref_name || "latest" }}"
     steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -26,4 +28,4 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/eth-wallet-gen:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/eth-wallet-gen:${{ env.IMAGE_TAG }}
