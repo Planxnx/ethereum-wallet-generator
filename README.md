@@ -20,8 +20,7 @@
 </h3>
 <br>
 
-> **Multiple Ethereum and Crypto Wallets Generator written in Go💰**
-> <br>Generate a thousand crypto wallets in a sec ⚡️
+> **Multiple Ethereum and Crypto Wallets Generator written in Go💰** > <br>Generate a thousand crypto wallets in a sec ⚡️
 
 [![Golang](https://badges.aleen42.com/src/golang.svg)](https://golang.org/)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/1d765b63df4b4266bdcf653d5a024458)](https://www.codacy.com/gh/Planxnx/eth-wallet-gen/dashboard?utm_source=github.com&utm_medium=referral&utm_content=Planxnx/eth-wallet-gen&utm_campaign=Badge_Grade)
@@ -34,7 +33,7 @@
 #### Easy & Fast Way to generate more than thousands of Ethereum Wallets at once!
 
 - ∞ Enable infinite wallet generation! (set number to -1 to active infinite loop) ∞
-- Auto-generate BIP-39 mnemonic using 128-256 bits of entropy (12, 24 Word Seed Phrase) (Default is 256 bits).
+- Auto-generate BIP-39 mnemonic using 128-256 bits of entropy (12, 24 Word Seed Phrase) (Default is 128 bits or 12 words).
 - Default (HD Wallet)Hierarchical Deterministic Path - m/44'/60'/0'/0 .
 - Tiny Sizes and Superior Speed with Golang 🚀 (required go 1.18 or higher)
 - No Go? No Problem! [Docker images](https://hub.docker.com/r/planxthanee/eth-wallet-gen) are provided for you 🐳
