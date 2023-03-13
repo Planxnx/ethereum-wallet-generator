@@ -157,8 +157,6 @@ func main() {
 			Number:      *number,
 		},
 	)
-	defer func() {
-	}()
 
 	go func() {
 		<-ctx.Done()
