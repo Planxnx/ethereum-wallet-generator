@@ -21,8 +21,8 @@ jobs:
         uses: docker/setup-qemu-action@v2
 
       - name: Set IMAGE_TAG environment variable from input
-        if: env.IMAGE_TAG == null
-        run: echo "IMAGE_TAG=latest" >> $GITHUB_ENV
+        if: ${{ github.event.inputs.IMAGE_TAG }} != null
+        run: echo "IMAGE_TAG=${{ github.event.inputs.IMAGE_TAG }}" >> $GITHUB_ENV
 
       - name: Set default IMAGE_TAG environment variable
         if: env.IMAGE_TAG == null
