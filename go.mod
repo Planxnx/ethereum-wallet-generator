@@ -3,8 +3,8 @@ module github.com/Planxnx/eth-wallet-gen
 go 1.20
 
 require (
-	github.com/btcsuite/btcd v0.23.1
-	github.com/btcsuite/btcd/btcutil v1.1.2
+	github.com/btcsuite/btcd v0.23.4
+	github.com/btcsuite/btcd/btcutil v1.1.3
 	github.com/cheggaaa/pb/v3 v3.1.0
 	github.com/ethereum/go-ethereum v1.11.4
 	github.com/pkg/errors v0.9.1
@@ -17,7 +17,7 @@ require (
 require (
 	github.com/VividCortex/ewma v1.2.0 // indirect
 	github.com/btcsuite/btcd/btcec/v2 v2.3.2 // indirect
-	github.com/btcsuite/btcd/chaincfg/chainhash v1.0.1 // indirect
+	github.com/btcsuite/btcd/chaincfg/chainhash v1.0.2 // indirect
 	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.1.0 // indirect
 	github.com/fatih/color v1.13.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
