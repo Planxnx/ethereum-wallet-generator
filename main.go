@@ -68,11 +68,11 @@ func main() {
 				return strings.Contains(address, contain)
 			}
 			if *strict {
-				if !have(contains, cb) {
+				if !utils.Have(contains, cb) {
 					isValid = false
 				}
 			} else {
-				if !some(contains, cb) {
+				if !utils.Some(contains, cb) {
 					isValid = false
 				}
 			}
@@ -161,6 +161,11 @@ func main() {
 	go func() {
 		<-ctx.Done()
 		log.Printf("gracefully shutting down...\n")
+
+		if err := walletsRepo.Close(); err != nil {
+			log.Printf("WalletsRepo Close Error: %+v", err)
+		}
+
 		if db != nil {
 			if err := utils.Must(db.DB()).Close(); err != nil {
 				log.Printf("DB Close Error: %+v", err)
@@ -171,23 +176,4 @@ func main() {
 	if err := generator.Start(ctx); err != nil {
 		log.Printf("Generator Error: %+v", err)
 	}
-}
-
-// forked this methods from core-js
-func some(arr []string, fn func(string) bool) bool {
-	for _, v := range arr {
-		if fn(v) {
-			return true
-		}
-	}
-	return false
-}
-
-func have(arr []string, fn func(string) bool) bool {
-	for _, v := range arr {
-		if !fn(v) {
-			return false
-		}
-	}
-	return true
 }
