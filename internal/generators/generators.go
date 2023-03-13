@@ -13,10 +13,11 @@ import (
 )
 
 type Config struct {
-	ProgressBar progressbar.ProgressBar
-	DryRun      bool
-	Concurrency int
-	Number      int
+	ProgressBar      progressbar.ProgressBar
+	DryRun           bool
+	Concurrency      int
+	Number           int
+	HideStdoutResult bool
 }
 
 type Generator struct {
@@ -44,10 +45,12 @@ func (g *Generator) Start(ctx context.Context) (err error) {
 			log.Printf("Gerate Error: %+v", err)
 		}
 
-		if result := g.walletsRepo.Results(); len(result) > 0 {
-			fmt.Printf("\n%-42s %s\n", "Address", "Seed")
-			fmt.Printf("%-42s %s\n", strings.Repeat("-", 42), strings.Repeat("-", 160))
-			fmt.Println(result)
+		if !g.config.HideStdoutResult {
+			if result := g.walletsRepo.Results(); len(result) > 0 {
+				fmt.Printf("\n%-42s %s\n", "Address", "Seed")
+				fmt.Printf("%-42s %s\n", strings.Repeat("-", 42), strings.Repeat("-", 160))
+				fmt.Println(result)
+			}
 		}
 	}()
 

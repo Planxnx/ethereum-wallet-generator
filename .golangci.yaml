@@ -33,9 +33,9 @@ linters: # https://golangci-lint.run/usage/linters/
     - typecheck # bugs
     - unused # unused
     # Other Linters
+    # - dupl # style - code clone detection
     - bodyclose # performance, bugs - checks whether HTTP response body is closed successfully
     - decorder # format, style - check declaration order and count of types, constants, variables and functions
-    - dupl # style - code clone detection
     - errorlint # bugs, error - find code that will cause problems with the error wrapping scheme introduced in Go 1.13.
     - goconst # style - Finds repeated strings that could be replaced by a constant
     - gosec # bugs - Inspects source code for security problems
@@ -47,7 +47,6 @@ linters: # https://golangci-lint.run/usage/linters/
     - usestdlibvars # style - detect the possibility to use variables/constants from the Go standard library
     - whitespace # style - detection of leading and trailing whitespace
     - wrapcheck # style, error - Checks that errors returned from external packages are wrapped, we should wrap the error from external library
-    - dupl # style - code clone detection
     - nosnakecase # style - detects snake case of variable naming and function name.
 
 linters-settings:
