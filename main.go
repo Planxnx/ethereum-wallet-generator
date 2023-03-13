@@ -111,7 +111,7 @@ func main() {
 		fmt.Printf("\nCopyright (C) 2023 Planxnx <planxthanee@gmail.com>\n")
 	}()
 
-	var bar *progressbar.ProgressBar
+	var bar progressbar.ProgressBar
 	if *isCompatible {
 		bar = progressbar.NewCompatibleProgressBar(*number)
 	} else {

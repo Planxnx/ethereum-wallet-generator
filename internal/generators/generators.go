@@ -6,13 +6,14 @@ import (
 	"log"
 	"strings"
 	"sync"
+	"sync/atomic"
 
 	"github.com/Planxnx/eth-wallet-gen/pkg/progressbar"
 	"github.com/Planxnx/eth-wallet-gen/pkg/wallets"
 )
 
 type Config struct {
-	ProgressBar *progressbar.ProgressBar
+	ProgressBar progressbar.ProgressBar
 	DryRun      bool
 	Concurrency int
 	Number      int
@@ -38,6 +39,11 @@ func (g *Generator) Start(ctx context.Context) (err error) {
 			return
 		}
 
+		if err := g.walletsRepo.Commit(); err != nil {
+			// Ignore error
+			log.Printf("Gerate Error: %+v", err)
+		}
+
 		if result := g.walletsRepo.Results(); len(result) > 0 {
 			fmt.Printf("\n%-42s %s\n", "Address", "Seed")
 			fmt.Printf("%-42s %s\n", strings.Repeat("-", 42), strings.Repeat("-", 160))
@@ -45,7 +51,8 @@ func (g *Generator) Start(ctx context.Context) (err error) {
 		}
 	}()
 
-	resolvedCount := 0
+	var resolvedCount atomic.Int64
+
 	var wg sync.WaitGroup
 	// generate wallets without db
 	semph := make(chan int, g.config.Concurrency)
@@ -65,16 +72,17 @@ func (g *Generator) Start(ctx context.Context) (err error) {
 
 				ok, err := g.walletsRepo.Generate()
 				if err != nil {
-					log.Printf("Error: %+v", err)
+					// Ignore error
+					log.Printf("Gerate Error: %+v", err)
 					return
 				}
 				if !ok {
 					return
 				}
 
-				resolvedCount++
-				_ = g.config.ProgressBar.Increment()
-				_ = g.config.ProgressBar.SetResolved(resolvedCount)
+				resolvedCount.Add(1)
+				_ = bar.Increment()
+				_ = bar.SetResolved(int(resolvedCount.Load()))
 			}()
 		}
 	}

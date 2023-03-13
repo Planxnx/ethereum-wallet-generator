@@ -10,15 +10,23 @@ import (
 
 const DefaultStandardModeTemplate = `{{counters . }} | {{bar . "" "█" "█" "" "" | rndcolor}} | {{percent . }} | {{speed . }} | {{string . "resolved"}}`
 
-// ProgressBar progressbar logging with 2 mode
-type ProgressBar struct {
+// ProgressBar progress bar interface
+type ProgressBar interface {
+	Increment() error
+	SetResolved(resolved int) error
+	Finish() error
+}
+
+// progressBar progressbar logging with 2 mode.
+// TODO: extract to compateMode and standardMode adapters
+type progressBar struct {
 	StandardMode   *pb.ProgressBar
 	CompatibleMode *progressbar.ProgressBar
 }
 
 // NewCompatibleProgressBar returns a new progress bar set to compatible mode.
-func NewCompatibleProgressBar(number int) *ProgressBar {
-	return &ProgressBar{
+func NewCompatibleProgressBar(number int) ProgressBar {
+	return &progressBar{
 		CompatibleMode: progressbar.NewOptions(number,
 			progressbar.OptionSetItsString("w"),
 			progressbar.OptionSetPredictTime(true),
@@ -30,8 +38,8 @@ func NewCompatibleProgressBar(number int) *ProgressBar {
 }
 
 // NewStandardProgressBar returns a new progress bar set to standard mode.
-func NewStandardProgressBar(number int) *ProgressBar {
-	bar := &ProgressBar{
+func NewStandardProgressBar(number int) ProgressBar {
+	bar := &progressBar{
 		StandardMode: pb.StartNew(number),
 	}
 	bar.StandardMode.SetTemplate(pb.Default)
@@ -40,7 +48,7 @@ func NewStandardProgressBar(number int) *ProgressBar {
 }
 
 // Increment increment progress
-func (bar *ProgressBar) Increment() error {
+func (bar *progressBar) Increment() error {
 	if bar.CompatibleMode != nil {
 		return errors.WithStack(bar.CompatibleMode.Add(1))
 	}
@@ -48,7 +56,7 @@ func (bar *ProgressBar) Increment() error {
 }
 
 // SetResolved set resolved wallet number
-func (bar *ProgressBar) SetResolved(resolved int) error {
+func (bar *progressBar) SetResolved(resolved int) error {
 	if bar.StandardMode != nil {
 		return errors.WithStack(bar.StandardMode.Set("resolved", fmt.Sprintf("resolved: %v", resolved)).Err())
 	}
@@ -56,7 +64,7 @@ func (bar *ProgressBar) SetResolved(resolved int) error {
 }
 
 // Finish close progress bar
-func (bar *ProgressBar) Finish() error {
+func (bar *progressBar) Finish() error {
 	if bar.CompatibleMode != nil {
 		return errors.WithStack(bar.CompatibleMode.Close())
 	}
