@@ -7,6 +7,7 @@ import (
 	"strings"
 	"sync"
 	"sync/atomic"
+	"time"
 
 	"github.com/Planxnx/eth-wallet-gen/pkg/progressbar"
 	"github.com/Planxnx/eth-wallet-gen/pkg/wallets"
@@ -33,12 +34,15 @@ func New(walletsRepo *wallets.Repository, cfg Config) *Generator {
 }
 
 func (g *Generator) Start(ctx context.Context) (err error) {
-	bar := g.config.ProgressBar
+	var (
+		bar           = g.config.ProgressBar
+		resolvedCount atomic.Int64
+		start         = time.Now()
+	)
+	defer func() {
+	}()
 	defer func() {
 		_ = bar.Finish()
-		if g.config.DryRun {
-			return
-		}
 
 		if err := g.walletsRepo.Commit(); err != nil {
 			// Ignore error
@@ -46,18 +50,20 @@ func (g *Generator) Start(ctx context.Context) (err error) {
 		}
 
 		if !g.config.HideStdoutResult {
-			if result := g.walletsRepo.Results(); len(result) > 0 {
+			if result := g.walletsRepo.Results(); len(result) > 0 && !g.config.DryRun {
 				fmt.Printf("\n%-42s %s\n", "Address", "Seed")
 				fmt.Printf("%-42s %s\n", strings.Repeat("-", 42), strings.Repeat("-", 160))
 				fmt.Println(result)
 			}
+
+			fmt.Printf("\nResolved Speed: %.2f w/s\n", float64(resolvedCount.Load())/time.Since(start).Seconds())
+			fmt.Printf("Total Duration: %v\n", time.Since(start))
+			fmt.Printf("Total Wallet Resolved: %d w\n", resolvedCount.Load())
+			fmt.Printf("\nCopyright (C) 2023 Planxnx <planxthanee@gmail.com>\n")
 		}
 	}()
 
-	var resolvedCount atomic.Int64
-
 	var wg sync.WaitGroup
-	// generate wallets without db
 	semph := make(chan int, g.config.Concurrency)
 	for i := 0; i < g.config.Number || g.config.Number < 0; i++ {
 		select {
@@ -89,6 +95,7 @@ func (g *Generator) Start(ctx context.Context) (err error) {
 			}()
 		}
 	}
+
 	wg.Wait()
 
 	return nil
