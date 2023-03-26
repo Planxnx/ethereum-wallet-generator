@@ -36,7 +36,7 @@ func New(walletsRepo *wallets.Repository, cfg Config) *Generator {
 func (g *Generator) Start(ctx context.Context) (err error) {
 	var (
 		bar           = g.config.ProgressBar
-		resolvedCount atomic.Int64
+		resolvedCount int64
 		start         = time.Now()
 	)
 	defer func() {
@@ -56,9 +56,9 @@ func (g *Generator) Start(ctx context.Context) (err error) {
 				fmt.Println(result)
 			}
 
-			fmt.Printf("\nResolved Speed: %.2f w/s\n", float64(resolvedCount.Load())/time.Since(start).Seconds())
+			fmt.Printf("\nResolved Speed: %.2f w/s\n", float64(resolvedCount)/time.Since(start).Seconds())
 			fmt.Printf("Total Duration: %v\n", time.Since(start))
-			fmt.Printf("Total Wallet Resolved: %d w\n", resolvedCount.Load())
+			fmt.Printf("Total Wallet Resolved: %d w\n", resolvedCount)
 			fmt.Printf("\nCopyright (C) 2023 Planxnx <planxthanee@gmail.com>\n")
 		}
 	}()
@@ -77,11 +77,11 @@ func (g *Generator) Start(ctx context.Context) (err error) {
 					return
 				}
 				if ok {
-					resolvedCount.Add(1)
+					atomic.AddInt64(&resolvedCount, 1)
 				}
 
 				_ = bar.Increment()
-				_ = bar.SetResolved(int(resolvedCount.Load()))
+				_ = bar.SetResolved(int(resolvedCount))
 			}
 		}()
 	}
