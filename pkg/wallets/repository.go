@@ -83,7 +83,7 @@ func (r *Repository) Generate() (ok bool, err error) {
 		return true, nil
 	}
 
-	if _, err := fmt.Fprintf(&r.result, "%-18s %s\n", wallet.Address, wallet.Mnemonic); err != nil {
+	if err := r.stdInsert(wallet); err != nil {
 		return false, errors.Wrapf(ErrorCanNotStore, err.Error())
 	}
 
@@ -94,7 +94,6 @@ func (r *Repository) Close() error {
 	if err := r.Commit(); err != nil {
 		return errors.WithStack(err)
 	}
-	r.result.Reset()
 	return nil
 }
 
@@ -117,6 +116,17 @@ func (r *Repository) Results() string {
 		return r.result.String()
 	}
 	return ""
+}
+
+func (r *Repository) stdInsert(wallet *Wallet) error {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+
+	if _, err := fmt.Fprintf(&r.result, "%-18s %s\n", wallet.Address, wallet.Mnemonic); err != nil {
+		return errors.Wrapf(ErrorCanNotStore, err.Error())
+	}
+
+	return nil
 }
 
 func (r *Repository) dbInsert(wallet *Wallet) error {
