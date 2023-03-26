@@ -64,21 +64,12 @@ func (g *Generator) Start(ctx context.Context) (err error) {
 	}()
 
 	var wg sync.WaitGroup
-	semph := make(chan int, g.config.Concurrency)
-	for i := 0; i < g.config.Number || g.config.Number < 0; i++ {
-		select {
-		case <-ctx.Done():
-			return
-		default:
-			semph <- 1
-			wg.Add(1)
-
-			go func() {
-				defer func() {
-					<-semph
-					wg.Done()
-				}()
-
+	commands := make(chan struct{})
+	for i := 0; i < g.config.Concurrency; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			for range commands {
 				ok, err := g.walletsRepo.Generate()
 				if err != nil {
 					// Ignore error
@@ -92,10 +83,21 @@ func (g *Generator) Start(ctx context.Context) (err error) {
 				resolvedCount.Add(1)
 				_ = bar.Increment()
 				_ = bar.SetResolved(int(resolvedCount.Load()))
-			}()
+			}
+		}()
+	}
+
+mainloop:
+	for i := 0; i < g.config.Number || g.config.Number < 0; i++ {
+		select {
+		case <-ctx.Done():
+			break mainloop
+		default:
+			commands <- struct{}{}
 		}
 	}
 
+	close(commands)
 	wg.Wait()
 
 	return nil
