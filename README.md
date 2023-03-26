@@ -164,7 +164,7 @@ Total Duration: 1m2.3567961s
 Total Wallet Resolved: 2 w
 ```
 
-### **Speed up wallet generation by using Concurrency and storing to SQLite3:**
+### **Storing to embeded databse(SQLite3) to easily management:**
 
 ```console
 $ eth-wallet-gen -n 50000 -c 12 -db 0x77.db -prefix 0x77
