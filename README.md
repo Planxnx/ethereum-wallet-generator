@@ -35,7 +35,7 @@
 - ∞ Enable infinite wallet generation! (set number to -1 to active infinite loop) ∞
 - Auto-generate BIP-39 mnemonic using 128-256 bits of entropy (12, 24 Word Seed Phrase) (Default is 128 bits or 12 words).
 - Default (HD Wallet)Hierarchical Deterministic Path - m/44'/60'/0'/0 .
-- Tiny Sizes and Superior Speed with Golang 🚀 (required go 1.18 or higher)
+- Tiny Sizes and Superior Speed with Golang 🚀 (required go 1.19 or higher)
 - No Go? No Problem! [Docker images](https://hub.docker.com/r/planxthanee/eth-wallet-gen) are provided for you 🐳
 - Embedded Database Supported! (with SQLite3).
 - Filtering by RegEx or Letters Supported! [regex, prefix, suffix, contains] (resolve only the addresses that you want) 🔥
