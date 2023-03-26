@@ -1,22 +1,23 @@
+# Ethereum Wallet Generator
 <br>
 <h3 align="center">
   
-  <img src="https://user-images.githubusercontent.com/37617738/120125455-13de3a00-c1e3-11eb-9a51-707e2dcefdaa.png" alt="eth" height="70" />
+  <img src="https://user-images.githubusercontent.com/37617738/120125455-13de3a00-c1e3-11eb-9a51-707e2dcefdaa.png" alt="Ethereum Wallet Generator" height="70" />
    &nbsp&nbsp
-  <img src="https://user-images.githubusercontent.com/37617738/120122724-aaefc580-c1d4-11eb-9343-234eb8fb3ab9.png" alt="eth-wallet-gen" height="50" />
+  <img src="https://user-images.githubusercontent.com/37617738/120122724-aaefc580-c1d4-11eb-9343-234eb8fb3ab9.png" alt="Ethereum Wallet Generator" height="50" />
 </h3>
 <br/>
 <h3 align="center">
-  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" height="50" />
-  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" height="60" />
-  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" height="70" />
-  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" height="80" />
-  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" height="90" />
-  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" height="100" />
-  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" height="110" />
-  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" height="120" />
-  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" height="130" />
-  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go-eth" height="140" />
+  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go ethereum" height="50" />
+  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go ethereum" height="60" />
+  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go ethereum" height="70" />
+  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go ethereum" height="80" />
+  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go ethereum" height="90" />
+  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go ethereum" height="100" />
+  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go ethereum" height="110" />
+  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go ethereum" height="120" />
+  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go ethereum" height="130" />
+  <img src="https://user-images.githubusercontent.com/37617738/120087436-1886ed80-c112-11eb-945f-8065957a1dd0.png" alt="go ethereum" height="140" />
 </h3>
 <br>
 
