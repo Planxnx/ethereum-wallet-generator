@@ -49,7 +49,7 @@
 <img  align="right" src="https://user-images.githubusercontent.com/37617738/120122855-b1cb0800-c1d5-11eb-9502-8d64bb275337.png" height="140" alt="gopher" />
 
 ```console
-$ go get -u github.com/Planxnx/eth-wallet-gen
+$ go install github.com/Planxnx/eth-wallet-gen
 or
 $ docker pull planxthanee/eth-wallet-gen:latest
 ```
