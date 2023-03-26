@@ -20,7 +20,7 @@
 </h3>
 <br>
 
-> **Multiple Ethereum and Crypto Wallets Generator written in Go💰** > <br>Generate a thousand crypto wallets in a sec ⚡️
+> **Multi Ethereum and Crypto Wallets Generator written in Go💰** <br>Generate a thousand crypto wallets (public key and mnemonic seed) in a sec ⚡️<br>Find beautiful and awesome wallet addresses 🎨
 
 [![Golang](https://badges.aleen42.com/src/golang.svg)](https://golang.org/)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/1d765b63df4b4266bdcf653d5a024458)](https://www.codacy.com/gh/Planxnx/eth-wallet-gen/dashboard?utm_source=github.com&utm_medium=referral&utm_content=Planxnx/eth-wallet-gen&utm_campaign=Badge_Grade)
@@ -30,19 +30,23 @@
 [![DeepSource](https://deepsource.io/gh/Planxnx/eth-wallet-gen.svg/?label=active+issues)](https://deepsource.io/gh/Planxnx/eth-wallet-gen/?ref=repository-badge)
 [![license](https://img.shields.io/badge/license-WTFPL%20--%20Do%20What%20the%20Fuck%20You%20Want%20to%20Public%20License-green.svg)](https://github.com/Planxnx/eth-wallet-gen/blob/main/LICENSE)
 
-#### Easy & Fast Way to generate more than thousands of Ethereum Wallets at once!
+## Easy & Fast  Way to generate a thousands beauty Ethereum Wallets in a sec ⚡️🎨
+![ethereum and crypto wallets generated](https://user-images.githubusercontent.com/37617738/227807144-c1dc59ae-94fd-4fdf-9678-bf8c12e58cd4.png)
 
-- ∞ Enable infinite wallet generation! (set number to -1 to active infinite loop) ∞
-- Auto-generate BIP-39 mnemonic using 128-256 bits of entropy (12, 24 Word Seed Phrase) (Default is 128 bits or 12 words).
-- Default (HD Wallet)Hierarchical Deterministic Path - m/44'/60'/0'/0 .
+- Awesome and Beautiful wallet addresses filtering supported! [regex, prefix, suffix, contains] 🎨
+- ∞ Infinite wallet generating! (set number to -1 to active infinite loop) ∞
+- Generate word seed phrase with BIP-39 mnemonic (support 12, 24 Word Seed Phrase) (Default is 128 bits for 12 words).
+- Embedded Database Supported! (with SQLite3). It's easiest to generate, manage, search a billion wallets without any pain.
 - Tiny Sizes and Superior Speed with Golang 🚀 (required go 1.19 or higher)
 - No Go? No Problem! [Docker images](https://hub.docker.com/r/planxthanee/eth-wallet-gen) are provided for you 🐳
-- Embedded Database Supported! (with SQLite3).
-- Filtering by RegEx or Letters Supported! [regex, prefix, suffix, contains] (resolve only the addresses that you want) 🔥
 - Speed things up!! with customizable concurrency numbers ⚡️
 - You can benchmark generating speed by setting the `isDryrun` flag 📈
+- Default (HD Wallet)Hierarchical Deterministic Path - m/44'/60'/0'/0 .
 - [Golang Package](https://github.com/Planxnx/eth-wallet-gen/blob/main/generator) to import within your projects.
 - We recommend every user of this application audit and verify every source code in this repository and every imported dependecies for its validity and clearness. 👮🏻‍♂️
+
+
+
 
 ## Installation
 
@@ -143,7 +147,7 @@ Total Wallet Resolved: 2 w
 ### **Speed up wallet generation by using Concurrency and storing to SQLite3:**
 
 ```console
-$ eth-wallet-gen -n 50000 -c 12 -db wallet.db -prefix 0x
+$ eth-wallet-gen -n 50000 -c 12 -db 0x77.db -prefix 0x77
 ===============ETH Wallet Generator===============
 
 50000 / 50000 | [█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 5384 p/s | resovled: 50000
@@ -152,6 +156,8 @@ Resolved Speed: 5266.02 w/s
 Total Duration: 9.4908578s
 Total Wallet Resolved: 50000 w
 ```
+![image](https://user-images.githubusercontent.com/37617738/227806706-02a8a7fa-7d2b-43ca-b89b-c21cc51835ff.png)
+
 
 ### **Use Docker (recommend using concurrency for speed up):**
 
