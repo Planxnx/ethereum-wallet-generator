@@ -106,6 +106,26 @@ Total Wallet Resolved: 10 w
 
 ```
 
+### **Speeding up with concurrency:**
+
+```console
+$ eth-wallet-gen -n 10000 -c 16
+===============ETH Wallet Generator===============
+
+10000 / 10000 | [██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 5081 p/s | resolved: 10000
+
+.
+.
+.
+
+Resolved Speed: 5080.86 w/s
+Total Duration: 1.96817s
+Total Wallet Resolved: 10000 w
+
+Copyright (C) 2023 Planxnx <planxthanee@gmail.com>
+
+```
+
 ### **Filter with contains options:**
 
 ```console
