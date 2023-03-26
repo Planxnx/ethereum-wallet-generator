@@ -148,7 +148,10 @@ func main() {
 
 	go func() {
 		<-ctx.Done()
-		log.Printf("gracefully shutting down...\n")
+
+		if err := generator.Shutdown(); err != nil {
+			log.Printf("Generator Shutdown Error: %+v", err)
+		}
 
 		if err := walletsRepo.Close(); err != nil {
 			log.Printf("WalletsRepo Close Error: %+v", err)
@@ -161,7 +164,7 @@ func main() {
 		}
 	}()
 
-	if err := generator.Start(ctx); err != nil {
+	if err := generator.Start(); err != nil {
 		log.Printf("Generator Error: %+v", err)
 	}
 }
