@@ -20,7 +20,7 @@
 </h3>
 <br>
 
-> **Multi Ethereum and Crypto Wallets Generator written in Go💰** <br>Generate a thousand crypto wallets (public key and mnemonic seed) in a sec ⚡️<br>Find beautiful and awesome wallet addresses 🎨
+> **Multiple Ethereum and Crypto Wallets Generator written in Go💰** <br>Generate a thousand crypto wallets (public key and mnemonic seed) in a sec ⚡️<br>Find beautiful and awesome wallet addresses 🎨
 
 [![Golang](https://badges.aleen42.com/src/golang.svg)](https://golang.org/)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/1d765b63df4b4266bdcf653d5a024458)](https://www.codacy.com/gh/Planxnx/eth-wallet-gen/dashboard?utm_source=github.com&utm_medium=referral&utm_content=Planxnx/eth-wallet-gen&utm_campaign=Badge_Grade)
