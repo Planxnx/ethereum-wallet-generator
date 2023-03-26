@@ -59,10 +59,10 @@ $ docker pull planxthanee/eth-wallet-gen:latest
 ```console
 Usage of eth-wallet-gen:
   -n          int    set number of wallets to generate (default 10) (set number to -1 for Infinite loop ∞)
-  -db         string set sqlite output file name eg. wallets.db (db file will create in /db)
+  -db         string set sqlite output file name eg. wallets.db (db file will create in `/db` folder)
   -c          int    set concurrency value (default 1)
-  -bit        int    set number of entropy bits [128, 256] (default 256)
-  -strict     bool   strict contains mode (required contains to use)
+  -bit        int    set number of entropy bits [128 for 12 words, 256 for 24 words] (default 128)
+  -strict     bool   strict contains mode, resolve only the addresses that contain all the given letters (required contains to use)
   -contains   string used to check if the given letters are present in the given string (support for multiple characters)
   -prefix     string used to check if the given letters are present in the prefix string (support for single character)
   -suffix     string used to check if the given letters are present in the suffix string (support for single character)
@@ -80,20 +80,20 @@ $ eth-wallet-gen
 
 ===============ETH Wallet Generator===============
 
-10 / 10 | [█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | ? p/s | resovled: 10
+10 / 10 | [█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 503 p/s | resovled: 10
 
 Address                                    Seed
 ------------------------------------------ ----------------------------------------------------------------------------------------------------------------------------------------------------------------
-0xc982Dd2E1E9E980A40725367916000793c258aB4 beauty spring lend endless unique thing neutral dignity soup beyond park pact accident mosquito barely tuition memory rather salt spend disease execute list input
-0x39F85fb3EFd4Ee8191cE2531AE61d8F2D7C8716f judge match embark suspect wonder sea skull immense ahead galaxy tree recycle lyrics ridge slide physical derive equip clever improve recipe quality tattoo link
-0xb3125E8e8Ac9cd54D42DddA9f04D149717AeaaEC pupil ugly festival cruise bar shuffle ball mansion unhappy knee chunk spell fetch rude usage wait picture glue effort wrong angry awake common sample
-0x12De8E6eE2A3c82188f12e0ebA984977E49f6E42 hamster treat alcohol thunder reopen demise sick burger beauty reflect bird simple few win female moral paddle version awful develop tell cake that sphere
-0x65b25D613C1fAf0a2D48d23757Ed8242f3Ef19f4 flight safe pitch digital main civil pumpkin trick harbor announce drastic nerve super net credit brother swift soldier tonight bonus beyond jelly way video
-0x831A0855726f322c61F943b5fb2D212d5451EBb4 olympic people exchange defense lizard maple doctor wool scene ask broken bitter moment sweet help slide off buyer guilt boost trial fame ride method
-0x8031c4f8d2A64b1458D749e772A0B365E783A61E increase detect together doll include security insect flash arena deputy orchard poem pact dove atom review wash fashion lonely globe over visa remind toddler
-0xD8e65744C6F0DA597b34BDEFAE67e8B1eD1ed9F1 word hour assist warrior hold number right when city off frequent tube enrich steel dentist provide million reject dune ship pudding candy annual almost
-0x2CC9df2B0210415Bf15dde9883e89Ad73a548d2f involve people rural grief business case fun injury noodle ritual slender flash predict prosper weird expire remind tank knock anger pool network change style
-0x6c6575237168e923F1a2d2Ef6fb7E1cc62404A8D bargain include street tent unique vague animal axis turn hockey scatter attitude naive couple adjust cement deny actor average odor estate happy barrel birth
+0x239ffa10fcd89b2359a5bd8c27c866cfad8eb75a lecture edge end come west mountain van wing zebra trumpet size wool
+0x3addecebd6c63be1730205d249681a179e3c768b need decide earth farm punch crush banana unfold income month bread unhappy
+0xc4f55b38e6e586cf974eb005e07482fd40274a26 hundred hundred canvas casual staff candy sign travel sort chat travel space
+0xe8df7efc452801dc7c75137136c76006bbc2e6d6 gospel father funny pair catalog today champion maple valid feed loop write
+0xdf2809a480e29a883a69beb6dedff095984f09eb poet impulse can undo vital stadium tattoo labor trap now blanket assume
+0xabc91fd93be63474c14699a1697533410115824c aisle almost miracle coach practice ostrich thing solution ask kiss idle object
+0xc9af163bbac66c1c75f3c5f67f758eed1c6077ba funny shift guilt lucky fringe install sugar forget wagon famous inject evoke
+0xcf959644c8ee3c20ac9fbecc85610de067cca890 cupboard analyst remove sausage frame engage visual crowd deny boy firm stick
+0xa8904e447afb9e0d9b601669aeca53c9b66fe058 sentence skin april wool huge dad bitter loyal perfect again document boring
+0x107a842b628b999827730e4543314c6681c72b93 turkey shove mountain yellow ugly shoot crouch donor topple girl polar pelican
 
 
 Resolved Speed: 502.78 w/s
@@ -102,10 +102,29 @@ Total Wallet Resolved: 10 w
 
 ```
 
-### **Filter with contains and strict options:**
+### **Filter with contains options:**
 
 ```console
-$ eth-wallet-gen -n 50000 -contains 0x00,777 -strict
+$ eth-wallet-gen -n 100 -contains 0x000,777
+===============ETH Wallet Generator===============
+
+100 / 100 | [██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 5073 p/s | resovled: 2
+
+Address                                    Seed
+------------------------------------------ ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+0x0004b4067dfe53903d208c032c7bc113ee02c562 economy scene object friend ribbon hungry area thank arrest unfair push hungry
+0xac9466777a844f96bf9ac7dafc9bdfeab3e5c8b4 dutch camp banana horse capable border arrest stadium math sport decade help
+
+
+Resolved Speed: 9.08 w/s
+Total Duration: 220.403958ms
+Total Wallet Resolved: 2 w
+```
+
+### **24 word seed prhase and filter with contains and strict options:**
+
+```console
+$ eth-wallet-gen -n 50000 -contains 0x00,777 -strict -bit 256
 ===============ETH Wallet Generator===============
 
 50000 / 50000 | [██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 803 p/s | resovled: 2
