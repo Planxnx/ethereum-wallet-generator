@@ -43,7 +43,6 @@
 - Speed things up!! with customizable concurrency numbers ⚡️
 - You can benchmark generating speed by setting the `isDryrun` flag 📈
 - Default (HD Wallet)Hierarchical Deterministic Path - m/44'/60'/0'/0 .
-- [Golang Package](https://github.com/Planxnx/eth-wallet-gen/blob/main/generator) to import within your projects.
 - We recommend every user of this application audit and verify every source code in this repository and every imported dependecies for its validity and clearness. 👮🏻‍♂️
 
 
