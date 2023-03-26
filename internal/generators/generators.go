@@ -76,11 +76,10 @@ func (g *Generator) Start(ctx context.Context) (err error) {
 					log.Printf("Gerate Error: %+v", err)
 					return
 				}
-				if !ok {
-					return
+				if ok {
+					resolvedCount.Add(1)
 				}
 
-				resolvedCount.Add(1)
 				_ = bar.Increment()
 				_ = bar.SetResolved(int(resolvedCount.Load()))
 			}
