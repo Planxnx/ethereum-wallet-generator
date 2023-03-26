@@ -99,17 +99,6 @@ func main() {
 		*number = -1
 	}
 
-	// now := time.Now()
-	// resolvedCount := 0
-
-	// defer func() {
-	// 	fmt.Printf("\nResolved Speed: %.2f w/s\n", float64(resolvedCount)/time.Since(now).Seconds())
-	// 	fmt.Printf("Total Duration: %v\n", time.Since(now))
-	// 	fmt.Printf("Total Wallet Resolved: %d w\n", resolvedCount)
-
-	// 	fmt.Printf("\nCopyright (C) 2023 Planxnx <planxthanee@gmail.com>\n")
-	// }()
-
 	var bar progressbar.ProgressBar
 	if *isCompatible {
 		bar = progressbar.NewCompatibleProgressBar(*number)
