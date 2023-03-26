@@ -150,11 +150,11 @@ Total Wallet Resolved: 2 w
 $ eth-wallet-gen -n 50000 -c 12 -db 0x77.db -prefix 0x77
 ===============ETH Wallet Generator===============
 
-50000 / 50000 | [█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 5384 p/s | resovled: 50000
+50000 / 50000 | [█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 5384 p/s | resovled: 178
 
-Resolved Speed: 5266.02 w/s
-Total Duration: 9.4908578s
-Total Wallet Resolved: 50000 w
+Resolved Speed: 16.04 w/s
+Total Duration: 11.09416725s
+Total Wallet Resolved: 178 w
 ```
 ![image](https://user-images.githubusercontent.com/37617738/227806706-02a8a7fa-7d2b-43ca-b89b-c21cc51835ff.png)
 
