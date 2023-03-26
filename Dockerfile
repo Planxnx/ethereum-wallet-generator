@@ -1,7 +1,7 @@
 ############################
 # STEP 1 build executable binary
 ############################
-FROM golang:1.19.0-alpine AS builder
+FROM golang:1.20.2-alpine AS builder
 RUN apk update && apk add build-base && apk add gcc
 WORKDIR /src/build
 COPY go.mod go.sum ./
