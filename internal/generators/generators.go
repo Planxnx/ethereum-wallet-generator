@@ -1,7 +1,6 @@
 package generators
 
 import (
-	"context"
 	"fmt"
 	"log"
 	"strings"
@@ -24,23 +23,30 @@ type Config struct {
 type Generator struct {
 	walletsRepo *wallets.Repository
 	config      Config
+
+	isShutdown     atomic.Bool
+	shutdownSignal chan struct{}
+	shutDownWg     sync.WaitGroup
 }
 
 func New(walletsRepo *wallets.Repository, cfg Config) *Generator {
 	return &Generator{
-		walletsRepo: walletsRepo,
-		config:      cfg,
+		walletsRepo:    walletsRepo,
+		config:         cfg,
+		shutdownSignal: make(chan struct{}),
 	}
 }
 
-func (g *Generator) Start(ctx context.Context) (err error) {
+func (g *Generator) Start() (err error) {
+	g.isShutdown.Store(false)
+	g.shutDownWg.Add(1)
+	defer g.shutDownWg.Done()
+
 	var (
 		bar           = g.config.ProgressBar
 		resolvedCount atomic.Int64
 		start         = time.Now()
 	)
-	defer func() {
-	}()
 	defer func() {
 		_ = bar.Finish()
 
@@ -61,6 +67,8 @@ func (g *Generator) Start(ctx context.Context) (err error) {
 			fmt.Printf("Total Wallet Resolved: %d w\n", resolvedCount.Load())
 			fmt.Printf("\nCopyright (C) 2023 Planxnx <planxthanee@gmail.com>\n")
 		}
+
+		g.isShutdown.Store(true)
 	}()
 
 	var wg sync.WaitGroup
@@ -89,7 +97,7 @@ func (g *Generator) Start(ctx context.Context) (err error) {
 mainloop:
 	for i := 0; i < g.config.Number || g.config.Number < 0; i++ {
 		select {
-		case <-ctx.Done():
+		case <-g.shutdownSignal:
 			break mainloop
 		default:
 			commands <- struct{}{}
@@ -98,6 +106,16 @@ mainloop:
 
 	close(commands)
 	wg.Wait()
+	return nil
+}
 
+func (g *Generator) Shutdown() (err error) {
+	if g.isShutdown.Load() {
+		return nil
+	}
+	go func() {
+		g.shutdownSignal <- struct{}{}
+	}()
+	g.shutDownWg.Wait()
 	return nil
 }
