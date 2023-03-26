@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        go-version: ["1.18.x", "1.x"]
+        go-version: ["1.19.x", "1.x"]
     name: Lint, Test and Build (${{ matrix.os }}/${{ matrix.go-version }})
     runs-on: ${{ matrix.os }}
     steps:
