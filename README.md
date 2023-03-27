@@ -26,7 +26,7 @@
 
 [![Golang](https://badges.aleen42.com/src/golang.svg)](https://golang.org/)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/1d765b63df4b4266bdcf653d5a024458)](https://www.codacy.com/gh/Planxnx/ethereum-wallet-generator/dashboard?utm_source=github.com&utm_medium=referral&utm_content=Planxnx/ethereum-wallet-generator&utm_campaign=Badge_Grade)
-![Docker Image Size (tag)](https://img.shields.io/docker/image-size/planxthanee/ethereum-wallet-generator/latest)
+[![Docker Image Size (tag)](https://img.shields.io/docker/image-size/planxthanee/ethereum-wallet-generator/latest)](https://hub.docker.com/r/planxthanee/ethereum-wallet-generator)
 [![Code Analysis & Tests](https://github.com/Planxnx/ethereum-wallet-generator/actions/workflows/code-analysis.yml/badge.svg)](https://github.com/Planxnx/ethereum-wallet-generator/actions/workflows/code-analysis.yml)
 ![GitHub issues](https://img.shields.io/github/issues/Planxnx/ethereum-wallet-generator)
 [![DeepSource](https://deepsource.io/gh/Planxnx/ethereum-wallet-generator.svg/?label=active+issues)](https://deepsource.io/gh/Planxnx/ethereum-wallet-generator/?ref=repository-badge)
