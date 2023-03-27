@@ -5,4 +5,4 @@ name = "go"
 enabled = true
 
   [analyzers.meta]
-  import_root = "github.com/Planxnx/eth-wallet-gen"
+  import_root = "github.com/Planxnx/ethereum-wallet-generator"

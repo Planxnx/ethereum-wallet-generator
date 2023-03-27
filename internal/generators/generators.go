@@ -8,8 +8,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/Planxnx/eth-wallet-gen/pkg/progressbar"
-	"github.com/Planxnx/eth-wallet-gen/pkg/wallets"
+	"github.com/Planxnx/ethereum-wallet-generator/pkg/progressbar"
+	"github.com/Planxnx/ethereum-wallet-generator/pkg/wallets"
 )
 
 type Config struct {
