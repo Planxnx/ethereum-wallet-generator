@@ -1,4 +1,4 @@
-# Ethereum Wallet Generator
+# Ethereum Vanity Wallet Generator
 
 <br>
 <h3 align="center">
