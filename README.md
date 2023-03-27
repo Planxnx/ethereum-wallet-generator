@@ -22,7 +22,7 @@
 </h3>
 <br>
 
-> **Multiple Ethereum and Crypto Wallets Generator written in Go💰** <br>Generate a thousand crypto wallets (vanity address and mnemonic seed) in a sec ⚡️<br>Find beautiful and awesome wallet addresses 🎨
+> **Multiple Ethereum and Crypto Vanity Wallets Generator written in Go💰** <br>Generate a thousand crypto wallets (vanity address and mnemonic seed) in a sec ⚡️<br>Find beautiful and awesome vanity wallet addresses 🎨
 
 [![Golang](https://badges.aleen42.com/src/golang.svg)](https://golang.org/)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/1d765b63df4b4266bdcf653d5a024458)](https://www.codacy.com/gh/Planxnx/ethereum-wallet-generator/dashboard?utm_source=github.com&utm_medium=referral&utm_content=Planxnx/ethereum-wallet-generator&utm_campaign=Badge_Grade)
@@ -36,7 +36,7 @@
 
 ![ethereum and crypto wallets generated](https://user-images.githubusercontent.com/37617738/227807144-c1dc59ae-94fd-4fdf-9678-bf8c12e58cd4.png)
 
-- Awesome and Beautiful wallet addresses filtering supported! [regex, prefix, suffix, contains] 🎨
+- Awesome and Beautiful vanity wallet addresses supported! [regex, prefix, suffix, contains] 🎨
 - ∞ Infinite wallet generating! (set number to -1 to active infinite loop) ∞
 - Generate word seed phrase with BIP-39 mnemonic (support 12, 24 Word Seed Phrase) (Default is 128 bits for 12 words).
 - Embedded Database Supported! (with SQLite3). It's easiest to generate, manage, search a billion wallets without any pain.
