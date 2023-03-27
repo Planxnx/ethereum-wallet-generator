@@ -37,7 +37,8 @@
 ![ethereum and crypto wallets generated](https://user-images.githubusercontent.com/37617738/227807144-c1dc59ae-94fd-4fdf-9678-bf8c12e58cd4.png)
 
 - Awesome and Beautiful vanity wallet addresses supported! [regex, prefix, suffix, contains] 🎨
-- ∞ Infinite wallet generating! (set number to -1 to active infinite loop) ∞
+- Supports to generating until got the vanity wallet addresses you want 🤩 (using `-n 0` and `-limit <number>` flags)
+- ∞ Infinite wallet generating! (set number to 0 to active infinite loop) ∞
 - Generate word seed phrase with BIP-39 mnemonic (support 12, 24 Word Seed Phrase) (Default is 128 bits for 12 words).
 - Embedded Database Supported! (with SQLite3). It's easiest to generate, manage, search a billion wallets without any pain.
 - Tiny Sizes and Superior Speed with Golang 🚀 (required go 1.19 or higher)
@@ -67,7 +68,8 @@ $ docker pull planxthanee/ethereum-wallet-generator:latest
 
 ```console
 Usage of ethereum-wallet-generator:
-  -n          int    set number of generate times (not number of result wallets) (set number to -1 for Infinite loop ∞)
+  -n          int    set number of generate times (not number of result wallets) (set number to 0 for Infinite loop ∞, default 10)
+  -limit      int    set limit number of result wallets. stop generate when result of vanity wallets reach the limit (set number to 0 for no limit, default 0)
   -db         string set sqlite output file name eg. wallets.db (db file will create in `/db` folder)
   -c          int    set concurrency value (default 1)
   -bit        int    set number of entropy bits [128 for 12 words, 256 for 24 words] (default 128)
@@ -82,7 +84,7 @@ Usage of ethereum-wallet-generator:
 
 ## Examples
 
-### **Simple stdout:**
+### **Simple usgae:**
 
 ```console
 $ ethereum-wallet-generator
@@ -111,61 +113,43 @@ Total Wallet Resolved: 10 w
 
 ```
 
-### **Speeding up with concurrency:**
+### **Generate until got expected number of vanity addresses and Speeding up with concurrency:**
 
 ```console
-$ ethereum-wallet-generator -n 10000 -c 16
+$ ethereum-wallet-generator -n -1 -limit 5 -contains 0x000,0x777 -c 8
 ===============ETH Wallet Generator===============
 
-10000 / 10000 | [██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 5081 p/s | resolved: 10000
-
-.
-.
-.
-
-Resolved Speed: 5080.86 w/s
-Total Duration: 1.96817s
-Total Wallet Resolved: 10000 w
-
-Copyright (C) 2023 Planxnx <planxthanee@gmail.com>
-
-```
-
-### **Filter with contains options:**
-
-```console
-$ ethereum-wallet-generator -n 100 -contains 0x000,777
-===============ETH Wallet Generator===============
-
-100 / 100 | [██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 5073 p/s | resovled: 2
+12435 | [██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 5073 p/s | resovled: 5
 
 Address                                    Seed
 ------------------------------------------ ----------------------------------------------------------------------------------------------------------------------------------------------------------------
-0x0004b4067dfe53903d208c032c7bc113ee02c562 economy scene object friend ribbon hungry area thank arrest unfair push hungry
-0xac9466777a844f96bf9ac7dafc9bdfeab3e5c8b4 dutch camp banana horse capable border arrest stadium math sport decade help
+0x0002e20a2528c4fe90af8dd10a38231d1d937531 jump skull butter topic bronze member feed wait flee oven deer rabbit
+0x000ff528ae048f2cb71cea8cdeb0198ad45ff09f rotate change tooth design price milk derive olympic small sudden payment hover
+0x000b98901463db593613e749d7a4803f24e3a7bb fish zone shift river sort visit begin hunt august trouble fatal easy
+0x7772eef4d1f660d8cd0b89f4d6cdf90175b63b3a review today coil purity mouse lucky trip collect mail right weekend remove
+0x77746fe800078d956b3176c367be88cdc39cd878 fiscal east exhibit arena expand indicate fury document vacuum mansion aisle garbage
 
-
-Resolved Speed: 9.08 w/s
-Total Duration: 220.403958ms
-Total Wallet Resolved: 2 w
+Resolved Speed: 1.48 w/s
+Total Duration: 2.4512123s
+Total Wallet Resolved: 5 w
 ```
 
-### **24 word seed prhase and filter with contains and strict options:**
+### **24 word seed prhase and filter vanity addresses with contains and strict options:**
 
 ```console
-$ ethereum-wallet-generator -n 50000 -contains 0x00,777 -strict -bit 256
+$ ethereum-wallet-generator -n 50000 -limit 2 -contains 0x00,777,22 -strict -bit 256
 ===============ETH Wallet Generator===============
 
-50000 / 50000 | [██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 803 p/s | resovled: 2
+31099 / 50000 | [██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 2277 p/s | resovled: 2
 
 Address                                    Seed
 ------------------------------------------ ----------------------------------------------------------------------------------------------------------------------------------------------------------------
-0x00d6118f53777ecFbF430E40121345D91Fb6018b pen cliff toward mushroom stairs finish filter basic slogan exotic bomb senior drip brush coffee include lady tent finish stable evoke wolf lobster frame
-0x0077e7063389F6F7fF8216394ed23D259367dbCb fuel wolf embark tip this accident vague face cave echo shift pear between very child draw version face noodle head bubble oblige supreme slot
+0x00325b7844a4c8612108f407c0ad722da3294777 delay pilot wall radio next uniform margin copper plunge kidney coil runway baby major token method arena brave expand route job raise budget buffalo
+0x00ca8750521c2270e7776becd05d4a7d1b2ffdcb insect fashion original page stamp grow mean cinnamon embody favorite near useless relief crouch ranch nerve card captain situate truly cousin renew birth credit
 
 
-Resolved Speed: 0.02 w/s
-Total Duration: 1m2.3567961s
+Resolved Speed: 0.14 w/s
+Total Duration: 13.857967333s
 Total Wallet Resolved: 2 w
 ```
 

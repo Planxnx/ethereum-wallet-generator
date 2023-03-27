@@ -18,6 +18,7 @@ type Config struct {
 	Concurrency      int
 	Number           int
 	HideStdoutResult bool
+	Limit            int
 }
 
 type Generator struct {
@@ -78,11 +79,15 @@ func (g *Generator) Start() (err error) {
 		go func() {
 			defer wg.Done()
 			for range commands {
+				if !(resolvedCount.Load() < int64(g.config.Limit) || g.config.Limit < 0) {
+					return
+				}
+
 				ok, err := g.walletsRepo.Generate()
 				if err != nil {
 					// Ignore error
 					log.Printf("Gerate Error: %+v", err)
-					return
+					continue
 				}
 				if ok {
 					resolvedCount.Add(1)
@@ -95,7 +100,7 @@ func (g *Generator) Start() (err error) {
 	}
 
 mainloop:
-	for i := 0; i < g.config.Number || g.config.Number < 0; i++ {
+	for i := 0; (i < g.config.Number || g.config.Number < 0) && (resolvedCount.Load() < int64(g.config.Limit) || g.config.Limit < 0); i++ {
 		select {
 		case <-g.shutdownSignal:
 			break mainloop
