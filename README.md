@@ -1,4 +1,4 @@
-# Ethereum Wallet Generator
+# Ethereum Vanity Wallet Generator
 
 <br>
 <h3 align="center">
@@ -22,21 +22,21 @@
 </h3>
 <br>
 
-> **Multiple Ethereum and Crypto Wallets Generator written in Go💰** <br>Generate a thousand crypto wallets (public key and mnemonic seed) in a sec ⚡️<br>Find beautiful and awesome wallet addresses 🎨
+> **Multiple Ethereum and Crypto Vanity Wallets Generator written in Go💰** <br>Generate a thousand crypto wallets (vanity address and mnemonic seed) in a sec ⚡️<br>Find beautiful and awesome vanity wallet addresses 🎨
 
 [![Golang](https://badges.aleen42.com/src/golang.svg)](https://golang.org/)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/1d765b63df4b4266bdcf653d5a024458)](https://www.codacy.com/gh/Planxnx/ethereum-wallet-generator/dashboard?utm_source=github.com&utm_medium=referral&utm_content=Planxnx/ethereum-wallet-generator&utm_campaign=Badge_Grade)
-![Docker Image Size (tag)](https://img.shields.io/docker/image-size/planxthanee/ethereum-wallet-generator/latest)
+[![Docker Image Size (tag)](https://img.shields.io/docker/image-size/planxthanee/ethereum-wallet-generator/latest)](https://hub.docker.com/r/planxthanee/ethereum-wallet-generator)
 [![Code Analysis & Tests](https://github.com/Planxnx/ethereum-wallet-generator/actions/workflows/code-analysis.yml/badge.svg)](https://github.com/Planxnx/ethereum-wallet-generator/actions/workflows/code-analysis.yml)
 ![GitHub issues](https://img.shields.io/github/issues/Planxnx/ethereum-wallet-generator)
 [![DeepSource](https://deepsource.io/gh/Planxnx/ethereum-wallet-generator.svg/?label=active+issues)](https://deepsource.io/gh/Planxnx/ethereum-wallet-generator/?ref=repository-badge)
 [![license](https://img.shields.io/badge/license-WTFPL%20--%20Do%20What%20the%20Fuck%20You%20Want%20to%20Public%20License-green.svg)](https://github.com/Planxnx/ethereum-wallet-generator/blob/main/LICENSE)
 
-## Easy & Fast Way to generate a thousands beauty Ethereum Wallets ⚡️🎨
+## Easy & Fast Way to generate a thousands beauty Ethereum Vanity Wallets ⚡️
 
 ![ethereum and crypto wallets generated](https://user-images.githubusercontent.com/37617738/227807144-c1dc59ae-94fd-4fdf-9678-bf8c12e58cd4.png)
 
-- Awesome and Beautiful wallet addresses filtering supported! [regex, prefix, suffix, contains] 🎨
+- Awesome and Beautiful vanity wallet addresses supported! [regex, prefix, suffix, contains] 🎨
 - ∞ Infinite wallet generating! (set number to -1 to active infinite loop) ∞
 - Generate word seed phrase with BIP-39 mnemonic (support 12, 24 Word Seed Phrase) (Default is 128 bits for 12 words).
 - Embedded Database Supported! (with SQLite3). It's easiest to generate, manage, search a billion wallets without any pain.
@@ -46,6 +46,12 @@
 - You can benchmark generating speed by setting the `isDryrun` flag 📈
 - Default (HD Wallet)Hierarchical Deterministic Path - m/44'/60'/0'/0 .
 - We recommend every user of this application audit and verify every source code in this repository and every imported dependecies for its validity and clearness. 👮🏻‍♂️
+
+## What's a vanity address 🎨
+
+A vanity address is an address which part of it is chosen by yourself. Adding vanity to an address is used to give it personality, to reinforce a brand, to send a message, or to make the owner(s) feel cool 🤩
+
+Examples: `0x1111111254fb6c44bAC0beD2854e76F90643097d`, or `0x9999997001a3d5F44D48729b11cE9eEd1f19a7b9`
 
 ## Installation
 
