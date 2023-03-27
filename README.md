@@ -61,7 +61,7 @@ $ docker pull planxthanee/ethereum-wallet-generator:latest
 
 ```console
 Usage of ethereum-wallet-generator:
-  -n          int    set number of wallets to generate (default 10) (set number to -1 for Infinite loop ∞)
+  -n          int    set number of generate times (default 10) (set number to -1 for Infinite loop ∞)
   -db         string set sqlite output file name eg. wallets.db (db file will create in `/db` folder)
   -c          int    set concurrency value (default 1)
   -bit        int    set number of entropy bits [128 for 12 words, 256 for 24 words] (default 128)
