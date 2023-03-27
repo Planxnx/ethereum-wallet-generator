@@ -32,7 +32,7 @@
 [![DeepSource](https://deepsource.io/gh/Planxnx/ethereum-wallet-generator.svg/?label=active+issues)](https://deepsource.io/gh/Planxnx/ethereum-wallet-generator/?ref=repository-badge)
 [![license](https://img.shields.io/badge/license-WTFPL%20--%20Do%20What%20the%20Fuck%20You%20Want%20to%20Public%20License-green.svg)](https://github.com/Planxnx/ethereum-wallet-generator/blob/main/LICENSE)
 
-## Easy & Fast Way to generate a thousands beauty Ethereum Wallets ⚡️🎨
+## Easy & Fast Way to generate a thousands beauty Ethereum Vanity Wallets ⚡️🎨
 
 ![ethereum and crypto wallets generated](https://user-images.githubusercontent.com/37617738/227807144-c1dc59ae-94fd-4fdf-9678-bf8c12e58cd4.png)
 
@@ -46,6 +46,12 @@
 - You can benchmark generating speed by setting the `isDryrun` flag 📈
 - Default (HD Wallet)Hierarchical Deterministic Path - m/44'/60'/0'/0 .
 - We recommend every user of this application audit and verify every source code in this repository and every imported dependecies for its validity and clearness. 👮🏻‍♂️
+
+## What's a vanity address?
+
+A vanity address is an address which part of it is chosen by yourself. Adding vanity to an address is used to give it personality, to reinforce a brand, to send a message, or to make the owner(s) feel cool 🤩
+
+Examples: `0x1111111254fb6c44bAC0beD2854e76F90643097d`, or `0x9999997001a3d5F44D48729b11cE9eEd1f19a7b9`
 
 ## Installation
 
