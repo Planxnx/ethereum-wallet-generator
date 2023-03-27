@@ -26,14 +26,16 @@ type progressBar struct {
 
 // NewCompatibleProgressBar returns a new progress bar set to compatible mode.
 func NewCompatibleProgressBar(number int) ProgressBar {
+	bar := progressbar.NewOptions(number,
+		progressbar.OptionSetItsString("w"),
+		progressbar.OptionSetPredictTime(true),
+		progressbar.OptionShowIts(),
+		progressbar.OptionShowCount(),
+		progressbar.OptionFullWidth(),
+	)
+	_ = bar.RenderBlank()
 	return &progressBar{
-		CompatibleMode: progressbar.NewOptions(number,
-			progressbar.OptionSetItsString("w"),
-			progressbar.OptionSetPredictTime(true),
-			progressbar.OptionShowIts(),
-			progressbar.OptionShowCount(),
-			progressbar.OptionFullWidth(),
-		),
+		CompatibleMode: bar,
 	}
 }
 
