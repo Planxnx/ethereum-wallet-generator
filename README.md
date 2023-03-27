@@ -47,7 +47,7 @@
 - Default (HD Wallet)Hierarchical Deterministic Path - m/44'/60'/0'/0 .
 - We recommend every user of this application audit and verify every source code in this repository and every imported dependecies for its validity and clearness. 👮🏻‍♂️
 
-## What's a vanity address?
+## What's a vanity address 🎨
 
 A vanity address is an address which part of it is chosen by yourself. Adding vanity to an address is used to give it personality, to reinforce a brand, to send a message, or to make the owner(s) feel cool 🤩
 
