@@ -60,6 +60,7 @@ func main() {
 		panic(err)
 	}
 	contains := strings.Split(*contain, ",")
+	*prefix = utils.Add0xPrefix(*prefix)
 	validateAddress := func(address string) bool {
 		isValid := true
 		if len(contains) > 0 {
