@@ -1,4 +1,5 @@
 # Ethereum Wallet Generator
+
 <br>
 <h3 align="center">
   
@@ -24,14 +25,15 @@
 > **Multiple Ethereum and Crypto Wallets Generator written in Go💰** <br>Generate a thousand crypto wallets (public key and mnemonic seed) in a sec ⚡️<br>Find beautiful and awesome wallet addresses 🎨
 
 [![Golang](https://badges.aleen42.com/src/golang.svg)](https://golang.org/)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/1d765b63df4b4266bdcf653d5a024458)](https://www.codacy.com/gh/Planxnx/eth-wallet-gen/dashboard?utm_source=github.com&utm_medium=referral&utm_content=Planxnx/eth-wallet-gen&utm_campaign=Badge_Grade)
-![Docker Image Size (tag)](https://img.shields.io/docker/image-size/planxthanee/eth-wallet-gen/latest)
-[![Code Analysis & Tests](https://github.com/Planxnx/eth-wallet-gen/actions/workflows/code-analysis.yml/badge.svg)](https://github.com/Planxnx/eth-wallet-gen/actions/workflows/code-analysis.yml)
-![GitHub issues](https://img.shields.io/github/issues/Planxnx/eth-wallet-gen)
-[![DeepSource](https://deepsource.io/gh/Planxnx/eth-wallet-gen.svg/?label=active+issues)](https://deepsource.io/gh/Planxnx/eth-wallet-gen/?ref=repository-badge)
-[![license](https://img.shields.io/badge/license-WTFPL%20--%20Do%20What%20the%20Fuck%20You%20Want%20to%20Public%20License-green.svg)](https://github.com/Planxnx/eth-wallet-gen/blob/main/LICENSE)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/1d765b63df4b4266bdcf653d5a024458)](https://www.codacy.com/gh/Planxnx/ethereum-wallet-generator/dashboard?utm_source=github.com&utm_medium=referral&utm_content=Planxnx/ethereum-wallet-generator&utm_campaign=Badge_Grade)
+![Docker Image Size (tag)](https://img.shields.io/docker/image-size/planxthanee/ethereum-wallet-generator/latest)
+[![Code Analysis & Tests](https://github.com/Planxnx/ethereum-wallet-generator/actions/workflows/code-analysis.yml/badge.svg)](https://github.com/Planxnx/ethereum-wallet-generator/actions/workflows/code-analysis.yml)
+![GitHub issues](https://img.shields.io/github/issues/Planxnx/ethereum-wallet-generator)
+[![DeepSource](https://deepsource.io/gh/Planxnx/ethereum-wallet-generator.svg/?label=active+issues)](https://deepsource.io/gh/Planxnx/ethereum-wallet-generator/?ref=repository-badge)
+[![license](https://img.shields.io/badge/license-WTFPL%20--%20Do%20What%20the%20Fuck%20You%20Want%20to%20Public%20License-green.svg)](https://github.com/Planxnx/ethereum-wallet-generator/blob/main/LICENSE)
 
-## Easy & Fast  Way to generate a thousands beauty Ethereum Wallets ⚡️🎨
+## Easy & Fast Way to generate a thousands beauty Ethereum Wallets ⚡️🎨
+
 ![ethereum and crypto wallets generated](https://user-images.githubusercontent.com/37617738/227807144-c1dc59ae-94fd-4fdf-9678-bf8c12e58cd4.png)
 
 - Awesome and Beautiful wallet addresses filtering supported! [regex, prefix, suffix, contains] 🎨
@@ -39,29 +41,26 @@
 - Generate word seed phrase with BIP-39 mnemonic (support 12, 24 Word Seed Phrase) (Default is 128 bits for 12 words).
 - Embedded Database Supported! (with SQLite3). It's easiest to generate, manage, search a billion wallets without any pain.
 - Tiny Sizes and Superior Speed with Golang 🚀 (required go 1.19 or higher)
-- No Go? No Problem! [Docker images](https://hub.docker.com/r/planxthanee/eth-wallet-gen) are provided for you 🐳
+- No Go? No Problem! [Docker images](https://hub.docker.com/r/planxthanee/ethereum-wallet-generator) are provided for you 🐳
 - Speed things up!! with customizable concurrency numbers ⚡️
 - You can benchmark generating speed by setting the `isDryrun` flag 📈
 - Default (HD Wallet)Hierarchical Deterministic Path - m/44'/60'/0'/0 .
 - We recommend every user of this application audit and verify every source code in this repository and every imported dependecies for its validity and clearness. 👮🏻‍♂️
-
-
-
 
 ## Installation
 
 <img  align="right" src="https://user-images.githubusercontent.com/37617738/120122855-b1cb0800-c1d5-11eb-9502-8d64bb275337.png" height="140" alt="gopher" />
 
 ```console
-$ go install github.com/Planxnx/eth-wallet-gen
+$ go install github.com/Planxnx/ethereum-wallet-generator
 or
-$ docker pull planxthanee/eth-wallet-gen:latest
+$ docker pull planxthanee/ethereum-wallet-generator:latest
 ```
 
 ## Usage
 
 ```console
-Usage of eth-wallet-gen:
+Usage of ethereum-wallet-generator:
   -n          int    set number of wallets to generate (default 10) (set number to -1 for Infinite loop ∞)
   -db         string set sqlite output file name eg. wallets.db (db file will create in `/db` folder)
   -c          int    set concurrency value (default 1)
@@ -80,7 +79,7 @@ Usage of eth-wallet-gen:
 ### **Simple stdout:**
 
 ```console
-$ eth-wallet-gen
+$ ethereum-wallet-generator
 
 ===============ETH Wallet Generator===============
 
@@ -109,7 +108,7 @@ Total Wallet Resolved: 10 w
 ### **Speeding up with concurrency:**
 
 ```console
-$ eth-wallet-gen -n 10000 -c 16
+$ ethereum-wallet-generator -n 10000 -c 16
 ===============ETH Wallet Generator===============
 
 10000 / 10000 | [██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 5081 p/s | resolved: 10000
@@ -129,7 +128,7 @@ Copyright (C) 2023 Planxnx <planxthanee@gmail.com>
 ### **Filter with contains options:**
 
 ```console
-$ eth-wallet-gen -n 100 -contains 0x000,777
+$ ethereum-wallet-generator -n 100 -contains 0x000,777
 ===============ETH Wallet Generator===============
 
 100 / 100 | [██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 5073 p/s | resovled: 2
@@ -148,7 +147,7 @@ Total Wallet Resolved: 2 w
 ### **24 word seed prhase and filter with contains and strict options:**
 
 ```console
-$ eth-wallet-gen -n 50000 -contains 0x00,777 -strict -bit 256
+$ ethereum-wallet-generator -n 50000 -contains 0x00,777 -strict -bit 256
 ===============ETH Wallet Generator===============
 
 50000 / 50000 | [██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 803 p/s | resovled: 2
@@ -167,7 +166,7 @@ Total Wallet Resolved: 2 w
 ### **Storing to embeded databse(SQLite3) to easily management:**
 
 ```console
-$ eth-wallet-gen -n 50000 -c 12 -db 0x77.db -prefix 0x77
+$ ethereum-wallet-generator -n 50000 -c 12 -db 0x77.db -prefix 0x77
 ===============ETH Wallet Generator===============
 
 50000 / 50000 | [█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 5384 p/s | resovled: 178
@@ -176,13 +175,13 @@ Resolved Speed: 16.04 w/s
 Total Duration: 11.09416725s
 Total Wallet Resolved: 178 w
 ```
-![image](https://user-images.githubusercontent.com/37617738/227806706-02a8a7fa-7d2b-43ca-b89b-c21cc51835ff.png)
 
+![image](https://user-images.githubusercontent.com/37617738/227806706-02a8a7fa-7d2b-43ca-b89b-c21cc51835ff.png)
 
 ### **Use Docker (recommend using concurrency for speed up):**
 
 ```console
-$ docker run --rm -v $PWD:/db planxthanee/eth-wallet-gen -n 50000 -db wallet.db -c 8
+$ docker run --rm -v $PWD:/db planxthanee/ethereum-wallet-generator -n 50000 -db wallet.db -c 8
 ===============ETH Wallet Generator===============
 
   100% |██████████████████████████████████████| (50000/50000, 4651 w/s) [10s:95ms]
