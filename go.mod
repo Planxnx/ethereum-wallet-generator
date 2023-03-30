@@ -1,4 +1,4 @@
-module github.com/Planxnx/ethereum-wallet-generator
+module github.com/planxnx/ethereum-wallet-generator
 
 go 1.20
 

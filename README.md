@@ -27,10 +27,10 @@
 [![Golang](https://badges.aleen42.com/src/golang.svg)](https://golang.org/)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/1d765b63df4b4266bdcf653d5a024458)](https://www.codacy.com/gh/Planxnx/ethereum-wallet-generator/dashboard?utm_source=github.com&utm_medium=referral&utm_content=Planxnx/ethereum-wallet-generator&utm_campaign=Badge_Grade)
 [![Docker Image Size (tag)](https://img.shields.io/docker/image-size/planxthanee/ethereum-wallet-generator/latest)](https://hub.docker.com/r/planxthanee/ethereum-wallet-generator)
-[![Code Analysis & Tests](https://github.com/Planxnx/ethereum-wallet-generator/actions/workflows/code-analysis.yml/badge.svg)](https://github.com/Planxnx/ethereum-wallet-generator/actions/workflows/code-analysis.yml)
+[![Code Analysis & Tests](https://github.com/planxnx/ethereum-wallet-generator/actions/workflows/code-analysis.yml/badge.svg)](https://github.com/planxnx/ethereum-wallet-generator/actions/workflows/code-analysis.yml)
 ![GitHub issues](https://img.shields.io/github/issues/Planxnx/ethereum-wallet-generator)
 [![DeepSource](https://deepsource.io/gh/Planxnx/ethereum-wallet-generator.svg/?label=active+issues)](https://deepsource.io/gh/Planxnx/ethereum-wallet-generator/?ref=repository-badge)
-[![license](https://img.shields.io/badge/license-WTFPL%20--%20Do%20What%20the%20Fuck%20You%20Want%20to%20Public%20License-green.svg)](https://github.com/Planxnx/ethereum-wallet-generator/blob/main/LICENSE)
+[![license](https://img.shields.io/badge/license-WTFPL%20--%20Do%20What%20the%20Fuck%20You%20Want%20to%20Public%20License-green.svg)](https://github.com/planxnx/ethereum-wallet-generator/blob/main/LICENSE)
 
 ## Easy & Fast Way to generate a thousands beauty Ethereum Vanity Wallets ⚡️
 
@@ -59,7 +59,7 @@ Examples: `0x1111111254fb6c44bAC0beD2854e76F90643097d`, or `0x9999997001a3d5F44D
 <img  align="right" src="https://user-images.githubusercontent.com/37617738/120122855-b1cb0800-c1d5-11eb-9502-8d64bb275337.png" height="140" alt="gopher" />
 
 ```console
-$ go install github.com/Planxnx/ethereum-wallet-generator@latest
+$ go install github.com/planxnx/ethereum-wallet-generator@latest
 or
 $ docker pull planxthanee/ethereum-wallet-generator:latest
 ```
