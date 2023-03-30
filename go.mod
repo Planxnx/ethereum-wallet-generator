@@ -32,5 +32,3 @@ require (
 	golang.org/x/sys v0.6.0 // indirect
 	golang.org/x/term v0.6.0 // indirect
 )
-
-replace eth-wallet-gen/common => ./common
