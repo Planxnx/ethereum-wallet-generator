@@ -45,7 +45,7 @@ func main() {
 	number := flag.Int("n", 10, "set number of generate times (not number of result wallets) (set number to 0 for Infinite loop ∞)")
 	limit := flag.Int("limit", 0, "set limit number of result wallets. stop generate when result of vanity wallets reach the limit (set number to 0 for no limit)")
 	dbPath := flag.String("db", "", "set sqlite output name eg. wallets.db (db file will create in /db)")
-	concurrency := flag.Int("c", 1, "set concurrency value")
+	concurrency := flag.Int("c", 1, "set concurrency value (default 1)")
 	bits := flag.Int("bit", 128, "set number of entropy bits [128, 256]")
 	strict := flag.Bool("strict", false, "strict contains mode (required contains to use)")
 	contain := flag.String("contains", "", "show only result that contained with the given letters (support for multiple characters)")
