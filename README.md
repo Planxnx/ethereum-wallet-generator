@@ -85,7 +85,7 @@ Usage of ethereum-wallet-generator:
 ## Benchmark
 
 We've dryrun the generator with 8 concurrents for 10 seconds on MacBook Air M1 2020 Memory 16 GB <br/>
-and got 68150 wallets with speed up to 6353.05 wallets/sec.
+and got 68,150 wallets with speed up to 6,353.05 wallets/sec.
 
 ```console
 ethereum-wallet-generator -n -1 -c 8 -dryrun
