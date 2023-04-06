@@ -82,6 +82,23 @@ Usage of ethereum-wallet-generator:
   -compatible bool   logging compatible mode (turn this on to fix logging glitch)
 ```
 
+## Benchmark
+
+We've dryrun the generator with 8 concurrents for 10 seconds on MacBook Air M1 2020 Memory 16 GB <br/>
+and got 68150 wallets with speed up to 6353.05 wallets/sec.
+
+```console
+ethereum-wallet-generator -n -1 -c 8 -dryrun
+===============ETH Wallet Generator===============
+68150 | [███████████████████████████████████████████████████████████████████████████] | ?% | 6353 p/s | resolved: 68150
+
+Resolved Speed: 6353.05 w/s
+Total Duration: 10.727131063s
+Total Wallet Resolved: 68150 w
+
+Copyright (C) 2023 Planxnx <planxthanee@gmail.com>
+```
+
 ## Examples
 
 ### **Simple usgae:**
