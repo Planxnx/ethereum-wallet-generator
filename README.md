@@ -204,6 +204,11 @@ Total Wallet Resolved: 50000 w
 
 ```
 
+## Thanks to
+
+- [tyler-smith/go-bip39](github.com/tyler-smith/go-bip39) - for BIP39 implementation in Go
+- [holiman/uint256](github.com/holiman/uint256) - for high performance fixed size unsigned 256-bit math library
+
 ## Contributing ![eth](https://user-images.githubusercontent.com/37617738/120125730-1d1bd680-c1e4-11eb-83ad-45664245cae9.png)
 
 Pull requests are welcome!
