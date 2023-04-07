@@ -61,7 +61,9 @@ Examples: `0x1111111254fb6c44bAC0beD2854e76F90643097d`, or `0x9999997001a3d5F44D
 ```console
 $ go install github.com/planxnx/ethereum-wallet-generator@latest
 ```
+
 or
+
 ```console
 $ docker pull planxthanee/ethereum-wallet-generator:latest
 ```
@@ -86,17 +88,18 @@ Usage of ethereum-wallet-generator:
 
 ## Benchmark
 
-We've dryrun the generator with 8 concurrents for 10 seconds on MacBook Air M1 2020 Memory 16 GB <br/>
-and got 68,150 wallets with speed up to 6,353.05 wallets/sec.
+We've dryrun the generator with 8 concurrents for 60,000 wallets on MacBook Air M1 2020 Memory 16 GB <br/>
+and got speed up to 6,468.58 wallet/sec.
 
 ```console
-ethereum-wallet-generator -n -1 -c 8 -dryrun
+ethereum-wallet-generator -n 60000 -dryrun -c 8
 ===============ETH Wallet Generator===============
-68150 | [███████████████████████████████████████████████████████████████████████████] | ?% | 6353 p/s | resolved: 68150
 
-Resolved Speed: 6353.05 w/s
-Total Duration: 10.727131063s
-Total Wallet Resolved: 68150 w
+60000 / 60000 | [██████████████████████████████████████████████████████] | 100.00% | 6469 p/s | resolved: 60000
+
+Resolved Speed: 6468.58 w/s
+Total Duration: 9.275597416s
+Total Wallet Resolved: 60000 w
 
 Copyright (C) 2023 Planxnx <planxthanee@gmail.com>
 ```
@@ -200,6 +203,11 @@ Total Duration: 10.9545307s
 Total Wallet Resolved: 50000 w
 
 ```
+
+## Thanks to
+
+- [tyler-smith/go-bip39](github.com/tyler-smith/go-bip39) - for BIP39 implementation in Go
+- [holiman/uint256](github.com/holiman/uint256) - for high performance fixed size unsigned 256-bit math library
 
 ## Contributing ![eth](https://user-images.githubusercontent.com/37617738/120125730-1d1bd680-c1e4-11eb-83ad-45664245cae9.png)
 
