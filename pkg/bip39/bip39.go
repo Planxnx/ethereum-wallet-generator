@@ -10,17 +10,17 @@ package bip39
 import (
 	"crypto/rand"
 	"crypto/sha256"
-	"math/big"
 	"strings"
 
+	"github.com/holiman/uint256"
 	"github.com/pkg/errors"
 )
 
 var (
-	last11BitsMask  = big.NewInt(2047)
-	shift11BitsMask = big.NewInt(2048)
-	one             = big.NewInt(1)
-	two             = big.NewInt(2)
+	last11BitsMask  = uint256.NewInt(2047)
+	shift11BitsMask = uint256.NewInt(2048)
+	one             = uint256.NewInt(1)
+	two             = uint256.NewInt(2)
 )
 
 // NewEntropy will create random entropy bytes
@@ -64,10 +64,10 @@ func NewMnemonic(entropy []byte) (string, error) {
 	// Add to the last empty slot so we can work with LSBs instead of MSB.
 
 	// Entropy as an int so we can bitmask without worrying about bytes slices.
-	entropyInt := new(big.Int).SetBytes(entropy)
+	entropyInt := new(uint256.Int).SetBytes(entropy)
 
-	// Throw away big.Int for AND masking.
-	word := big.NewInt(0)
+	// Throw away uint256.Int for AND masking.
+	word := uint256.NewInt(0)
 
 	var w strings.Builder
 	w.Grow(sentenceLength * 11)
@@ -78,10 +78,10 @@ func NewMnemonic(entropy []byte) (string, error) {
 
 		// Convert bytes to an index and add that word to the list.
 		if i == sentenceLength-1 {
-			w.WriteString(Words[word.Int64()])
+			w.WriteString(Words[word.Uint64()])
 		} else {
 			w.WriteString(" ")
-			w.WriteString(Words[word.Int64()])
+			w.WriteString(Words[word.Uint64()])
 		}
 	}
 
@@ -101,19 +101,19 @@ func addChecksum(data []byte) []byte {
 	// For each bit of check sum we want we shift the data one the left
 	// and then set the (new) right most bit equal to checksum bit at that index
 	// staring from the left
-	dataBigInt := new(big.Int).SetBytes(data)
+	dataInt := new(uint256.Int).SetBytes(data)
 
 	for i := uint(0); i < checksumBitLength; i++ {
 		// Bitshift 1 left
-		dataBigInt.Mul(dataBigInt, two)
+		dataInt.Mul(dataInt, two)
 
 		// Set rightmost bit if leftmost checksum bit is set
 		if firstChecksumByte&(1<<(7-i)) > 0 {
-			dataBigInt.Or(dataBigInt, one)
+			dataInt.Or(dataInt, one)
 		}
 	}
 
-	return dataBigInt.Bytes()
+	return dataInt.Bytes()
 }
 
 func computeChecksum(data []byte) []byte {
@@ -121,20 +121,6 @@ func computeChecksum(data []byte) []byte {
 	_, _ = hasher.Write(data) // This error is guaranteed to be nil
 
 	return hasher.Sum(nil)
-}
-
-// padByteSlice returns a byte slice of the given size with contents of the
-// given slice left padded and any empty spaces filled with 0's.
-func padByteSlice(slice []byte, length int) []byte {
-	offset := length - len(slice)
-	if offset <= 0 {
-		return slice
-	}
-
-	newSlice := make([]byte, length)
-	copy(newSlice[offset:], slice)
-
-	return newSlice
 }
 
 // validateEntropyBitSize ensures that entropy is the correct size for being a mnemonic.
