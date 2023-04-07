@@ -60,7 +60,9 @@ Examples: `0x1111111254fb6c44bAC0beD2854e76F90643097d`, or `0x9999997001a3d5F44D
 
 ```console
 $ go install github.com/planxnx/ethereum-wallet-generator@latest
+```
 or
+```console
 $ docker pull planxthanee/ethereum-wallet-generator:latest
 ```
 
