@@ -17,10 +17,12 @@ import (
 )
 
 var (
-	last11BitsMask  = uint256.NewInt(2047)
-	shift11BitsMask = uint256.NewInt(2048)
-	one             = uint256.NewInt(1)
-	two             = uint256.NewInt(2)
+	one = uint256.NewInt(1)
+	two = uint256.NewInt(2)
+
+	bitsChunkSize   = 11
+	shift11BitsMask = new(uint256.Int).Lsh(one, uint(bitsChunkSize)) // 2^11 = 2048
+	last11BitsMask  = new(uint256.Int).Sub(shift11BitsMask, one)     // 2^11 - 1 = 2047
 )
 
 // NewEntropy will create random entropy bytes
@@ -47,7 +49,7 @@ func NewMnemonic(entropy []byte) (string, error) {
 	// Compute some lengths for convenience.
 	entropyBitLength := len(entropy) * 8
 	checksumBitLength := entropyBitLength / 32
-	sentenceLength := (entropyBitLength + checksumBitLength) / 11
+	sentenceLength := (entropyBitLength + checksumBitLength) / bitsChunkSize
 
 	// Validate that the requested size is supported.
 	err := validateEntropyBitSize(entropyBitLength)
@@ -56,21 +58,19 @@ func NewMnemonic(entropy []byte) (string, error) {
 	}
 
 	// Add checksum to entropy.
-	entropy = addChecksum(entropy)
+	// Entropy as an int so we can bitmask without worrying about bytes slices.
+	entropyInt := addChecksum(entropy)
+
+	// Throw away uint256.Int for AND masking.
+	word := uint256.NewInt(0)
 
 	// Break entropy up into sentenceLength chunks of 11 bits.
 	// For each word AND mask the rightmost 11 bits and find the word at that index.
 	// Then bitshift entropy 11 bits right and repeat.
 	// Add to the last empty slot so we can work with LSBs instead of MSB.
 
-	// Entropy as an int so we can bitmask without worrying about bytes slices.
-	entropyInt := new(uint256.Int).SetBytes(entropy)
-
-	// Throw away uint256.Int for AND masking.
-	word := uint256.NewInt(0)
-
 	var w strings.Builder
-	w.Grow(sentenceLength * 11)
+	w.Grow(sentenceLength * bitsChunkSize)
 	for i := sentenceLength - 1; i >= 0; i-- {
 		// Get 11 right most bits and bitshift 11 to the right for next time.
 		word.And(entropyInt, last11BitsMask)
@@ -89,8 +89,10 @@ func NewMnemonic(entropy []byte) (string, error) {
 }
 
 // Appends to data the first (len(data) / 32)bits of the result of sha256(data)
+// abd returns the result as a uint256.Int.
+//
 // Currently only supports data up to 32 bytes.
-func addChecksum(data []byte) []byte {
+func addChecksum(data []byte) *uint256.Int {
 	// Get first byte of sha256
 	hash := computeChecksum(data)
 	firstChecksumByte := hash[0]
@@ -113,7 +115,7 @@ func addChecksum(data []byte) []byte {
 		}
 	}
 
-	return dataInt.Bytes()
+	return dataInt
 }
 
 func computeChecksum(data []byte) []byte {
