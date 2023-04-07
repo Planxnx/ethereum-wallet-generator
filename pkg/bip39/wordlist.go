@@ -1,3 +1,4 @@
+// nolint
 package bip39
 
 import (
