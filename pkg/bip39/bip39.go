@@ -10,7 +10,6 @@ package bip39
 import (
 	"crypto/rand"
 	"crypto/sha256"
-	"encoding/binary"
 	"math/big"
 	"strings"
 
@@ -77,15 +76,12 @@ func NewMnemonic(entropy []byte) (string, error) {
 		word.And(entropyInt, last11BitsMask)
 		entropyInt.Div(entropyInt, shift11BitsMask)
 
-		// Get the bytes representing the 11 bits as a 2 byte slice.
-		wordBytes := padByteSlice(word.Bytes(), 2)
-
 		// Convert bytes to an index and add that word to the list.
 		if i == sentenceLength-1 {
-			w.WriteString(Words[binary.BigEndian.Uint16(wordBytes)])
+			w.WriteString(Words[word.Int64()])
 		} else {
 			w.WriteString(" ")
-			w.WriteString(Words[binary.BigEndian.Uint16(wordBytes)])
+			w.WriteString(Words[word.Int64()])
 		}
 	}
 
