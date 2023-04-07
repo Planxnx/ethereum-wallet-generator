@@ -39,6 +39,8 @@ func NewWallet(bitSize int) (*Wallet, error) {
 		return nil, err
 	}
 
+	// TODO: only private key mode for speed up to 100k wallet per second (20x)
+
 	privateKey, publicKey, err := deriveWallet(bip39.NewSeed(mnemonic, ""), DefaultBaseDerivationPath)
 	if err != nil {
 		return nil, err
