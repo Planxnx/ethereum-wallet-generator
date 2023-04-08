@@ -16,10 +16,10 @@ import (
 	"gorm.io/gorm/logger"
 
 	"github.com/planxnx/ethereum-wallet-generator/internal/generators"
+	"github.com/planxnx/ethereum-wallet-generator/internal/progressbar"
 	"github.com/planxnx/ethereum-wallet-generator/internal/repository"
-	"github.com/planxnx/ethereum-wallet-generator/pkg/progressbar"
-	"github.com/planxnx/ethereum-wallet-generator/pkg/utils"
-	"github.com/planxnx/ethereum-wallet-generator/pkg/wallets"
+	"github.com/planxnx/ethereum-wallet-generator/utils"
+	"github.com/planxnx/ethereum-wallet-generator/wallets"
 )
 
 func init() {

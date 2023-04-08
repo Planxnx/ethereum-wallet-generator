@@ -2,7 +2,7 @@ package wallets
 
 import (
 	"github.com/pkg/errors"
-	"github.com/planxnx/ethereum-wallet-generator/pkg/bip39"
+	"github.com/planxnx/ethereum-wallet-generator/bip39"
 )
 
 func NewMnemonic(bitSize int) (string, error) {
