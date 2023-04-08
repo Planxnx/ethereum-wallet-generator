@@ -22,7 +22,7 @@
 </h3>
 <br>
 
-> **Multiple Ethereum and Crypto Vanity Wallets Generator written in Go💰** <br>Generate a thousand crypto wallets (vanity address and mnemonic seed) in a sec ⚡️<br>Find beautiful and awesome vanity wallet addresses 🎨
+> **Blazing fast multiple Ethereum and Crypto Vanity Wallets Generator written in Go💰** <br>Generate a ten thousand crypto wallets (vanity address and mnemonic seed) in a sec ⚡️<br>Find beautiful and awesome vanity wallet addresses 🎨
 
 [![Golang](https://badges.aleen42.com/src/golang.svg)](https://golang.org/)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/1d765b63df4b4266bdcf653d5a024458)](https://www.codacy.com/gh/Planxnx/ethereum-wallet-generator/dashboard?utm_source=github.com&utm_medium=referral&utm_content=Planxnx/ethereum-wallet-generator&utm_campaign=Badge_Grade)
@@ -32,18 +32,18 @@
 [![DeepSource](https://deepsource.io/gh/Planxnx/ethereum-wallet-generator.svg/?label=active+issues)](https://deepsource.io/gh/Planxnx/ethereum-wallet-generator/?ref=repository-badge)
 [![license](https://img.shields.io/badge/license-WTFPL%20--%20Do%20What%20the%20Fuck%20You%20Want%20to%20Public%20License-green.svg)](https://github.com/planxnx/ethereum-wallet-generator/blob/main/LICENSE)
 
-## Easy & Fast Way to generate a thousands beauty Ethereum Vanity Wallets ⚡️
+## Easy & Fast Way to generate a ten thousands beauty Ethereum Vanity Wallets 🎨⚡️
 
 ![ethereum and crypto wallets generated](https://user-images.githubusercontent.com/37617738/227807144-c1dc59ae-94fd-4fdf-9678-bf8c12e58cd4.png)
 
 - Awesome and Beautiful vanity wallet addresses supported! [regex, prefix, suffix, contains] 🎨
+- Blazing fast wallets generate. Speeding up to **+100k wallet/sec** with concurrency and only privatekey mode ⚡️
 - Supports to generating until got the vanity wallet addresses you want 🤩 (using `-n 0` and `-limit <number>` flags)
 - ∞ Infinite wallet generating! (set number to 0 to active infinite loop) ∞
 - Generate word seed phrase with BIP-39 mnemonic (support 12, 24 Word Seed Phrase) (Default is 128 bits for 12 words).
 - Embedded Database Supported! (with SQLite3). It's easiest to generate, manage, search a billion wallets without any pain.
 - Tiny Sizes and Superior Speed with Golang 🚀 (required go 1.19 or higher)
 - No Go? No Problem! [Docker images](https://hub.docker.com/r/planxthanee/ethereum-wallet-generator) are provided for you 🐳
-- Speed things up!! with customizable concurrency numbers ⚡️
 - You can benchmark generating speed by setting the `isDryrun` flag 📈
 - Default (HD Wallet)Hierarchical Deterministic Path - m/44'/60'/0'/0 .
 - We recommend every user of this application audit and verify every source code in this repository and every imported dependecies for its validity and clearness. 👮🏻‍♂️
@@ -69,6 +69,8 @@ $ docker pull planxthanee/ethereum-wallet-generator:latest
 ```
 
 ## Modes
+
+We've provided 2 modes for you to generate wallets.
 
 - **[1] Normal Mode** - Generate wallets with mnemonic phrase. (default)
 - **[2] Only Private Key Mode⚡️** - Generate wallets with private key only. **Increase speed up to 20x (+100k wallet/sec), but you will not get a mnemonic phrase.**
@@ -140,10 +142,10 @@ $ ethereum-wallet-generator
 $ ethereum-wallet-generator -mode 1
 ===============ETH Wallet Generator===============
 
-10 / 10 | [█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 503 p/s | resovled: 10
+10 / 10 | [██████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 503 p/s | resovled: 10
 
 Address                                    Seed
------------------------------------------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------ ------------------------------------------------------------------------------------------
 0x239ffa10fcd89b2359a5bd8c27c866cfad8eb75a lecture edge end come west mountain van wing zebra trumpet size wool
 0x3addecebd6c63be1730205d249681a179e3c768b need decide earth farm punch crush banana unfold income month bread unhappy
 0xc4f55b38e6e586cf974eb005e07482fd40274a26 hundred hundred canvas casual staff candy sign travel sort chat travel space
@@ -162,21 +164,41 @@ Total Wallet Resolved: 10 w
 
 ```
 
-### **Generate until got expected number of vanity addresses and Speeding up with concurrency:**
+### **🎨️⚡ Generate until got expected number of vanity addresses and Speeding up with concurrency:**
 
 ```console
 $ ethereum-wallet-generator -n -1 -limit 5 -contains 0x000,0x777 -c 8
 ===============ETH Wallet Generator===============
 
-12435 | [██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 5073 p/s | resovled: 5
+12435 | [██████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 5073 p/s | resovled: 5
 
 Address                                    Seed
------------------------------------------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------ ------------------------------------------------------------------------------------------
 0x0002e20a2528c4fe90af8dd10a38231d1d937531 jump skull butter topic bronze member feed wait flee oven deer rabbit
 0x000ff528ae048f2cb71cea8cdeb0198ad45ff09f rotate change tooth design price milk derive olympic small sudden payment hover
 0x000b98901463db593613e749d7a4803f24e3a7bb fish zone shift river sort visit begin hunt august trouble fatal easy
 0x7772eef4d1f660d8cd0b89f4d6cdf90175b63b3a review today coil purity mouse lucky trip collect mail right weekend remove
 0x77746fe800078d956b3176c367be88cdc39cd878 fiscal east exhibit arena expand indicate fury document vacuum mansion aisle garbage
+
+Resolved Speed: 1.48 w/s
+Total Duration: 2.4512123s
+Total Wallet Resolved: 5 w
+```
+
+### **⚠⚡️ ️Extream speeding up with concurrency `Only Private Key mode` for generate vanity addresses:**
+
+```console
+$ ethereum-wallet-generator -n -1 -limit 5 -contains 0x00000,0x11111 -c 8 -mode 2
+===============ETH Wallet Generator===============
+
+252237 | [██████████████████████████████████████████████████████████████████████████████████████████] | ?% | 102903 p/s | resolved: 5
+Address                                    Private Key
+------------------------------------------ ------------------------------------------------------------------------------------------
+0x0000005927adc84c599084c48f50525617a76cf6 aaf26b1e0d137813bd221e59b3e072a5ad8b58e36c5d30ae19e8d0e5e19f287e
+0x111111285bf095c0fa68bc170f9c23a43af9ead0 2826c6596897074a3545fce2904e961a69291efce09585c81417587603a6ca55
+0x11111235eebd9d28420aaae50ac243e0be980618 7b1993e90956d929036918ddad9f5a4de3cd946bee569e01a0226be57de94862
+0x000008a6481c0396d318c04417b4cdbc053aef1f d306a6f9808f073e455e11bddb206403d175874e327835dc06d6e81f325231b0
+0x11111022d16444795ba8c5ee348f2f24650888af ec4263f4879837afa1c380b8252ffd0ddbe468b49a18254b47b4b1f22ea900da
 
 Resolved Speed: 1.48 w/s
 Total Duration: 2.4512123s
@@ -189,10 +211,10 @@ Total Wallet Resolved: 5 w
 $ ethereum-wallet-generator -n 50000 -limit 2 -contains 0x00,777,22 -strict -bit 256
 ===============ETH Wallet Generator===============
 
-31099 / 50000 | [██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 2277 p/s | resovled: 2
+31099 / 50000 | [██████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 2277 p/s | resovled: 2
 
 Address                                    Seed
------------------------------------------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------ ------------------------------------------------------------------------------------------
 0x00325b7844a4c8612108f407c0ad722da3294777 delay pilot wall radio next uniform margin copper plunge kidney coil runway baby major token method arena brave expand route job raise budget buffalo
 0x00ca8750521c2270e7776becd05d4a7d1b2ffdcb insect fashion original page stamp grow mean cinnamon embody favorite near useless relief crouch ranch nerve card captain situate truly cousin renew birth credit
 
@@ -202,13 +224,13 @@ Total Duration: 13.857967333s
 Total Wallet Resolved: 2 w
 ```
 
-### **Storing to embeded databse(SQLite3) to easily management:**
+### **📚 Storing to embeded databse(SQLite3) to easily management:**
 
 ```console
 $ ethereum-wallet-generator -n 50000 -c 12 -db 0x77.db -prefix 0x77
 ===============ETH Wallet Generator===============
 
-50000 / 50000 | [█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 5384 p/s | resovled: 178
+50000 / 50000 | [██████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 5384 p/s | resovled: 178
 
 Resolved Speed: 16.04 w/s
 Total Duration: 11.09416725s
@@ -217,7 +239,7 @@ Total Wallet Resolved: 178 w
 
 ![image](https://user-images.githubusercontent.com/37617738/227806706-02a8a7fa-7d2b-43ca-b89b-c21cc51835ff.png)
 
-### **Use Docker (recommend using concurrency for speed up):**
+### **🐳 Use Docker (recommend using concurrency for speed up):**
 
 ```console
 $ docker run --rm -v $PWD:/db planxthanee/ethereum-wallet-generator -n 50000 -db wallet.db -c 8
