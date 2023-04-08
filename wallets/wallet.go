@@ -4,6 +4,7 @@ import (
 	"crypto/ecdsa"
 	"encoding/hex"
 	"errors"
+	"unsafe"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
@@ -66,4 +67,9 @@ func NewFromPrivatekey(privateKey *ecdsa.PrivateKey) (*Wallet, error) {
 		Address:    pubString,
 		PrivateKey: privString,
 	}, nil
+}
+
+// b2s converts a byte slice to a string without memory allocation.
+func b2s(b []byte) string {
+	return *(*string)(unsafe.Pointer(&b))
 }

@@ -18,21 +18,6 @@ var (
 	DefaultBaseDerivationPathString = DefaultBaseDerivationPath.String()
 )
 
-// NewMnemonic returns a new mnemonic(BIP39) with the given bit size.
-func NewMnemonic(bitSize int) (string, error) {
-	entropy, err := bip39.NewEntropy(bitSize)
-	if err != nil {
-		return "", errors.WithStack(err)
-	}
-
-	mnemonic, err := bip39.NewMnemonic(entropy)
-	if err != nil {
-		return "", errors.WithStack(err)
-	}
-
-	return mnemonic, nil
-}
-
 // NewGeneratorMnemonic returns a new wallet generator that uses a mnemonic(BIP39) and a derivation path(BIP44) to generate a wallet.
 func NewGeneratorMnemonic(bitSize int) Generator {
 	return func() (*Wallet, error) {
@@ -57,6 +42,21 @@ func NewGeneratorMnemonic(bitSize int) Generator {
 
 		return wallet, nil
 	}
+}
+
+// NewMnemonic returns a new mnemonic(BIP39) with the given bit size.
+func NewMnemonic(bitSize int) (string, error) {
+	entropy, err := bip39.NewEntropy(bitSize)
+	if err != nil {
+		return "", errors.WithStack(err)
+	}
+
+	mnemonic, err := bip39.NewMnemonic(entropy)
+	if err != nil {
+		return "", errors.WithStack(err)
+	}
+
+	return mnemonic, nil
 }
 
 func deriveWallet(seed []byte, path accounts.DerivationPath) (*ecdsa.PrivateKey, error) {
