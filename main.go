@@ -43,6 +43,8 @@ func main() {
 	fmt.Println("===============ETH Wallet Generator===============")
 	fmt.Println(" ")
 
+	// Parse flags
+	flag.Parse()
 	number := flag.Int("n", 10, "set number of generate times (not number of result wallets) (set number to 0 for Infinite loop ∞)")
 	limit := flag.Int("limit", 0, "set limit number of result wallets. stop generate when result of vanity wallets reach the limit (set number to 0 for no limit)")
 	dbPath := flag.String("db", "", "set sqlite output name eg. wallets.db (db file will create in /db)")
@@ -57,6 +59,7 @@ func main() {
 	isCompatible := flag.Bool("compatible", false, "logging compatible mode (turn this on to fix logging glitch)")
 	flag.Parse()
 
+	// Wallet Address Validator
 	r, err := regexp.Compile(*regEx)
 	if err != nil {
 		panic(err)
@@ -105,6 +108,7 @@ func main() {
 		*limit = *number
 	}
 
+	// Progress bar
 	var bar progressbar.ProgressBar
 	if *isCompatible {
 		bar = progressbar.NewCompatibleProgressBar(*number)
@@ -112,6 +116,7 @@ func main() {
 		bar = progressbar.NewStandardProgressBar(*number)
 	}
 
+	// Repository
 	var repo repository.Repository
 	switch {
 	case *dbPath != "":
@@ -140,10 +145,13 @@ func main() {
 		repo = repository.NewInMemoryRepository()
 	}
 
+	// Wallet generator
+	walletGenerator := wallets.NewGeneratorMnemonic(*bits)
+
 	generator := generators.New(
+		walletGenerator,
 		repo,
 		generators.Config{
-			BitSize:         *bits,
 			AddresValidator: validateAddress,
 			ProgressBar:     bar,
 			DryRun:          *isDryrun,

@@ -14,7 +14,6 @@ import (
 )
 
 type Config struct {
-	BitSize         int
 	AddresValidator func(address string) bool
 	ProgressBar     progressbar.ProgressBar
 	DryRun          bool
@@ -24,16 +23,18 @@ type Config struct {
 }
 
 type Generator struct {
-	repo   repository.Repository
-	config Config
+	walletGen wallets.Generator
+	repo      repository.Repository
+	config    Config
 
 	isShutdown     atomic.Bool
 	shutdownSignal chan struct{}
 	shutDownWg     sync.WaitGroup
 }
 
-func New(repo repository.Repository, cfg Config) *Generator {
+func New(walletGen wallets.Generator, repo repository.Repository, cfg Config) *Generator {
 	return &Generator{
+		walletGen:      walletGen,
 		repo:           repo,
 		config:         cfg,
 		shutdownSignal: make(chan struct{}),
@@ -90,7 +91,7 @@ func (g *Generator) Start() (err error) {
 					return
 				}
 
-				wallet, err := wallets.NewWallet(g.config.BitSize)
+				wallet, err := g.walletGen()
 				if err != nil {
 					// Ignore error
 					log.Printf("[ERROR] failed to generate wallet: %+v\n", err)
