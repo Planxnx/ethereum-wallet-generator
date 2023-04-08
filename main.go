@@ -151,7 +151,7 @@ func main() {
 	case 1:
 		walletGenerator = wallets.NewGeneratorMnemonic(*bits)
 	case 2:
-		panic("Fast mode is not supported yet")
+		walletGenerator = wallets.NewGeneratorFastMnemonic(*bits)
 	case 3:
 		walletGenerator = wallets.NewGeneratorPrivatekey()
 	default:
