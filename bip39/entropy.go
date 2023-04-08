@@ -8,6 +8,8 @@ import (
 	"github.com/pkg/errors"
 )
 
+var _32 = uint256.NewInt(32)
+
 // NewEntropy will create random entropy bytes
 // so long as the requested size bitSize is an appropriate size.
 //
@@ -32,7 +34,7 @@ type FastEntropy struct {
 	mu            sync.Mutex
 	count         uint64
 	maxCumulative uint64
-	entropy       *uint256.Int
+	entropyInt    *uint256.Int
 }
 
 // NewFastEntropy will create a new FastEntropy.
@@ -51,7 +53,7 @@ func NewFastEntropy(bitSize int, maxCumulative ...uint64) (*FastEntropy, error) 
 	return &FastEntropy{
 		bitSize:       bitSize,
 		maxCumulative: max,
-		entropy:       new(uint256.Int).SetBytes(entropy),
+		entropyInt:    new(uint256.Int).SetBytes(entropy),
 	}, nil
 }
 
@@ -60,17 +62,21 @@ func (f *FastEntropy) Next() ([]byte, error) {
 	f.mu.Lock()
 	defer func() {
 		f.count++
-		f.entropy.Add(f.entropy, one)
+		f.entropyInt.Add(f.entropyInt, one)
 		f.mu.Unlock()
 	}()
 
-	if f.count >= f.maxCumulative {
-		entropy, err := NewEntropy(f.bitSize)
+	entropy := f.entropyInt.Bytes()
+	entropyBitLength := len(entropy) * 8
+	if err := validateEntropyBitSize(entropyBitLength); err != nil || f.count >= f.maxCumulative {
+		newEntropy, err := NewEntropy(f.bitSize)
 		if err != nil {
 			return nil, errors.WithStack(err)
 		}
-		f.entropy.SetBytes(entropy)
+		f.count = 0
+		entropy = newEntropy
+		f.entropyInt.SetBytes(newEntropy)
 	}
 
-	return f.entropy.Bytes(), nil
+	return entropy, nil
 }
