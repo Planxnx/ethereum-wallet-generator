@@ -3,7 +3,6 @@ package wallets
 import (
 	"crypto/ecdsa"
 	"encoding/hex"
-	"time"
 
 	"github.com/btcsuite/btcd/btcutil/hdkeychain"
 	"github.com/btcsuite/btcd/chaincfg"
@@ -27,10 +26,9 @@ type Wallet struct {
 	Address    string
 	PrivateKey string
 	Mnemonic   string
-	Bits       int
 	HDPath     string
-	CreatedAt  time.Time
 	gorm.Model
+	Bits int
 }
 
 func NewWallet(bitSize int) (*Wallet, error) {
@@ -68,7 +66,6 @@ func NewWallet(bitSize int) (*Wallet, error) {
 		Mnemonic:   mnemonic,
 		Bits:       bitSize,
 		HDPath:     DefaultBaseDerivationPathString,
-		CreatedAt:  time.Now(),
 	}, nil
 }
 

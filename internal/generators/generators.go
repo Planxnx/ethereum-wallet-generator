@@ -8,31 +8,33 @@ import (
 	"sync/atomic"
 	"time"
 
+	"github.com/planxnx/ethereum-wallet-generator/internal/repository"
 	"github.com/planxnx/ethereum-wallet-generator/pkg/progressbar"
 	"github.com/planxnx/ethereum-wallet-generator/pkg/wallets"
 )
 
 type Config struct {
-	ProgressBar      progressbar.ProgressBar
-	DryRun           bool
-	Concurrency      int
-	Number           int
-	HideStdoutResult bool
-	Limit            int
+	BitSize         int
+	AddresValidator func(address string) bool
+	ProgressBar     progressbar.ProgressBar
+	DryRun          bool
+	Concurrency     int
+	Number          int
+	Limit           int
 }
 
 type Generator struct {
-	walletsRepo *wallets.Repository
-	config      Config
+	repo   repository.Repository
+	config Config
 
 	isShutdown     atomic.Bool
 	shutdownSignal chan struct{}
 	shutDownWg     sync.WaitGroup
 }
 
-func New(walletsRepo *wallets.Repository, cfg Config) *Generator {
+func New(repo repository.Repository, cfg Config) *Generator {
 	return &Generator{
-		walletsRepo:    walletsRepo,
+		repo:           repo,
 		config:         cfg,
 		shutdownSignal: make(chan struct{}),
 	}
@@ -51,23 +53,29 @@ func (g *Generator) Start() (err error) {
 	defer func() {
 		_ = bar.Finish()
 
-		if err := g.walletsRepo.Commit(); err != nil {
+		if err := g.repo.Close(); err != nil {
 			// Ignore error
-			log.Printf("Gerate Error: %+v", err)
+			log.Printf("[ERROR] failed to close repository: %+v\n", err)
 		}
 
-		if !g.config.HideStdoutResult {
-			if result := g.walletsRepo.Results(); len(result) > 0 && !g.config.DryRun {
-				fmt.Printf("\n%-42s %s\n", "Address", "Seed")
-				fmt.Printf("%-42s %s\n", strings.Repeat("-", 42), strings.Repeat("-", 160))
-				fmt.Println(result)
+		if w := g.repo.Result(); len(w) > 0 && !g.config.DryRun {
+			var result strings.Builder
+			for _, wallet := range w {
+				if _, err := fmt.Fprintf(&result, "%-42s %s\n", wallet.Address, wallet.Mnemonic); err != nil {
+					continue
+				}
 			}
 
-			fmt.Printf("\nResolved Speed: %.2f w/s\n", float64(resolvedCount.Load())/time.Since(start).Seconds())
-			fmt.Printf("Total Duration: %v\n", time.Since(start))
-			fmt.Printf("Total Wallet Resolved: %d w\n", resolvedCount.Load())
-			fmt.Printf("\nCopyright (C) 2023 Planxnx <planxthanee@gmail.com>\n")
+			fmt.Printf("\n%-42s %s\n", "Address", "Seed")
+			fmt.Printf("%-42s %s\n", strings.Repeat("-", 42), strings.Repeat("-", 90))
+			fmt.Println(result.String())
+
 		}
+
+		fmt.Printf("\nResolved Speed: %.2f w/s\n", float64(resolvedCount.Load())/time.Since(start).Seconds())
+		fmt.Printf("Total Duration: %v\n", time.Since(start))
+		fmt.Printf("Total Wallet Resolved: %d w\n", resolvedCount.Load())
+		fmt.Printf("\nCopyright (C) 2023 Planxnx <planxthanee@gmail.com>\n")
 
 		g.isShutdown.Store(true)
 	}()
@@ -83,18 +91,29 @@ func (g *Generator) Start() (err error) {
 					return
 				}
 
-				ok, err := g.walletsRepo.Generate()
+				wallet, err := wallets.NewWallet(g.config.BitSize)
 				if err != nil {
 					// Ignore error
-					log.Printf("Gerate Error: %+v", err)
+					log.Printf("[ERROR] failed to generate wallet: %+v\n", err)
 					continue
 				}
-				if ok {
+
+				isOk := true
+				if g.config.AddresValidator != nil {
+					isOk = g.config.AddresValidator(wallet.Address)
+				}
+
+				if isOk {
+					if err := g.repo.Insert(wallet); err != nil {
+						// Ignore error
+						log.Printf("[ERROR] failed to insert wallet to db: %+v\n", err)
+						continue
+					}
 					resolvedCount.Add(1)
 				}
 
-				_ = bar.Increment()
 				_ = bar.SetResolved(int(resolvedCount.Load()))
+				_ = bar.Increment()
 			}
 		}()
 	}
