@@ -118,7 +118,7 @@ We've dryrun the generator on only private key mode with 8 concurrents for 1,000
 and got speed up to 11,2029 wallet/sec.
 
 ```console
-ethereum-wallet-generator -n 60000 -dryrun -c 8 -mode 1
+ethereum-wallet-generator -n 1000000 -dryrun -c 8 -mode 2
 ===============ETH Wallet Generator===============
 
 1000000 / 1000000 | [███████████████████████████████████████████████] | 100.00% | 111778 p/s | resolved: 1000000
@@ -136,7 +136,8 @@ Copyright (C) 2023 Planxnx <planxthanee@gmail.com>
 
 ```console
 $ ethereum-wallet-generator
-
+# or
+$ ethereum-wallet-generator -mode 1
 ===============ETH Wallet Generator===============
 
 10 / 10 | [█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████] | 100.00% | 503 p/s | resovled: 10
@@ -232,6 +233,7 @@ Total Wallet Resolved: 50000 w
 
 ## Thanks to
 
+- [conseweb/coinutil](https://github.com/conseweb/coinutil) - for BIP39 implementation in Go
 - [tyler-smith/go-bip39](https://github.com/tyler-smith/go-bip39) - for BIP39 implementation in Go
 - [holiman/uint256](https://github.com/holiman/uint256) - for high performance fixed size unsigned 256-bit math library
 
