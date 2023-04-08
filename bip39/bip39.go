@@ -92,7 +92,7 @@ func NewMnemonic(entropy []byte) (string, error) {
 
 // NewSeed creates a hashed seed output given a provided string and password.
 // No checking is performed to validate that the string provided is a valid mnemonic.
-func NewSeed(mnemonic string, password string) []byte {
+func NewSeed(mnemonic, password string) []byte {
 	return pbkdf2.Key([]byte(mnemonic), []byte("mnemonic"+password), 2048, 64, sha512.New)
 }
 
