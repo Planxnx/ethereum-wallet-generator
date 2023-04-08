@@ -8,9 +8,9 @@ import (
 	"sync/atomic"
 	"time"
 
+	"github.com/planxnx/ethereum-wallet-generator/internal/progressbar"
 	"github.com/planxnx/ethereum-wallet-generator/internal/repository"
-	"github.com/planxnx/ethereum-wallet-generator/pkg/progressbar"
-	"github.com/planxnx/ethereum-wallet-generator/pkg/wallets"
+	"github.com/planxnx/ethereum-wallet-generator/wallets"
 )
 
 type Config struct {
