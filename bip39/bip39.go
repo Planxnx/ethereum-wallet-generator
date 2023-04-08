@@ -8,7 +8,6 @@
 package bip39
 
 import (
-	"crypto/rand"
 	"crypto/sha256"
 	"crypto/sha512"
 	"strings"
@@ -26,23 +25,6 @@ var (
 	shift11BitsMask = new(uint256.Int).Lsh(one, uint(bitsChunkSize)) // 2^11 = 2048
 	last11BitsMask  = new(uint256.Int).Sub(shift11BitsMask, one)     // 2^11 - 1 = 2047
 )
-
-// NewEntropy will create random entropy bytes
-// so long as the requested size bitSize is an appropriate size.
-//
-// bitSize has to be a multiple 32 and be within the inclusive range of {128, 256}.
-func NewEntropy(bitSize int) ([]byte, error) {
-	if err := validateEntropyBitSize(bitSize); err != nil {
-		return nil, errors.WithStack(err)
-	}
-
-	entropy := make([]byte, bitSize/8)
-	if _, err := rand.Read(entropy); err != nil {
-		return nil, errors.WithStack(err)
-	}
-
-	return entropy, nil
-}
 
 // NewMnemonic will return a string consisting of the mnemonic words for
 // the given entropy.
