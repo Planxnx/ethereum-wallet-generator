@@ -60,14 +60,19 @@ func (g *Generator) Start() (err error) {
 		}
 
 		if w := g.repo.Result(); len(w) > 0 && !g.config.DryRun {
+			col2Name := "Seed"
 			var result strings.Builder
 			for _, wallet := range w {
-				if _, err := fmt.Fprintf(&result, "%-42s %s\n", wallet.Address, wallet.Mnemonic); err != nil {
+				col2 := wallet.Mnemonic
+				if wallet.Mnemonic == "" {
+					col2 = wallet.PrivateKey
+					col2Name = "Private Key"
+				}
+				if _, err := fmt.Fprintf(&result, "%-42s %s\n", wallet.Address, col2); err != nil {
 					continue
 				}
 			}
-
-			fmt.Printf("\n%-42s %s\n", "Address", "Seed")
+			fmt.Printf("\n%-42s %s\n", "Address", col2Name)
 			fmt.Printf("%-42s %s\n", strings.Repeat("-", 42), strings.Repeat("-", 90))
 			fmt.Println(result.String())
 		}

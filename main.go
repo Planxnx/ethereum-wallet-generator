@@ -44,11 +44,10 @@ func main() {
 	fmt.Println(" ")
 
 	// Parse flags
-	flag.Parse()
 	number := flag.Int("n", 10, "set number of generate times (not number of result wallets) (set number to 0 for Infinite loop ∞)")
 	limit := flag.Int("limit", 0, "set limit number of result wallets. stop generate when result of vanity wallets reach the limit (set number to 0 for no limit)")
 	dbPath := flag.String("db", "", "set sqlite output name eg. wallets.db (db file will create in /db)")
-	concurrency := flag.Int("c", 1, "set concurrency value (default 1)")
+	concurrency := flag.Int("c", 1, "set concurrency value")
 	bits := flag.Int("bit", 128, "set number of entropy bits [128, 256]")
 	strict := flag.Bool("strict", false, "strict contains mode (required contains to use)")
 	contain := flag.String("contains", "", "show only result that contained with the given letters (support for multiple characters)")
@@ -57,6 +56,7 @@ func main() {
 	regEx := flag.String("regex", "", "show only result that was matched with given regex (eg. ^0x99 or ^0x00)")
 	isDryrun := flag.Bool("dryrun", false, "generate wallet without a result (used for benchmark speed)")
 	isCompatible := flag.Bool("compatible", false, "logging compatible mode (turn this on to fix logging glitch)")
+	mode := flag.Int("mode", 1, "wallet generate mode [1: normal mode, 2: fast mode(reduce entropy random times, but less secure), 3: only private key mode(generate only privatekey, this fastest mode)]")
 	flag.Parse()
 
 	// Wallet Address Validator
@@ -146,7 +146,17 @@ func main() {
 	}
 
 	// Wallet generator
-	walletGenerator := wallets.NewGeneratorMnemonic(*bits)
+	var walletGenerator wallets.Generator
+	switch *mode {
+	case 1:
+		walletGenerator = wallets.NewGeneratorMnemonic(*bits)
+	case 2:
+		panic("Fast mode is not supported yet")
+	case 3:
+		walletGenerator = wallets.NewGeneratorPrivatekey()
+	default:
+		panic("Invalid mode. See: https://github.com/Planxnx/ethereum-wallet-generator#Modes")
+	}
 
 	generator := generators.New(
 		walletGenerator,
