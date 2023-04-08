@@ -16,6 +16,7 @@ import (
 	"gorm.io/gorm/logger"
 
 	"github.com/planxnx/ethereum-wallet-generator/internal/generators"
+	"github.com/planxnx/ethereum-wallet-generator/internal/repository"
 	"github.com/planxnx/ethereum-wallet-generator/pkg/progressbar"
 	"github.com/planxnx/ethereum-wallet-generator/pkg/utils"
 	"github.com/planxnx/ethereum-wallet-generator/pkg/wallets"
@@ -111,9 +112,10 @@ func main() {
 		bar = progressbar.NewStandardProgressBar(*number)
 	}
 
-	var db *gorm.DB
-	if *dbPath != "" {
-		db, err = gorm.Open(sqlite.Open("./db/"+*dbPath), &gorm.Config{
+	var repo repository.Repository
+	switch {
+	case *dbPath != "":
+		db, err := gorm.Open(sqlite.Open("./db/"+*dbPath), &gorm.Config{
 			Logger:                 logger.Default.LogMode(logger.Silent),
 			DryRun:                 *isDryrun,
 			SkipDefaultTransaction: true,
@@ -132,23 +134,22 @@ func main() {
 				panic(err)
 			}
 		}
+
+		repo = repository.NewGormRepository(db, uint64(*concurrency))
+	default:
+		repo = repository.NewInMemoryRepository()
 	}
 
-	walletsRepo := wallets.NewRepository(wallets.RepositoryConfig{
-		BitSize:            *bits,
-		AddresValidator:    validateAddress,
-		DB:                 db,
-		DBTransactionsSize: uint64(*concurrency),
-	})
-
 	generator := generators.New(
-		walletsRepo,
+		repo,
 		generators.Config{
-			ProgressBar: bar,
-			DryRun:      *isDryrun,
-			Concurrency: *concurrency,
-			Number:      *number,
-			Limit:       *limit,
+			BitSize:         *bits,
+			AddresValidator: validateAddress,
+			ProgressBar:     bar,
+			DryRun:          *isDryrun,
+			Concurrency:     *concurrency,
+			Number:          *number,
+			Limit:           *limit,
 		},
 	)
 
@@ -159,14 +160,8 @@ func main() {
 			log.Printf("Generator Shutdown Error: %+v", err)
 		}
 
-		if err := walletsRepo.Close(); err != nil {
+		if err := repo.Close(); err != nil {
 			log.Printf("WalletsRepo Close Error: %+v", err)
-		}
-
-		if db != nil {
-			if err := utils.Must(db.DB()).Close(); err != nil {
-				log.Printf("DB Close Error: %+v", err)
-			}
 		}
 	}()
 
