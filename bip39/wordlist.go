@@ -3,7 +3,6 @@ package bip39
 
 import (
 	_ "embed"
-	"fmt"
 	"hash/crc32"
 	"strings"
 
@@ -26,7 +25,6 @@ func init() {
 	// OUTPUT: c1dbd296
 	checksum := crc32.ChecksumIEEE([]byte(words))
 	if checksum != 0xc1dbd296 {
-		fmt.Println(words)
 		panic(errors.Errorf("wordlist checksum mismatch: expected %x, got %x", 0xc1dbd296, checksum))
 	}
 }
