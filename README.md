@@ -37,7 +37,7 @@
 ![ethereum and crypto wallets generated](https://user-images.githubusercontent.com/37617738/227807144-c1dc59ae-94fd-4fdf-9678-bf8c12e58cd4.png)
 
 - Awesome and Beautiful vanity wallet addresses supported! [regex, prefix, suffix, contains] 🎨
-- Blazing fast wallets generate. Speeding up to **+100k wallet/sec** with concurrency and only privatekey mode ⚡️
+- Blazing fast wallets generate. Speeding up to **+100k wallet/sec** (/w concurrency and only privatekey mode)⚡️
 - Supports to generating until got the vanity wallet addresses you want 🤩 (using `-n 0` and `-limit <number>` flags)
 - ∞ Infinite wallet generating! (set number to 0 to active infinite loop) ∞
 - Generate word seed phrase with BIP-39 mnemonic (support 12, 24 Word Seed Phrase) (Default is 128 bits for 12 words).
@@ -114,10 +114,10 @@ Total Wallet Resolved: 60000 w
 Copyright (C) 2023 Planxnx <planxthanee@gmail.com>
 ```
 
-### Only Private Key Mode
+### Only Private Key Mode ⚡️
 
 We've dryrun the generator on only private key mode with 8 concurrents for 1,000,000 wallets on MacBook Air M1 2020 Memory 16 GB <br/>
-and got speed up to 11,2029 wallet/sec.
+and got speed up to 111,778 wallet/sec.
 
 ```console
 ethereum-wallet-generator -n 1000000 -dryrun -c 8 -mode 2
