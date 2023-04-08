@@ -69,6 +69,7 @@ func (g *Generator) Start() (err error) {
 			fmt.Printf("\n%-42s %s\n", "Address", "Seed")
 			fmt.Printf("%-42s %s\n", strings.Repeat("-", 42), strings.Repeat("-", 90))
 			fmt.Println(result.String())
+
 		}
 
 		fmt.Printf("\nResolved Speed: %.2f w/s\n", float64(resolvedCount.Load())/time.Since(start).Seconds())
