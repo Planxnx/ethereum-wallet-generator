@@ -3,46 +3,49 @@ package wallets
 import (
 	"crypto/ecdsa"
 	"encoding/hex"
+	"errors"
+	"unsafe"
 
-	"github.com/btcsuite/btcd/btcutil/hdkeychain"
-	"github.com/btcsuite/btcd/chaincfg"
-	"github.com/ethereum/go-ethereum/accounts"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/pkg/errors"
-	"github.com/tyler-smith/go-bip39"
 	"gorm.io/gorm"
 )
 
-var (
-	// DefaultBaseDerivationPath is the base path from which custom derivation endpoints
-	// are incremented. As such, the first account will be at m/44'/60'/0'/0, the second
-	// at m/44'/60'/0'/1, etc
-	DefaultBaseDerivationPath       = accounts.DefaultBaseDerivationPath
-	DefaultBaseDerivationPathString = DefaultBaseDerivationPath.String()
+type (
+	// Generator is a function that generates a wallet.
+	Generator func() (*Wallet, error)
+
+	// Wallet is a struct that contains the information of a wallet.
+	Wallet struct {
+		Address    string
+		PrivateKey string
+		Mnemonic   string
+		HDPath     string
+		gorm.Model
+		Bits int
+	}
 )
 
-type Wallet struct {
-	Address    string
-	PrivateKey string
-	Mnemonic   string
-	HDPath     string
-	gorm.Model
-	Bits int
+const (
+	// DefaultMnemonicBits is the default number of bits to use when generating a mnemonic. default is 128 bits (12 words).
+	DefaultMnemonicBits = 128
+)
+
+// DefaultGenerator is the default wallet generator.
+var DefaultGenerator = NewGeneratorMnemonic(DefaultMnemonicBits)
+
+// NewWallet returns a new wallet using the default generator.
+func NewWallet() (*Wallet, error) {
+	return DefaultGenerator()
 }
 
-func NewWallet(bitSize int) (*Wallet, error) {
-	mnemonic, err := NewMnemonic(bitSize)
-	if err != nil {
-		return nil, err
+// NewFromPrivatekey returns a new wallet from a given private key.
+func NewFromPrivatekey(privateKey *ecdsa.PrivateKey) (*Wallet, error) {
+	if privateKey == nil {
+		return nil, errors.New("private key is nil")
 	}
 
-	// TODO: only private key mode for speed up to 100k wallet per second (20x)
-
-	privateKey, publicKey, err := deriveWallet(bip39.NewSeed(mnemonic, ""), DefaultBaseDerivationPath)
-	if err != nil {
-		return nil, err
-	}
+	publicKey := &privateKey.PublicKey
 
 	// toString PrivateKey
 	priveKeyBytes := crypto.FromECDSA(privateKey)
@@ -63,30 +66,10 @@ func NewWallet(bitSize int) (*Wallet, error) {
 	return &Wallet{
 		Address:    pubString,
 		PrivateKey: privString,
-		Mnemonic:   mnemonic,
-		Bits:       bitSize,
-		HDPath:     DefaultBaseDerivationPathString,
 	}, nil
 }
 
-func deriveWallet(seed []byte, path accounts.DerivationPath) (*ecdsa.PrivateKey, *ecdsa.PublicKey, error) {
-	key, err := hdkeychain.NewMaster(seed, &chaincfg.MainNetParams)
-	if err != nil {
-		return nil, nil, errors.WithStack(err)
-	}
-
-	for _, n := range path {
-		key, err = key.Derive(n)
-		if err != nil {
-			return nil, nil, errors.WithStack(err)
-		}
-	}
-
-	privateKey, err := key.ECPrivKey()
-	privateKeyECDSA := privateKey.ToECDSA()
-	if err != nil {
-		return nil, nil, errors.WithStack(err)
-	}
-
-	return privateKeyECDSA, privateKeyECDSA.Public().(*ecdsa.PublicKey), nil
+// b2s converts a byte slice to a string without memory allocation.
+func b2s(b []byte) string {
+	return *(*string)(unsafe.Pointer(&b))
 }

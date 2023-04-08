@@ -14,7 +14,6 @@ import (
 )
 
 type Config struct {
-	BitSize         int
 	AddresValidator func(address string) bool
 	ProgressBar     progressbar.ProgressBar
 	DryRun          bool
@@ -24,16 +23,18 @@ type Config struct {
 }
 
 type Generator struct {
-	repo   repository.Repository
-	config Config
+	walletGen wallets.Generator
+	repo      repository.Repository
+	config    Config
 
 	isShutdown     atomic.Bool
 	shutdownSignal chan struct{}
 	shutDownWg     sync.WaitGroup
 }
 
-func New(repo repository.Repository, cfg Config) *Generator {
+func New(walletGen wallets.Generator, repo repository.Repository, cfg Config) *Generator {
 	return &Generator{
+		walletGen:      walletGen,
 		repo:           repo,
 		config:         cfg,
 		shutdownSignal: make(chan struct{}),
@@ -59,14 +60,19 @@ func (g *Generator) Start() (err error) {
 		}
 
 		if w := g.repo.Result(); len(w) > 0 && !g.config.DryRun {
+			col2Name := "Seed"
 			var result strings.Builder
 			for _, wallet := range w {
-				if _, err := fmt.Fprintf(&result, "%-42s %s\n", wallet.Address, wallet.Mnemonic); err != nil {
+				col2 := wallet.Mnemonic
+				if wallet.Mnemonic == "" {
+					col2 = wallet.PrivateKey
+					col2Name = "Private Key"
+				}
+				if _, err := fmt.Fprintf(&result, "%-42s %s\n", wallet.Address, col2); err != nil {
 					continue
 				}
 			}
-
-			fmt.Printf("\n%-42s %s\n", "Address", "Seed")
+			fmt.Printf("\n%-42s %s\n", "Address", col2Name)
 			fmt.Printf("%-42s %s\n", strings.Repeat("-", 42), strings.Repeat("-", 90))
 			fmt.Println(result.String())
 		}
@@ -90,7 +96,7 @@ func (g *Generator) Start() (err error) {
 					return
 				}
 
-				wallet, err := wallets.NewWallet(g.config.BitSize)
+				wallet, err := g.walletGen()
 				if err != nil {
 					// Ignore error
 					log.Printf("[ERROR] failed to generate wallet: %+v\n", err)
