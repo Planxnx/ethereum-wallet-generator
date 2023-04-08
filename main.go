@@ -56,7 +56,7 @@ func main() {
 	regEx := flag.String("regex", "", "show only result that was matched with given regex (eg. ^0x99 or ^0x00)")
 	isDryrun := flag.Bool("dryrun", false, "generate wallet without a result (used for benchmark speed)")
 	isCompatible := flag.Bool("compatible", false, "logging compatible mode (turn this on to fix logging glitch)")
-	mode := flag.Int("mode", 1, "wallet generate mode [1: normal mode, 2: fast mode(reduce entropy random times, but less secure), 3: only private key mode(generate only privatekey, this fastest mode)]")
+	mode := flag.Int("mode", 1, "wallet generate mode [1: normal mode, 2: only private key mode(generate only privatekey, this fastest mode)]")
 	flag.Parse()
 
 	// Wallet Address Validator
@@ -151,9 +151,9 @@ func main() {
 	case 1:
 		walletGenerator = wallets.NewGeneratorMnemonic(*bits)
 	case 2:
-		walletGenerator = wallets.NewGeneratorFastMnemonic(*bits)
-	case 3:
 		walletGenerator = wallets.NewGeneratorPrivatekey()
+	case 3:
+		walletGenerator = wallets.NewGeneratorFastMnemonic(*bits)
 	default:
 		panic("Invalid mode. See: https://github.com/Planxnx/ethereum-wallet-generator#Modes")
 	}

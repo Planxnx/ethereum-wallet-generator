@@ -71,8 +71,7 @@ $ docker pull planxthanee/ethereum-wallet-generator:latest
 ## Modes
 
 - **[1] Normal Mode** - Generate wallets with mnemonic phrase. (default)
-- **[2] Fast Mode** - Generate wallets with a mnemonic phrase, **but less secure**. Use cumulative entropy instead of generating new random entropy(changing only the first or second words of mnemonic phrases). It will generate new random entropy every 2048 wallets.
-- **[3] Only Private Key Mode** - Generate wallets with private key only. **This mode is the fastest, but you will not get a mnemonic phrase.**
+- **[2] Only Private Key Mode⚡️** - Generate wallets with private key only. **Increase speed up to 20x (+100k wallet/sec), but you will not get a mnemonic phrase.**
 
 ## Usage
 
@@ -83,7 +82,7 @@ Usage of ethereum-wallet-generator:
   -db         string set sqlite output file name eg. wallets.db (db file will create in `/db` folder)
   -c          int    set concurrency value (default 1)
   -bit        int    set number of entropy bits [128 for 12 words, 256 for 24 words] (default 128)
-  -mode       int    set mode of wallet generator [1: normal mode, 2: fast mode, 3: only private key mode]
+  -mode       int    set mode of wallet generator [1: normal mode, 2: only private key mode]
   -strict     bool   strict contains mode, resolve only the addresses that contain all the given letters (required contains to use)
   -contains   string show only result that contained with the given letters (support for multiple characters)
   -prefix     string show only result that prefix was matched with the given letters  (support for single character)
@@ -94,6 +93,8 @@ Usage of ethereum-wallet-generator:
 ```
 
 ## Benchmark
+
+### Normal Mode
 
 We've dryrun the generator on normal mode with 8 concurrents for 60,000 wallets on MacBook Air M1 2020 Memory 16 GB <br/>
 and got speed up to 6,468.58 wallet/sec.
@@ -107,6 +108,24 @@ ethereum-wallet-generator -n 60000 -dryrun -c 8 -mode 1
 Resolved Speed: 6468.58 w/s
 Total Duration: 9.275597416s
 Total Wallet Resolved: 60000 w
+
+Copyright (C) 2023 Planxnx <planxthanee@gmail.com>
+```
+
+### Only Private Key Mode
+
+We've dryrun the generator on only private key mode with 8 concurrents for 1,000,000 wallets on MacBook Air M1 2020 Memory 16 GB <br/>
+and got speed up to 11,2029 wallet/sec.
+
+```console
+ethereum-wallet-generator -n 60000 -dryrun -c 8 -mode 1
+===============ETH Wallet Generator===============
+
+1000000 / 1000000 | [███████████████████████████████████████████████] | 100.00% | 111778 p/s | resolved: 1000000
+
+Resolved Speed: 111778.55 w/s
+Total Duration: 8.94626016s
+Total Wallet Resolved: 1000000 w
 
 Copyright (C) 2023 Planxnx <planxthanee@gmail.com>
 ```
