@@ -61,33 +61,28 @@ func NewMnemonic(entropy []byte) (string, error) {
 
 	// Add checksum to entropy.
 	// Entropy as an int so we can bitmask without worrying about bytes slices.
-	entropyInt := addChecksum(entropy)
+	entropyInt := new(uint256.Int).SetBytes(addChecksum(entropy))
 
 	// Throw away uint256.Int for AND masking.
 	word := uint256.NewInt(0)
+
+	// Slice to hold words in.
+	words := make([]string, sentenceLength)
 
 	// Break entropy up into sentenceLength chunks of 11 bits.
 	// For each word AND mask the rightmost 11 bits and find the word at that index.
 	// Then bitshift entropy 11 bits right and repeat.
 	// Add to the last empty slot so we can work with LSBs instead of MSB.
-
-	var w strings.Builder
-	w.Grow(sentenceLength * bitsChunkSize)
 	for i := sentenceLength - 1; i >= 0; i-- {
 		// Get 11 right most bits and bitshift 11 to the right for next time.
 		word.And(entropyInt, last11BitsMask)
 		entropyInt.Div(entropyInt, shift11BitsMask)
 
 		// Convert bytes to an index and add that word to the list.
-		if i == sentenceLength-1 {
-			w.WriteString(Words[word.Uint64()])
-		} else {
-			w.WriteString(" ")
-			w.WriteString(Words[word.Uint64()])
-		}
+		words[i] = Words[word.Uint64()]
 	}
 
-	return w.String(), nil
+	return strings.Join(words, " "), nil
 }
 
 // NewSeed creates a hashed seed output given a provided string and password.
@@ -100,7 +95,7 @@ func NewSeed(mnemonic, password string) []byte {
 // abd returns the result as a uint256.Int.
 //
 // Currently only supports data up to 32 bytes.
-func addChecksum(data []byte) *uint256.Int {
+func addChecksum(data []byte) []byte {
 	// Get first byte of sha256
 	hash := computeChecksum(data)
 	firstChecksumByte := hash[0]
@@ -112,7 +107,6 @@ func addChecksum(data []byte) *uint256.Int {
 	// and then set the (new) right most bit equal to checksum bit at that index
 	// staring from the left
 	dataInt := new(uint256.Int).SetBytes(data)
-
 	for i := uint(0); i < checksumBitLength; i++ {
 		// Bitshift 1 left
 		dataInt.Mul(dataInt, two)
@@ -123,13 +117,12 @@ func addChecksum(data []byte) *uint256.Int {
 		}
 	}
 
-	return dataInt
+	return dataInt.Bytes()
 }
 
 func computeChecksum(data []byte) []byte {
 	hasher := sha256.New()
 	_, _ = hasher.Write(data) // This error is guaranteed to be nil
-
 	return hasher.Sum(nil)
 }
 
