@@ -58,6 +58,10 @@ Examples: `0x1111111254fb6c44bAC0beD2854e76F90643097d`, or `0x9999997001a3d5F44D
 
 <img  align="right" src="https://user-images.githubusercontent.com/37617738/120122855-b1cb0800-c1d5-11eb-9502-8d64bb275337.png" height="140" alt="gopher" />
 
+> **Homebrew is coming soon**
+
+<br> 
+
 ```console
 $ go install github.com/planxnx/ethereum-wallet-generator@latest
 ```
