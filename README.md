@@ -60,17 +60,22 @@ Examples: `0x1111111254fb6c44bAC0beD2854e76F90643097d`, or `0x9999997001a3d5F44D
 
 > **Homebrew is coming soon**
 
-<br> 
+<be> 
 
+### Install from Source
 ```console
 $ go install github.com/planxnx/ethereum-wallet-generator@latest
 ```
 
-or
-
+### Docker
 ```console
 $ docker pull planxthanee/ethereum-wallet-generator:latest
 ```
+
+### Download from latest release
+> supports only Windows x86-64 and macOs
+
+[Download](https://github.com/Planxnx/ethereum-wallet-generator/releases/latest)
 
 ## Modes
 
