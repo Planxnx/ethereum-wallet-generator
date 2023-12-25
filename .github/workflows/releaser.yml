@@ -10,9 +10,10 @@ defaults:
   run:
     shell: bash
 jobs:
-  lint:
-    name: Code Analysis & Tests
-    uses: planxnx/ethereum-wallet-generator/.github/workflows/code-analysis.yml@main
+  # TODO: add `on.workflow_call` trigger in `code-analysis.yml`
+  # lint:
+  #   name: Code Analysis & Tests
+  #   uses: planxnx/ethereum-wallet-generator/.github/workflows/code-analysis.yml@main
   release:
     name: Create Release
     runs-on: "ubuntu-latest"
