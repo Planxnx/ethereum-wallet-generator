@@ -1,4 +1,4 @@
-name: Building and Push to Docker Hub
+name: Building and Push Docker Image to Docker Hub
 on:
   workflow_dispatch:
   release:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    name: Build and Push
+    name: Build and Push Docker Image
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: ethereum-wallet-generator
