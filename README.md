@@ -52,7 +52,7 @@
 
 A vanity address is an address which part of it is chosen by yourself. Adding vanity to an address is used to give it personality, to reinforce a brand, to send a message, or to make the owner(s) feel cool 🤩
 
-Examples: `0x1111111254fb6c44bAC0beD2854e76F90643097d`, or `0x9999997001a3d5F44D48729b11cE9eEd1f19a7b9`
+Examples: `0x1111111254fb6c44bAC0beD2854e76F90643097d`, or `0x999999999aa3d5F44D48729b11c091Ed1f12f599`
 
 ## Installation
 
