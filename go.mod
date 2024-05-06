@@ -6,7 +6,7 @@ require (
 	github.com/btcsuite/btcd v0.24.0
 	github.com/btcsuite/btcd/btcutil v1.1.5
 	github.com/cheggaaa/pb/v3 v3.1.5
-	github.com/ethereum/go-ethereum v1.13.14
+	github.com/ethereum/go-ethereum v1.13.15
 	github.com/glebarez/sqlite v1.10.0
 	github.com/pkg/errors v0.9.1
 	github.com/schollz/progressbar/v3 v3.14.2
