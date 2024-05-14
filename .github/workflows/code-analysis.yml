@@ -22,12 +22,6 @@ jobs:
           go-version: ${{ matrix.go-version }}
           cache: true
 
-      - name: Lint
-        uses: golangci/golangci-lint-action@v6
-        with:
-          version: latest
-          args: --verbose
-
       - name: Install dependencies
         run: go get ./...
 
@@ -42,3 +36,9 @@ jobs:
 
       - name: Display Go version
         run: go version
+
+      - name: Lint
+        uses: golangci/golangci-lint-action@v6
+        with:
+          version: latest
+          args: --verbose
