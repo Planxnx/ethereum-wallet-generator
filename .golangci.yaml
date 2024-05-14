@@ -47,23 +47,17 @@ linters: # https://golangci-lint.run/usage/linters/
     - usestdlibvars # style - detect the possibility to use variables/constants from the Go standard library
     - whitespace # style - detection of leading and trailing whitespace
     - wrapcheck # style, error - Checks that errors returned from external packages are wrapped, we should wrap the error from external library
-    - nosnakecase # style - detects snake case of variable naming and function name.
 
 linters-settings:
   misspell:
     locale: US
     ignore-words: []
-  gomnd:
-    ignored-functions: []
-    ignored-files: []
   gocritic:
     enabled-tags:
       - diagnostic
       - style
       - performance
       - opinionated
-    isabled-tags:
-      - experimental
   gosec:
     excludes:
       - G404 # Insecure random number source (rand)
