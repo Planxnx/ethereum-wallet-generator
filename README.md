@@ -42,8 +42,8 @@
 - ∞ Infinite wallet generating! (set number to 0 to active infinite loop) ∞
 - Generate word seed phrase with BIP-39 mnemonic (support 12, 24 Word Seed Phrase) (Default is 128 bits for 12 words).
 - Embedded Database Supported! (with SQLite3). It's easiest to generate, manage, search a billion wallets without any pain.
-- Tiny Sizes and Superior Speed with Golang 🚀 (required go 1.19 or higher)
-- No Go? No Problem! [Docker images 🐳](https://hub.docker.com/r/planxthanee/ethereum-wallet-generator) or [exec files](https://github.com/Planxnx/ethereum-wallet-generator/releases/latest) are provided for you 
+- Tiny Sizes and Superior Speed with Golang 🚀 (required go 1.21 or higher)
+- No Go? No Problem! [Docker images 🐳](https://hub.docker.com/r/planxthanee/ethereum-wallet-generator) or [exec files](https://github.com/Planxnx/ethereum-wallet-generator/releases/latest) are provided for you
 - You can benchmark generating speed by setting the `isDryrun` flag 📈
 - Default (HD Wallet)Hierarchical Deterministic Path - m/44'/60'/0'/0 .
 - We recommend every user of this application audit and verify every source code in this repository and every imported dependecies for its validity and clearness. 👮🏻‍♂️
@@ -60,19 +60,22 @@ Examples: `0x1111111254fb6c44bAC0beD2854e76F90643097d`, or `0x999999999aa3d5F44D
 
 > **Homebrew is coming soon**
 
-<be> 
+<be>
 
 ### Install from Source
+
 ```console
 $ go install github.com/planxnx/ethereum-wallet-generator@latest
 ```
 
 ### Docker
+
 ```console
 $ docker pull planxthanee/ethereum-wallet-generator:latest
 ```
 
 ### Download from latest release
+
 > supports only Windows x86-64 and macOs
 
 [Download](https://github.com/Planxnx/ethereum-wallet-generator/releases/latest)
