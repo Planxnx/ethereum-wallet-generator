@@ -28,10 +28,10 @@ jobs:
           # - "linux/arm64"
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-go@v3
+      - uses: actions/setup-go@v5
         with:
           go-version-file: "go.mod"
           cache: true # caching and restoring go modules and build outputs.
