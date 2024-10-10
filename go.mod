@@ -3,7 +3,7 @@ module github.com/planxnx/ethereum-wallet-generator
 go 1.21
 
 require (
-	github.com/btcsuite/btcd v0.24.0
+	github.com/btcsuite/btcd v0.24.2
 	github.com/btcsuite/btcd/btcutil v1.1.5
 	github.com/cheggaaa/pb/v3 v3.1.5
 	github.com/ethereum/go-ethereum v1.14.3
