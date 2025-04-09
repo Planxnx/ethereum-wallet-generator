@@ -38,7 +38,7 @@
 
 - Awesome and Beautiful vanity wallet addresses supported! [regex, prefix, suffix, contains] 🎨
 - Blazing fast wallets generate. Speeding up to **+100k wallet/sec** (/w concurrency and only privatekey mode)⚡️
-- Supports to generating until got the vanity wallet addresses you want 🤩 (using `-n 0` and `-limit <number>` flags)
+- Supports to generating until got the vanity wallet addresses you want 🤩 (using `-n -1` and `-limit <number>` flags)
 - ∞ Infinite wallet generating! (set number to 0 to active infinite loop) ∞
 - Generate word seed phrase with BIP-39 mnemonic (support 12, 24 Word Seed Phrase) (Default is 128 bits for 12 words).
 - Embedded Database Supported! (with SQLite3). It's easiest to generate, manage, search a billion wallets without any pain.
