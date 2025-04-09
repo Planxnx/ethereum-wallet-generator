@@ -91,7 +91,7 @@ We've provided 2 modes for you to generate wallets.
 
 ```console
 Usage of ethereum-wallet-generator:
-  -n          int    set number of generate times (not number of result wallets) (set number to 0 for Infinite loop ∞, default 10)
+  -n          int    set number of generate times (not number of result wallets) (set number to -1 for Infinite loop ∞, default 10)
   -limit      int    set limit number of result wallets. stop generate when result of vanity wallets reach the limit (set number to 0 for no limit, default 0)
   -db         string set sqlite output file name eg. wallets.db (db file will create in `/db` folder)
   -c          int    set concurrency value (default 1)
