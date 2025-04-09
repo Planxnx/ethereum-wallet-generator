@@ -44,7 +44,7 @@ func main() {
 	fmt.Println(" ")
 
 	// Parse flags
-	number := flag.Int("n", 10, "set number of generate times (not number of result wallets) (set number to 0 for Infinite loop ∞)")
+	number := flag.Int("n", 10, "set number of generate times (not number of result wallets) (set number to -1 for Infinite loop ∞)")
 	limit := flag.Int("limit", 0, "set limit number of result wallets. stop generate when result of vanity wallets reach the limit (set number to 0 for no limit)")
 	dbPath := flag.String("db", "", "set sqlite output name eg. wallets.db (db file will create in /db)")
 	concurrency := flag.Int("c", 1, "set concurrency value")
