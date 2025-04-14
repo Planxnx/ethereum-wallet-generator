@@ -1,6 +1,7 @@
 module github.com/planxnx/ethereum-wallet-generator
 
 go 1.21
+toolchain go1.24.1
 
 require (
 	github.com/btcsuite/btcd v0.24.0
@@ -12,7 +13,7 @@ require (
 	github.com/schollz/progressbar/v3 v3.14.2
 	github.com/stretchr/testify v1.8.4
 	github.com/tyler-smith/go-bip39 v1.1.0
-	golang.org/x/crypto v0.23.0
+	golang.org/x/crypto v0.35.0
 	gorm.io/gorm v1.25.10
 )
 
@@ -46,8 +47,8 @@ require (
 	github.com/supranational/blst v0.3.11 // indirect
 	golang.org/x/exp v0.0.0-20240222234643-814bf88cf225 // indirect
 	golang.org/x/sync v0.7.0 // indirect
-	golang.org/x/sys v0.20.0 // indirect
-	golang.org/x/term v0.20.0 // indirect
+	golang.org/x/sys v0.30.0 // indirect
+	golang.org/x/term v0.29.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	modernc.org/libc v1.50.5 // indirect
 	modernc.org/mathutil v1.6.0 // indirect
